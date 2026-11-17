@@ -1,0 +1,73 @@
+{
+  "deal": "Larkfield Mortgage Funding 2025-1 PLC",
+  "originator": "Larkfield Building Society",
+  "servicer": "Larkfield Building Society",
+  "cash_manager": "Northgate Trust Services Limited",
+  "trustee": "Northgate Trustees Limited",
+  "closing_date": "2025-06-30",
+  "first_ipd": "2025-07-31",
+  "payment_frequency": "Monthly",
+  "pool_cutoff_balance": 405511186.36,
+  "notes": {
+    "A": {
+      "initial_balance": 356849844.0,
+      "index": "Compounded Daily SONIA",
+      "margin_pct": 0.55
+    },
+    "B": {
+      "initial_balance": 20275559.32,
+      "index": "Compounded Daily SONIA",
+      "margin_pct": 1.1
+    },
+    "C": {
+      "initial_balance": 16220447.45,
+      "index": "Compounded Daily SONIA",
+      "margin_pct": 1.6
+    },
+    "D": {
+      "initial_balance": 12165335.59,
+      "index": "Compounded Daily SONIA",
+      "margin_pct": 2.4
+    }
+  },
+  "reserve_fund_required": 6082667.8,
+  "servicer_fee_bps": 15,
+  "trustee_fee_monthly": 2000.0,
+  "cash_manager_fee_monthly": 1500.0,
+  "sonia_path_pct": {
+    "2025-06-30": 4.2,
+    "2025-07-31": 4.2,
+    "2025-08-31": 4.2,
+    "2025-09-30": 3.95,
+    "2025-10-31": 3.95,
+    "2025-11-30": 3.95,
+    "2025-12-31": 3.95,
+    "2026-01-31": 3.95,
+    "2026-02-28": 3.7,
+    "2026-03-31": 3.7,
+    "2026-04-30": 3.7,
+    "2026-05-31": 3.7,
+    "2026-06-30": 3.7,
+    "2026-07-31": 3.45,
+    "2026-08-31": 3.45,
+    "2026-09-30": 3.45
+  },
+  "bbr_path_pct": {
+    "2025-06-30": 4.25,
+    "2025-07-31": 4.25,
+    "2025-08-31": 4.25,
+    "2025-09-30": 4.0,
+    "2025-10-31": 4.0,
+    "2025-11-30": 4.0,
+    "2025-12-31": 4.0,
+    "2026-01-31": 4.0,
+    "2026-02-28": 3.75,
+    "2026-03-31": 3.75,
+    "2026-04-30": 3.75,
+    "2026-05-31": 3.75,
+    "2026-06-30": 3.75,
+    "2026-07-31": 3.5,
+    "2026-08-31": 3.5,
+    "2026-09-30": 3.5
+  }
+}

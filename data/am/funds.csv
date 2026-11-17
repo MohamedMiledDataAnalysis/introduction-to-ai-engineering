@@ -1,0 +1,4 @@
+fund_code,name,share_class,isin,sfdr,ocf,benchmark,launch,aum_eur_m,sri,rhp_years
+HGEF,Harbourline Global Equity Fund,I EUR Acc,ZZF000000018,Article 8,0.0075,Harbourline Global Equity Reference Index,2019-03-29,1450.0,4,5
+HECB,Harbourline Euro Corporate Bond Fund,I EUR Acc,ZZF000000026,Article 8,0.004,Harbourline Euro Corporate Reference Index,2017-09-29,980.0,2,3
+HBMA,Harbourline Balanced Multi-Asset Fund,I EUR Acc,ZZF000000034,Article 6,0.006,55% HGERI / 40% HECRI / 5% EUR cash,2020-06-30,620.0,3,4

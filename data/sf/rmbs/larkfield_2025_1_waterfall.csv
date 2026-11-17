@@ -1,0 +1,331 @@
+cutoff,waterfall,item,due,paid,reserve_drawn
+2025-07-31,Revenue,(a) Trustee fee,2000.0,2000.0,0.0
+2025-07-31,Revenue,(b) Cash manager fee,1500.0,1500.0,0.0
+2025-07-31,Revenue,(c) Servicer fee,51661.01,51661.01,0.0
+2025-07-31,Revenue,(d) Class A interest,1439620.26,1439620.26,0.0
+2025-07-31,Revenue,(e) Class A PDL,0.0,0.0,0.0
+2025-07-31,Revenue,(f) Class B interest,91267.79,91267.79,0.0
+2025-07-31,Revenue,(g) Class B PDL,0.0,0.0,0.0
+2025-07-31,Revenue,(h) Class C interest,79902.37,79902.37,0.0
+2025-07-31,Revenue,(i) Class C PDL,0.0,0.0,0.0
+2025-07-31,Revenue,(j) Class D interest,68192.54,68192.54,0.0
+2025-07-31,Revenue,(k) Class D PDL,0.0,0.0,0.0
+2025-07-31,Revenue,(l) Replenish reserve fund,0.0,0.0,0.0
+2025-07-31,Revenue,(m) Residual to certificate holders,272763.62,272763.62,0.0
+2025-07-31,Principal,(a) Class A principal,356849844.0,5106418.16,0.0
+2025-07-31,Principal,(b) Class B principal,20275559.32,0.0,0.0
+2025-07-31,Principal,(c) Class C principal,16220447.45,0.0,0.0
+2025-07-31,Principal,(d) Class D principal,12165335.59,0.0,0.0
+2025-07-31,Summary,Available revenue receipts,2006907.59,2006907.59,0.0
+2025-07-31,Summary,Available principal receipts,5106418.16,5106418.16,0.0
+2025-07-31,Summary,New defaults debited to PDL,0.0,0.0,0.0
+2025-07-31,Summary,Reserve fund closing balance,6082667.8,6082667.8,0.0
+2025-07-31,Summary,Excess spread released,272763.62,272763.62,0.0
+2025-08-31,Revenue,(a) Trustee fee,2000.0,2000.0,0.0
+2025-08-31,Revenue,(b) Cash manager fee,1500.0,1500.0,0.0
+2025-08-31,Revenue,(c) Servicer fee,51010.47,51010.47,0.0
+2025-08-31,Revenue,(d) Class A interest,1419019.71,1419019.71,0.0
+2025-08-31,Revenue,(e) Class A PDL,0.0,0.0,0.0
+2025-08-31,Revenue,(f) Class B interest,91267.79,91267.79,0.0
+2025-08-31,Revenue,(g) Class B PDL,0.0,0.0,0.0
+2025-08-31,Revenue,(h) Class C interest,79902.37,79902.37,0.0
+2025-08-31,Revenue,(i) Class C PDL,0.0,0.0,0.0
+2025-08-31,Revenue,(j) Class D interest,68192.54,68192.54,0.0
+2025-08-31,Revenue,(k) Class D PDL,0.0,0.0,0.0
+2025-08-31,Revenue,(l) Replenish reserve fund,0.0,0.0,0.0
+2025-08-31,Revenue,(m) Residual to certificate holders,277537.66,277537.66,0.0
+2025-08-31,Principal,(a) Class A principal,351743425.84,6672099.95,0.0
+2025-08-31,Principal,(b) Class B principal,20275559.32,0.0,0.0
+2025-08-31,Principal,(c) Class C principal,16220447.45,0.0,0.0
+2025-08-31,Principal,(d) Class D principal,12165335.59,0.0,0.0
+2025-08-31,Summary,Available revenue receipts,1990430.54,1990430.54,0.0
+2025-08-31,Summary,Available principal receipts,6672099.95,6672099.95,0.0
+2025-08-31,Summary,New defaults debited to PDL,0.0,0.0,0.0
+2025-08-31,Summary,Reserve fund closing balance,6082667.8,6082667.8,0.0
+2025-08-31,Summary,Excess spread released,277537.66,277537.66,0.0
+2025-09-30,Revenue,(a) Trustee fee,2000.0,2000.0,0.0
+2025-09-30,Revenue,(b) Cash manager fee,1500.0,1500.0,0.0
+2025-09-30,Revenue,(c) Servicer fee,48542.38,48542.38,0.0
+2025-09-30,Revenue,(d) Class A interest,1276291.21,1276291.21,0.0
+2025-09-30,Revenue,(e) Class A PDL,0.0,0.0,0.0
+2025-09-30,Revenue,(f) Class B interest,84157.46,84157.46,0.0
+2025-09-30,Revenue,(g) Class B PDL,0.0,0.0,0.0
+2025-09-30,Revenue,(h) Class C interest,73991.9,73991.9,0.0
+2025-09-30,Revenue,(i) Class C PDL,0.0,0.0,0.0
+2025-09-30,Revenue,(j) Class D interest,63493.05,63493.05,0.0
+2025-09-30,Revenue,(k) Class D PDL,0.0,0.0,0.0
+2025-09-30,Revenue,(l) Replenish reserve fund,0.0,0.0,0.0
+2025-09-30,Revenue,(m) Residual to certificate holders,367202.11,367202.11,0.0
+2025-09-30,Principal,(a) Class A principal,345071325.89,4667239.77,0.0
+2025-09-30,Principal,(b) Class B principal,20275559.32,0.0,0.0
+2025-09-30,Principal,(c) Class C principal,16220447.45,0.0,0.0
+2025-09-30,Principal,(d) Class D principal,12165335.59,0.0,0.0
+2025-09-30,Summary,Available revenue receipts,1917178.11,1917178.11,0.0
+2025-09-30,Summary,Available principal receipts,4667239.77,4667239.77,0.0
+2025-09-30,Summary,New defaults debited to PDL,0.0,0.0,0.0
+2025-09-30,Summary,Reserve fund closing balance,6082667.8,6082667.8,0.0
+2025-09-30,Summary,Excess spread released,367202.11,367202.11,0.0
+2025-10-31,Revenue,(a) Trustee fee,2000.0,2000.0,0.0
+2025-10-31,Revenue,(b) Cash manager fee,1500.0,1500.0,0.0
+2025-10-31,Revenue,(c) Servicer fee,49565.87,49565.87,0.0
+2025-10-31,Revenue,(d) Class A interest,1300996.44,1300996.44,0.0
+2025-10-31,Revenue,(e) Class A PDL,0.0,0.0,0.0
+2025-10-31,Revenue,(f) Class B interest,86962.71,86962.71,0.0
+2025-10-31,Revenue,(g) Class B PDL,0.0,0.0,0.0
+2025-10-31,Revenue,(h) Class C interest,76458.3,76458.3,0.0
+2025-10-31,Revenue,(i) Class C PDL,0.0,0.0,0.0
+2025-10-31,Revenue,(j) Class D interest,65609.49,65609.49,0.0
+2025-10-31,Revenue,(k) Class D PDL,0.0,0.0,0.0
+2025-10-31,Revenue,(l) Replenish reserve fund,0.0,0.0,0.0
+2025-10-31,Revenue,(m) Residual to certificate holders,317172.44,317172.44,0.0
+2025-10-31,Principal,(a) Class A principal,340404086.12,5777897.24,0.0
+2025-10-31,Principal,(b) Class B principal,20275559.32,0.0,0.0
+2025-10-31,Principal,(c) Class C principal,16220447.45,0.0,0.0
+2025-10-31,Principal,(d) Class D principal,12165335.59,0.0,0.0
+2025-10-31,Summary,Available revenue receipts,1900265.25,1900265.25,0.0
+2025-10-31,Summary,Available principal receipts,5777897.24,5777897.24,0.0
+2025-10-31,Summary,New defaults debited to PDL,0.0,0.0,0.0
+2025-10-31,Summary,Reserve fund closing balance,6082667.8,6082667.8,0.0
+2025-10-31,Summary,Excess spread released,317172.44,317172.44,0.0
+2025-11-30,Revenue,(a) Trustee fee,2000.0,2000.0,0.0
+2025-11-30,Revenue,(b) Cash manager fee,1500.0,1500.0,0.0
+2025-11-30,Revenue,(c) Servicer fee,47254.63,47254.63,0.0
+2025-11-30,Revenue,(d) Class A interest,1237658.51,1237658.51,0.0
+2025-11-30,Revenue,(e) Class A PDL,0.0,0.0,0.0
+2025-11-30,Revenue,(f) Class B interest,84157.46,84157.46,0.0
+2025-11-30,Revenue,(g) Class B PDL,0.0,0.0,0.0
+2025-11-30,Revenue,(h) Class C interest,73991.9,73991.9,0.0
+2025-11-30,Revenue,(i) Class C PDL,0.0,0.0,0.0
+2025-11-30,Revenue,(j) Class D interest,63493.05,63493.05,0.0
+2025-11-30,Revenue,(k) Class D PDL,0.0,0.0,0.0
+2025-11-30,Revenue,(l) Replenish reserve fund,0.0,0.0,0.0
+2025-11-30,Revenue,(m) Residual to certificate holders,382806.53,382806.53,0.0
+2025-11-30,Principal,(a) Class A principal,334626188.88,6244998.74,0.0
+2025-11-30,Principal,(b) Class B principal,20275559.32,0.0,0.0
+2025-11-30,Principal,(c) Class C principal,16220447.45,0.0,0.0
+2025-11-30,Principal,(d) Class D principal,12165335.59,0.0,0.0
+2025-11-30,Summary,Available revenue receipts,1892862.08,1892862.08,0.0
+2025-11-30,Summary,Available principal receipts,6244998.74,6244998.74,0.0
+2025-11-30,Summary,New defaults debited to PDL,0.0,0.0,0.0
+2025-11-30,Summary,Reserve fund closing balance,6082667.8,6082667.8,0.0
+2025-11-30,Summary,Excess spread released,382806.53,382806.53,0.0
+2025-12-31,Revenue,(a) Trustee fee,2000.0,2000.0,0.0
+2025-12-31,Revenue,(b) Cash manager fee,1500.0,1500.0,0.0
+2025-12-31,Revenue,(c) Servicer fee,48034.19,48034.19,0.0
+2025-12-31,Revenue,(d) Class A interest,1255045.92,1255045.92,0.0
+2025-12-31,Revenue,(e) Class A PDL,0.0,0.0,0.0
+2025-12-31,Revenue,(f) Class B interest,86962.71,86962.71,0.0
+2025-12-31,Revenue,(g) Class B PDL,0.0,0.0,0.0
+2025-12-31,Revenue,(h) Class C interest,76458.3,76458.3,0.0
+2025-12-31,Revenue,(i) Class C PDL,0.0,0.0,0.0
+2025-12-31,Revenue,(j) Class D interest,65609.49,65609.49,0.0
+2025-12-31,Revenue,(k) Class D PDL,460387.6,357251.91,0.0
+2025-12-31,Revenue,(l) Replenish reserve fund,0.0,0.0,0.0
+2025-12-31,Revenue,(m) Residual to certificate holders,0.0,0.0,0.0
+2025-12-31,Principal,(a) Class A principal,328381190.14,5365152.62,0.0
+2025-12-31,Principal,(b) Class B principal,20275559.32,0.0,0.0
+2025-12-31,Principal,(c) Class C principal,16220447.45,0.0,0.0
+2025-12-31,Principal,(d) Class D principal,12165335.59,0.0,0.0
+2025-12-31,Summary,Available revenue receipts,1892862.52,1892862.52,0.0
+2025-12-31,Summary,Available principal receipts,5007900.71,5007900.71,0.0
+2025-12-31,Summary,New defaults debited to PDL,460387.6,460387.6,0.0
+2025-12-31,Summary,Reserve fund closing balance,6082667.8,6082667.8,0.0
+2025-12-31,Summary,Excess spread released,0.0,0.0,0.0
+2026-01-31,Revenue,(a) Trustee fee,2000.0,2000.0,0.0
+2026-01-31,Revenue,(b) Cash manager fee,1500.0,1500.0,0.0
+2026-01-31,Revenue,(c) Servicer fee,47337.54,47337.54,0.0
+2026-01-31,Revenue,(d) Class A interest,1234540.75,1234540.75,0.0
+2026-01-31,Revenue,(e) Class A PDL,0.0,0.0,0.0
+2026-01-31,Revenue,(f) Class B interest,86962.71,86962.71,0.0
+2026-01-31,Revenue,(g) Class B PDL,0.0,0.0,0.0
+2026-01-31,Revenue,(h) Class C interest,76458.3,76458.3,0.0
+2026-01-31,Revenue,(i) Class C PDL,0.0,0.0,0.0
+2026-01-31,Revenue,(j) Class D interest,65609.49,65609.49,0.0
+2026-01-31,Revenue,(k) Class D PDL,482054.56,356056.46,0.0
+2026-01-31,Revenue,(l) Replenish reserve fund,0.0,0.0,0.0
+2026-01-31,Revenue,(m) Residual to certificate holders,0.0,0.0,0.0
+2026-01-31,Principal,(a) Class A principal,323016037.52,7021697.29,0.0
+2026-01-31,Principal,(b) Class B principal,20275559.32,0.0,0.0
+2026-01-31,Principal,(c) Class C principal,16220447.45,0.0,0.0
+2026-01-31,Principal,(d) Class D principal,12165335.59,0.0,0.0
+2026-01-31,Summary,Available revenue receipts,1870465.25,1870465.25,0.0
+2026-01-31,Summary,Available principal receipts,6665640.83,6665640.83,0.0
+2026-01-31,Summary,New defaults debited to PDL,378918.87,378918.87,0.0
+2026-01-31,Summary,Reserve fund closing balance,6082667.8,6082667.8,0.0
+2026-01-31,Summary,Excess spread released,0.0,0.0,0.0
+2026-02-28,Revenue,(a) Trustee fee,2000.0,2000.0,0.0
+2026-02-28,Revenue,(b) Cash manager fee,1500.0,1500.0,0.0
+2026-02-28,Revenue,(c) Servicer fee,41945.88,41945.88,0.0
+2026-02-28,Revenue,(d) Class A interest,1030228.12,1030228.12,0.0
+2026-02-28,Revenue,(e) Class A PDL,0.0,0.0,0.0
+2026-02-28,Revenue,(f) Class B interest,74658.5,74658.5,0.0
+2026-02-28,Revenue,(g) Class B PDL,0.0,0.0,0.0
+2026-02-28,Revenue,(h) Class C interest,65948.34,65948.34,0.0
+2026-02-28,Revenue,(i) Class C PDL,0.0,0.0,0.0
+2026-02-28,Revenue,(j) Class D interest,56927.1,56927.1,0.0
+2026-02-28,Revenue,(k) Class D PDL,321824.24,321824.24,0.0
+2026-02-28,Revenue,(l) Replenish reserve fund,0.0,0.0,0.0
+2026-02-28,Revenue,(m) Residual to certificate holders,188710.67,188710.67,0.0
+2026-02-28,Principal,(a) Class A principal,315994340.23,5543519.0,0.0
+2026-02-28,Principal,(b) Class B principal,20275559.32,0.0,0.0
+2026-02-28,Principal,(c) Class C principal,16220447.45,0.0,0.0
+2026-02-28,Principal,(d) Class D principal,12165335.59,0.0,0.0
+2026-02-28,Summary,Available revenue receipts,1783742.85,1783742.85,0.0
+2026-02-28,Summary,Available principal receipts,5221694.76,5221694.76,0.0
+2026-02-28,Summary,New defaults debited to PDL,195826.14,195826.14,0.0
+2026-02-28,Summary,Reserve fund closing balance,6082667.8,6082667.8,0.0
+2026-02-28,Summary,Excess spread released,188710.67,188710.67,0.0
+2026-03-31,Revenue,(a) Trustee fee,2000.0,2000.0,0.0
+2026-03-31,Revenue,(b) Cash manager fee,1500.0,1500.0,0.0
+2026-03-31,Revenue,(c) Servicer fee,45749.91,45749.91,0.0
+2026-03-31,Revenue,(d) Class A interest,1120599.88,1120599.88,0.0
+2026-03-31,Revenue,(e) Class A PDL,0.0,0.0,0.0
+2026-03-31,Revenue,(f) Class B interest,82657.62,82657.62,0.0
+2026-03-31,Revenue,(g) Class B PDL,0.0,0.0,0.0
+2026-03-31,Revenue,(h) Class C interest,73014.23,73014.23,0.0
+2026-03-31,Revenue,(i) Class C PDL,0.0,0.0,0.0
+2026-03-31,Revenue,(j) Class D interest,63026.44,63026.44,0.0
+2026-03-31,Revenue,(k) Class D PDL,241800.0,241800.0,0.0
+2026-03-31,Revenue,(l) Replenish reserve fund,0.0,0.0,0.0
+2026-03-31,Revenue,(m) Residual to certificate holders,150897.88,150897.88,0.0
+2026-03-31,Principal,(a) Class A principal,310450821.23,6246264.93,0.0
+2026-03-31,Principal,(b) Class B principal,20275559.32,0.0,0.0
+2026-03-31,Principal,(c) Class C principal,16220447.45,0.0,0.0
+2026-03-31,Principal,(d) Class D principal,12165335.59,0.0,0.0
+2026-03-31,Summary,Available revenue receipts,1781245.96,1781245.96,0.0
+2026-03-31,Summary,Available principal receipts,6004464.93,6004464.93,0.0
+2026-03-31,Summary,New defaults debited to PDL,241800.0,241800.0,0.0
+2026-03-31,Summary,Reserve fund closing balance,6082667.8,6082667.8,0.0
+2026-03-31,Summary,Excess spread released,150897.88,150897.88,0.0
+2026-04-30,Revenue,(a) Trustee fee,2000.0,2000.0,0.0
+2026-04-30,Revenue,(b) Cash manager fee,1500.0,1500.0,0.0
+2026-04-30,Revenue,(c) Servicer fee,43504.01,43504.01,0.0
+2026-04-30,Revenue,(d) Class A interest,1062632.35,1062632.35,0.0
+2026-04-30,Revenue,(e) Class A PDL,0.0,0.0,0.0
+2026-04-30,Revenue,(f) Class B interest,79991.25,79991.25,0.0
+2026-04-30,Revenue,(g) Class B PDL,0.0,0.0,0.0
+2026-04-30,Revenue,(h) Class C interest,70658.94,70658.94,0.0
+2026-04-30,Revenue,(i) Class C PDL,0.0,0.0,0.0
+2026-04-30,Revenue,(j) Class D interest,60993.33,60993.33,0.0
+2026-04-30,Revenue,(k) Class D PDL,627986.46,606845.19,0.0
+2026-04-30,Revenue,(l) Replenish reserve fund,0.0,0.0,0.0
+2026-04-30,Revenue,(m) Residual to certificate holders,0.0,0.0,0.0
+2026-04-30,Principal,(a) Class A principal,304204556.3,5181438.54,0.0
+2026-04-30,Principal,(b) Class B principal,20275559.32,0.0,0.0
+2026-04-30,Principal,(c) Class C principal,16220447.45,0.0,0.0
+2026-04-30,Principal,(d) Class D principal,12165335.59,0.0,0.0
+2026-04-30,Summary,Available revenue receipts,1928125.07,1928125.07,0.0
+2026-04-30,Summary,Available principal receipts,4574593.35,4574593.35,0.0
+2026-04-30,Summary,New defaults debited to PDL,627986.46,627986.46,0.0
+2026-04-30,Summary,Reserve fund closing balance,6082667.8,6082667.8,0.0
+2026-04-30,Summary,Excess spread released,0.0,0.0,0.0
+2026-05-31,Revenue,(a) Trustee fee,2000.0,2000.0,0.0
+2026-05-31,Revenue,(b) Cash manager fee,1500.0,1500.0,0.0
+2026-05-31,Revenue,(c) Servicer fee,44291.35,44291.35,0.0
+2026-05-31,Revenue,(d) Class A interest,1079350.57,1079350.57,0.0
+2026-05-31,Revenue,(e) Class A PDL,0.0,0.0,0.0
+2026-05-31,Revenue,(f) Class B interest,82657.62,82657.62,0.0
+2026-05-31,Revenue,(g) Class B PDL,0.0,0.0,0.0
+2026-05-31,Revenue,(h) Class C interest,73014.23,73014.23,0.0
+2026-05-31,Revenue,(i) Class C PDL,0.0,0.0,0.0
+2026-05-31,Revenue,(j) Class D interest,63026.44,63026.44,0.0
+2026-05-31,Revenue,(k) Class D PDL,162340.06,162340.06,0.0
+2026-05-31,Revenue,(l) Replenish reserve fund,0.0,0.0,0.0
+2026-05-31,Revenue,(m) Residual to certificate holders,473229.28,473229.28,0.0
+2026-05-31,Principal,(a) Class A principal,299023117.76,4507562.99,0.0
+2026-05-31,Principal,(b) Class B principal,20275559.32,0.0,0.0
+2026-05-31,Principal,(c) Class C principal,16220447.45,0.0,0.0
+2026-05-31,Principal,(d) Class D principal,12165335.59,0.0,0.0
+2026-05-31,Summary,Available revenue receipts,1981409.55,1981409.55,0.0
+2026-05-31,Summary,Available principal receipts,4345222.93,4345222.93,0.0
+2026-05-31,Summary,New defaults debited to PDL,141198.79,141198.79,0.0
+2026-05-31,Summary,Reserve fund closing balance,6082667.8,6082667.8,0.0
+2026-05-31,Summary,Excess spread released,473229.28,473229.28,0.0
+2026-06-30,Revenue,(a) Trustee fee,2000.0,2000.0,0.0
+2026-06-30,Revenue,(b) Cash manager fee,1500.0,1500.0,0.0
+2026-06-30,Revenue,(c) Servicer fee,42309.48,42309.48,0.0
+2026-06-30,Revenue,(d) Class A interest,1028787.21,1028787.21,0.0
+2026-06-30,Revenue,(e) Class A PDL,0.0,0.0,0.0
+2026-06-30,Revenue,(f) Class B interest,79991.25,79991.25,0.0
+2026-06-30,Revenue,(g) Class B PDL,0.0,0.0,0.0
+2026-06-30,Revenue,(h) Class C interest,70658.94,70658.94,0.0
+2026-06-30,Revenue,(i) Class C PDL,0.0,0.0,0.0
+2026-06-30,Revenue,(j) Class D interest,60993.33,60993.33,0.0
+2026-06-30,Revenue,(k) Class D PDL,96500.0,96500.0,0.0
+2026-06-30,Revenue,(l) Replenish reserve fund,0.0,0.0,0.0
+2026-06-30,Revenue,(m) Residual to certificate holders,352871.94,352871.94,0.0
+2026-06-30,Principal,(a) Class A principal,294515554.77,4571988.94,0.0
+2026-06-30,Principal,(b) Class B principal,20275559.32,0.0,0.0
+2026-06-30,Principal,(c) Class C principal,16220447.45,0.0,0.0
+2026-06-30,Principal,(d) Class D principal,12165335.59,0.0,0.0
+2026-06-30,Summary,Available revenue receipts,1735612.15,1735612.15,0.0
+2026-06-30,Summary,Available principal receipts,4475488.94,4475488.94,0.0
+2026-06-30,Summary,New defaults debited to PDL,96500.0,96500.0,0.0
+2026-06-30,Summary,Reserve fund closing balance,6082667.8,6082667.8,0.0
+2026-06-30,Summary,Excess spread released,352871.94,352871.94,0.0
+2026-07-31,Revenue,(a) Trustee fee,2000.0,2000.0,0.0
+2026-07-31,Revenue,(b) Cash manager fee,1500.0,1500.0,0.0
+2026-07-31,Revenue,(c) Servicer fee,43137.34,43137.34,0.0
+2026-07-31,Revenue,(d) Class A interest,985013.76,985013.76,0.0
+2026-07-31,Revenue,(e) Class A PDL,0.0,0.0,0.0
+2026-07-31,Revenue,(f) Class B interest,78352.54,78352.54,0.0
+2026-07-31,Revenue,(g) Class B PDL,0.0,0.0,0.0
+2026-07-31,Revenue,(h) Class C interest,69570.17,69570.17,0.0
+2026-07-31,Revenue,(i) Class C PDL,0.0,0.0,0.0
+2026-07-31,Revenue,(j) Class D interest,60443.39,60443.39,0.0
+2026-07-31,Revenue,(k) Class D PDL,137200.0,137200.0,0.0
+2026-07-31,Revenue,(l) Replenish reserve fund,0.0,0.0,0.0
+2026-07-31,Revenue,(m) Residual to certificate holders,518305.86,518305.86,0.0
+2026-07-31,Principal,(a) Class A principal,289943565.83,4593984.01,0.0
+2026-07-31,Principal,(b) Class B principal,20275559.32,0.0,0.0
+2026-07-31,Principal,(c) Class C principal,16220447.45,0.0,0.0
+2026-07-31,Principal,(d) Class D principal,12165335.59,0.0,0.0
+2026-07-31,Summary,Available revenue receipts,1895523.06,1895523.06,0.0
+2026-07-31,Summary,Available principal receipts,4456784.01,4456784.01,0.0
+2026-07-31,Summary,New defaults debited to PDL,137200.0,137200.0,0.0
+2026-07-31,Summary,Reserve fund closing balance,6082667.8,6082667.8,0.0
+2026-07-31,Summary,Excess spread released,518305.86,518305.86,0.0
+2026-08-31,Revenue,(a) Trustee fee,2000.0,2000.0,0.0
+2026-08-31,Revenue,(b) Cash manager fee,1500.0,1500.0,0.0
+2026-08-31,Revenue,(c) Servicer fee,42552.08,42552.08,0.0
+2026-08-31,Revenue,(d) Class A interest,969406.8,969406.8,0.0
+2026-08-31,Revenue,(e) Class A PDL,0.0,0.0,0.0
+2026-08-31,Revenue,(f) Class B interest,78352.54,78352.54,0.0
+2026-08-31,Revenue,(g) Class B PDL,0.0,0.0,0.0
+2026-08-31,Revenue,(h) Class C interest,69570.17,69570.17,0.0
+2026-08-31,Revenue,(i) Class C PDL,0.0,0.0,0.0
+2026-08-31,Revenue,(j) Class D interest,60443.39,60443.39,0.0
+2026-08-31,Revenue,(k) Class D PDL,426546.5,426546.5,0.0
+2026-08-31,Revenue,(l) Replenish reserve fund,0.0,0.0,0.0
+2026-08-31,Revenue,(m) Residual to certificate holders,412990.44,412990.44,0.0
+2026-08-31,Principal,(a) Class A principal,285349581.82,6410890.21,0.0
+2026-08-31,Principal,(b) Class B principal,20275559.32,0.0,0.0
+2026-08-31,Principal,(c) Class C principal,16220447.45,0.0,0.0
+2026-08-31,Principal,(d) Class D principal,12165335.59,0.0,0.0
+2026-08-31,Summary,Available revenue receipts,2063361.92,2063361.92,0.0
+2026-08-31,Summary,Available principal receipts,5984343.71,5984343.71,0.0
+2026-08-31,Summary,New defaults debited to PDL,426546.5,426546.5,0.0
+2026-08-31,Summary,Reserve fund closing balance,6082667.8,6082667.8,0.0
+2026-08-31,Summary,Excess spread released,412990.44,412990.44,0.0
+2026-09-30,Revenue,(a) Trustee fee,2000.0,2000.0,0.0
+2026-09-30,Revenue,(b) Cash manager fee,1500.0,1500.0,0.0
+2026-09-30,Revenue,(c) Servicer fee,40389.05,40389.05,0.0
+2026-09-30,Revenue,(d) Class A interest,917058.71,917058.71,0.0
+2026-09-30,Revenue,(e) Class A PDL,0.0,0.0,0.0
+2026-09-30,Revenue,(f) Class B interest,75825.04,75825.04,0.0
+2026-09-30,Revenue,(g) Class B PDL,0.0,0.0,0.0
+2026-09-30,Revenue,(h) Class C interest,67325.97,67325.97,0.0
+2026-09-30,Revenue,(i) Class C PDL,0.0,0.0,0.0
+2026-09-30,Revenue,(j) Class D interest,58493.6,58493.6,0.0
+2026-09-30,Revenue,(k) Class D PDL,0.0,0.0,0.0
+2026-09-30,Revenue,(l) Replenish reserve fund,0.0,0.0,0.0
+2026-09-30,Revenue,(m) Residual to certificate holders,692429.96,692429.96,0.0
+2026-09-30,Principal,(a) Class A principal,278938691.61,4882267.39,0.0
+2026-09-30,Principal,(b) Class B principal,20275559.32,0.0,0.0
+2026-09-30,Principal,(c) Class C principal,16220447.45,0.0,0.0
+2026-09-30,Principal,(d) Class D principal,12165335.59,0.0,0.0
+2026-09-30,Summary,Available revenue receipts,1855022.33,1855022.33,0.0
+2026-09-30,Summary,Available principal receipts,4882267.39,4882267.39,0.0
+2026-09-30,Summary,New defaults debited to PDL,0.0,0.0,0.0
+2026-09-30,Summary,Reserve fund closing balance,6082667.8,6082667.8,0.0
+2026-09-30,Summary,Excess spread released,692429.96,692429.96,0.0

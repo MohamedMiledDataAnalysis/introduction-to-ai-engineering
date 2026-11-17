@@ -1,0 +1,171 @@
+isin,name,asset_class,sector,country,currency,market_cap_eur_bn,issuer,coupon_pct,maturity,rating,modified_duration,spread_bp,amount_outstanding_eur_m
+ZZE000000011,Elsworth Properties,Equity,Real Estate,US,USD,101.3,,,,,,,
+ZZE000000029,Stanmore Capital,Equity,Financials,AU,AUD,45.8,,,,,,,
+ZZE000000037,Linton Brands,Equity,Consumer Staples,US,USD,4.7,,,,,,,
+ZZE000000045,Calder Brands,Equity,Consumer Staples,US,USD,22.4,,,,,,,
+ZZE000000052,Oakridge Estates,Equity,Real Estate,US,USD,219.5,,,,,,,
+ZZE000000060,Arden Systems,Equity,Information Technology,US,USD,131.4,,,,,,,
+ZZE000000078,Corbett Capital,Equity,Financials,US,USD,126.0,,,,,,,
+ZZE000000086,Quayside Mining,Equity,Materials,US,USD,109.6,,,,,,,
+ZZE000000094,Oakridge Retail,Equity,Consumer Discretionary,CH,CHF,66.1,,,,,,,
+ZZE000000102,Marlowe Bank,Equity,Financials,US,USD,72.3,,,,,,,
+ZZE000000110,Arden Bank,Equity,Financials,US,USD,217.9,,,,,,,
+ZZE000000128,Elsworth Systems,Equity,Information Technology,US,USD,23.0,,,,,,,
+ZZE000000136,Blackmoor Software,Equity,Information Technology,US,USD,218.9,,,,,,,
+ZZE000000144,Thornbury Software,Equity,Information Technology,US,USD,104.5,,,,,,,
+ZZE000000151,Oakridge REIT,Equity,Real Estate,GB,GBP,20.4,,,,,,,
+ZZE000000169,Calder Pharma,Equity,Health Care,US,USD,74.5,,,,,,,
+ZZE000000177,Juniper Semiconductors,Equity,Information Technology,CH,CHF,100.2,,,,,,,
+ZZE000000185,Linton Medical,Equity,Health Care,SE,SEK,56.2,,,,,,,
+ZZE000000193,Blackmoor Insurance,Equity,Financials,US,USD,31.6,,,,,,,
+ZZE000000201,Thornbury Systems,Equity,Information Technology,US,USD,16.0,,,,,,,
+ZZE000000219,Glenhaven Systems,Equity,Information Technology,CA,CAD,20.9,,,,,,,
+ZZE000000227,Glenhaven Logistics,Equity,Industrials,US,USD,41.0,,,,,,,
+ZZE000000235,Quayside Aerospace,Equity,Industrials,GB,GBP,24.7,,,,,,,
+ZZE000000243,Juniper Petroleum,Equity,Energy,CA,CAD,178.4,,,,,,,
+ZZE000000250,Thornbury Semiconductors,Equity,Information Technology,US,USD,71.7,,,,,,,
+ZZE000000268,Stanmore Biosciences,Equity,Health Care,DE,EUR,11.6,,,,,,,
+ZZE000000276,Ivybridge Insurance,Equity,Financials,US,USD,99.5,,,,,,,
+ZZE000000284,Upland Medical,Equity,Health Care,US,USD,85.0,,,,,,,
+ZZE000000292,Fenwick Utilities,Equity,Utilities,US,USD,68.5,,,,,,,
+ZZE000000300,Juniper Chemicals,Equity,Materials,SE,SEK,92.0,,,,,,,
+ZZE000000318,Vantor Telecom,Equity,Communication Services,CH,CHF,129.6,,,,,,,
+ZZE000000326,Calder Media,Equity,Communication Services,FR,EUR,123.8,,,,,,,
+ZZE000000334,Westcombe Bank,Equity,Financials,US,USD,154.4,,,,,,,
+ZZE000000342,Yarrow Aerospace,Equity,Industrials,US,USD,138.8,,,,,,,
+ZZE000000359,Redfern Beverages,Equity,Consumer Staples,US,USD,123.6,,,,,,,
+ZZE000000367,Quayside Telecom,Equity,Communication Services,US,USD,100.1,,,,,,,
+ZZE000000375,Brightwater Logistics,Equity,Industrials,US,USD,41.9,,,,,,,
+ZZE000000383,Blackmoor Petroleum,Equity,Energy,GB,GBP,85.8,,,,,,,
+ZZE000000391,Pembury Petroleum,Equity,Energy,US,USD,82.7,,,,,,,
+ZZE000000409,Driftwood Insurance,Equity,Financials,CA,CAD,13.3,,,,,,,
+ZZE000000417,Calder Medical,Equity,Health Care,US,USD,21.9,,,,,,,
+ZZE000000425,Blackmoor Bank,Equity,Financials,US,USD,13.6,,,,,,,
+ZZE000000433,Pembury Brands,Equity,Consumer Staples,JP,JPY,28.2,,,,,,,
+ZZE000000441,Arden Pharma,Equity,Health Care,US,USD,128.8,,,,,,,
+ZZE000000458,Elsworth Logistics,Equity,Industrials,US,USD,79.0,,,,,,,
+ZZE000000466,Ashgrove Pharma,Equity,Health Care,SE,SEK,26.4,,,,,,,
+ZZE000000474,Glenhaven Capital,Equity,Financials,US,USD,57.5,,,,,,,
+ZZE000000482,Kestrel Properties,Equity,Real Estate,US,USD,57.7,,,,,,,
+ZZE000000490,Upland Logistics,Equity,Industrials,JP,JPY,38.7,,,,,,,
+ZZE000000508,Northfield Power,Equity,Utilities,FR,EUR,26.6,,,,,,,
+ZZE000000516,Driftwood Software,Equity,Information Technology,JP,JPY,49.4,,,,,,,
+ZZE000000524,Fenwick Mining,Equity,Materials,US,USD,103.2,,,,,,,
+ZZE000000532,Oakridge Insurance,Equity,Financials,US,USD,62.4,,,,,,,
+ZZE000000540,Quayside Bank,Equity,Financials,US,USD,106.6,,,,,,,
+ZZE000000557,Upland Telecom,Equity,Communication Services,US,USD,300.7,,,,,,,
+ZZE000000565,Calder Networks,Equity,Communication Services,AU,AUD,140.9,,,,,,,
+ZZE000000573,Brightwater Utilities,Equity,Utilities,US,USD,158.4,,,,,,,
+ZZE000000581,Arden Power,Equity,Utilities,US,USD,31.7,,,,,,,
+ZZE000000599,Zephyr Materials,Equity,Materials,US,USD,309.6,,,,,,,
+ZZE000000607,Northfield Leisure,Equity,Consumer Discretionary,US,USD,61.7,,,,,,,
+ZZE000000615,Northfield Biosciences,Equity,Health Care,US,USD,81.6,,,,,,,
+ZZE000000623,Upland Systems,Equity,Information Technology,NL,EUR,5.6,,,,,,,
+ZZE000000631,Pembury Bank,Equity,Financials,US,USD,30.4,,,,,,,
+ZZE000000649,Zephyr Capital,Equity,Financials,CA,CAD,71.5,,,,,,,
+ZZE000000656,Elsworth Motors,Equity,Consumer Discretionary,US,USD,24.8,,,,,,,
+ZZE000000664,Driftwood Logistics,Equity,Industrials,US,USD,39.8,,,,,,,
+ZZE000000672,Ivybridge Systems,Equity,Information Technology,FR,EUR,34.0,,,,,,,
+ZZE000000680,Marlowe Medical,Equity,Health Care,US,USD,271.1,,,,,,,
+ZZE000000698,Marlowe Foods,Equity,Consumer Staples,GB,GBP,37.1,,,,,,,
+ZZE000000706,Northfield Retail,Equity,Consumer Discretionary,US,USD,22.8,,,,,,,
+ZZE000000714,Fenwick Systems,Equity,Information Technology,US,USD,88.5,,,,,,,
+ZZE000000722,Kestrel Semiconductors,Equity,Information Technology,US,USD,24.7,,,,,,,
+ZZE000000730,Driftwood Systems,Equity,Information Technology,US,USD,174.5,,,,,,,
+ZZE000000748,Ivybridge Brands,Equity,Consumer Staples,US,USD,21.8,,,,,,,
+ZZE000000755,Glenhaven Properties,Equity,Real Estate,CA,CAD,76.7,,,,,,,
+ZZE000000763,Corbett Biosciences,Equity,Health Care,JP,JPY,26.5,,,,,,,
+ZZE000000771,Oakridge Properties,Equity,Real Estate,US,USD,70.1,,,,,,,
+ZZE000000789,Holloway Energy,Equity,Energy,AU,AUD,146.5,,,,,,,
+ZZE000000797,Linton Software,Equity,Information Technology,JP,JPY,37.5,,,,,,,
+ZZE000000805,Northfield Telecom,Equity,Communication Services,US,USD,260.4,,,,,,,
+ZZE000000813,Eastleigh Engineering,Equity,Industrials,DE,EUR,272.2,,,,,,,
+ZZE000000821,Corbett Logistics,Equity,Industrials,FR,EUR,55.1,,,,,,,
+ZZE000000839,Kestrel Motors,Equity,Consumer Discretionary,JP,JPY,80.0,,,,,,,
+ZZE000000847,Stanmore Properties,Equity,Real Estate,US,USD,27.7,,,,,,,
+ZZE000000854,Northfield Software,Equity,Information Technology,US,USD,378.3,,,,,,,
+ZZE000000862,Dunmore Water,Equity,Utilities,US,USD,408.1,,,,,,,
+ZZE000000870,Northfield Capital,Equity,Financials,CA,CAD,122.1,,,,,,,
+ZZE000000888,Stanmore Media,Equity,Communication Services,US,USD,261.8,,,,,,,
+ZZE000000896,Juniper Capital,Equity,Financials,US,USD,81.9,,,,,,,
+ZZE000000904,Kestrel Capital,Equity,Financials,US,USD,44.4,,,,,,,
+ZZB000000017,Upland Systems 3% 08/2038,Fixed Income,Information Technology,,EUR,,Upland Systems,3.0,2038-08-30,A+,10.49,114.0,1000.0
+ZZB000000025,Northfield Software 1.875% 10/2037,Fixed Income,Information Technology,,EUR,,Northfield Software,1.875,2037-10-17,A+,9.72,134.0,500.0
+ZZB000000033,Linton Medical 2.875% 09/2030,Fixed Income,Health Care,,EUR,,Linton Medical,2.875,2030-09-07,BBB+,3.47,157.0,1000.0
+ZZB000000041,Glenhaven Logistics 2% 03/2030,Fixed Income,Industrials,,EUR,,Glenhaven Logistics,2.0,2030-03-15,A,3.04,95.0,500.0
+ZZB000000058,Thornbury Systems 3.500% 02/2037,Fixed Income,Information Technology,,EUR,,Thornbury Systems,3.5,2037-02-23,BBB,9.15,195.0,600.0
+ZZB000000066,Corbett Logistics 2.625% 12/2037,Fixed Income,Industrials,,EUR,,Corbett Logistics,2.625,2037-12-05,A,9.84,138.0,500.0
+ZZB000000074,Pembury Bank 2.625% 07/2036,Fixed Income,Financials,,EUR,,Pembury Bank,2.625,2036-07-17,A,8.62,119.0,1000.0
+ZZB000000082,Pembury Bank 2.875% 06/2037,Fixed Income,Financials,,EUR,,Pembury Bank,2.875,2037-06-06,A-,9.4,152.0,500.0
+ZZB000000090,Arden Systems 3% 01/2032,Fixed Income,Information Technology,,EUR,,Arden Systems,3.0,2032-01-14,A-,4.66,132.0,1000.0
+ZZB000000108,Kestrel Properties 2.625% 01/2036,Fixed Income,Real Estate,,EUR,,Kestrel Properties,2.625,2036-01-28,BBB,8.21,195.0,500.0
+ZZB000000116,Fenwick Systems 4.875% 03/2031,Fixed Income,Information Technology,,EUR,,Fenwick Systems,4.875,2031-03-23,BBB-,3.94,187.0,1250.0
+ZZB000000124,Blackmoor Insurance 3% 01/2030,Fixed Income,Financials,,EUR,,Blackmoor Insurance,3.0,2030-01-12,BBB,2.89,141.0,1000.0
+ZZB000000132,Oakridge Retail 2.500% 05/2036,Fixed Income,Consumer Discretionary,,EUR,,Oakridge Retail,2.5,2036-05-09,A+,8.46,103.0,800.0
+ZZB000000140,Pembury Petroleum 2.500% 08/2038,Fixed Income,Energy,,EUR,,Pembury Petroleum,2.5,2038-08-23,BBB,10.47,195.0,600.0
+ZZB000000157,Arden Power 3.750% 06/2034,Fixed Income,Utilities,,EUR,,Arden Power,3.75,2034-06-01,BBB,6.75,160.0,600.0
+ZZB000000165,Eastleigh Engineering 3.250% 09/2036,Fixed Income,Industrials,,EUR,,Eastleigh Engineering,3.25,2036-09-05,BBB-,8.74,216.0,1000.0
+ZZB000000173,Ivybridge Systems 2.875% 03/2033,Fixed Income,Information Technology,,EUR,,Ivybridge Systems,2.875,2033-03-21,A-,5.7,126.0,500.0
+ZZB000000181,Elsworth Holdings 2.500% 11/2032,Fixed Income,Financials,,EUR,,Elsworth Holdings,2.5,2032-11-03,AA,5.36,69.0,600.0
+ZZB000000199,Pembury Petroleum 2.750% 07/2030,Fixed Income,Energy,,EUR,,Pembury Petroleum,2.75,2030-07-07,A-,3.32,120.0,750.0
+ZZB000000207,Oakridge REIT 2.750% 04/2034,Fixed Income,Real Estate,,EUR,,Oakridge REIT,2.75,2034-04-22,AA,6.65,73.0,750.0
+ZZB000000215,Fenwick Holdings 4% 09/2036,Fixed Income,Financials,,EUR,,Fenwick Holdings,4.0,2036-09-17,BBB-,8.77,192.0,1250.0
+ZZB000000223,Thornbury Semiconductors 3.750% 08/2029,Fixed Income,Information Technology,,EUR,,Thornbury Semiconductors,3.75,2029-08-15,BBB,2.53,179.0,800.0
+ZZB000000231,Calder Pharma 3.125% 08/2031,Fixed Income,Health Care,,EUR,,Calder Pharma,3.125,2031-08-17,A-,4.29,134.0,500.0
+ZZB000000249,Dunmore Holdings 4.125% 07/2033,Fixed Income,Financials,,EUR,,Dunmore Holdings,4.125,2033-07-14,BBB,5.97,181.0,500.0
+ZZB000000256,Oakridge REIT 3.375% 10/2029,Fixed Income,Real Estate,,EUR,,Oakridge REIT,3.375,2029-10-04,BBB-,2.65,167.0,800.0
+ZZB000000264,Kestrel Holdings 3.125% 04/2034,Fixed Income,Financials,,EUR,,Kestrel Holdings,3.125,2034-04-15,A,6.64,113.0,800.0
+ZZB000000272,Northfield Software 2.625% 07/2033,Fixed Income,Information Technology,,EUR,,Northfield Software,2.625,2033-07-12,BBB-,5.97,175.0,500.0
+ZZB000000280,Dunmore Holdings 3.625% 11/2028,Fixed Income,Financials,,EUR,,Dunmore Holdings,3.625,2028-11-21,A-,1.89,113.0,1250.0
+ZZB000000298,Brightwater Logistics 3.375% 09/2033,Fixed Income,Industrials,,EUR,,Brightwater Logistics,3.375,2033-09-07,A-,6.11,146.0,800.0
+ZZB000000306,Holloway Holdings 3% 04/2028,Fixed Income,Financials,,EUR,,Holloway Holdings,3.0,2028-04-15,BBB-,1.36,185.0,1250.0
+ZZB000000314,Northfield Retail 3% 04/2033,Fixed Income,Consumer Discretionary,,EUR,,Northfield Retail,3.0,2033-04-18,A-,5.76,117.0,1000.0
+ZZB000000322,Thornbury Semiconductors 4% 02/2035,Fixed Income,Information Technology,,EUR,,Thornbury Semiconductors,4.0,2035-02-01,BBB-,7.34,170.0,1250.0
+ZZB000000330,Thornbury Systems 3.250% 11/2033,Fixed Income,Information Technology,,EUR,,Thornbury Systems,3.25,2033-11-21,BBB+,6.29,166.0,750.0
+ZZB000000348,Blackmoor Insurance 1.875% 09/2029,Fixed Income,Financials,,EUR,,Blackmoor Insurance,1.875,2029-09-22,AA,2.62,59.0,600.0
+ZZB000000355,Corbett Logistics 2.750% 04/2032,Fixed Income,Industrials,,EUR,,Corbett Logistics,2.75,2032-04-06,A-,4.86,136.0,600.0
+ZZB000000363,Upland Systems 3.750% 02/2032,Fixed Income,Information Technology,,EUR,,Upland Systems,3.75,2032-02-12,BBB,4.73,175.0,600.0
+ZZB000000371,Northfield Leisure 2.625% 06/2029,Fixed Income,Consumer Discretionary,,EUR,,Northfield Leisure,2.625,2029-06-12,A-,2.38,134.0,800.0
+ZZB000000389,Oakridge Retail 2.875% 02/2030,Fixed Income,Consumer Discretionary,,EUR,,Oakridge Retail,2.875,2030-02-13,A-,2.97,120.0,1250.0
+ZZB000000397,Blackmoor Petroleum 3.250% 05/2037,Fixed Income,Energy,,EUR,,Blackmoor Petroleum,3.25,2037-05-16,A-,9.35,153.0,800.0
+ZZB000000405,Linton Brands 2.625% 07/2038,Fixed Income,Consumer Staples,,EUR,,Linton Brands,2.625,2038-07-06,BBB+,10.35,163.0,600.0
+ZZB000000413,Quayside Aerospace 3.125% 09/2033,Fixed Income,Industrials,,EUR,,Quayside Aerospace,3.125,2033-09-10,BBB,6.11,162.0,600.0
+ZZB000000421,Juniper Capital 1.750% 04/2028,Fixed Income,Financials,,EUR,,Juniper Capital,1.75,2028-04-02,BBB+,1.33,130.0,800.0
+ZZB000000439,Arden Bank 2.750% 04/2030,Fixed Income,Financials,,EUR,,Arden Bank,2.75,2030-04-08,BBB,3.1,140.0,750.0
+ZZB000000447,Blackmoor Insurance 1.500% 08/2032,Fixed Income,Financials,,EUR,,Blackmoor Insurance,1.5,2032-08-29,A-,5.21,110.0,1000.0
+ZZB000000454,Calder Brands 2.750% 11/2028,Fixed Income,Consumer Staples,,EUR,,Calder Brands,2.75,2028-11-14,A,1.87,95.0,500.0
+ZZB000000462,Yarrow Aerospace 4.250% 10/2032,Fixed Income,Industrials,,EUR,,Yarrow Aerospace,4.25,2032-10-27,BBB-,5.35,199.0,600.0
+ZZB000000470,Glenhaven Logistics 2.625% 05/2028,Fixed Income,Industrials,,EUR,,Glenhaven Logistics,2.625,2028-05-04,BBB+,1.4,139.0,800.0
+ZZB000000488,Dunmore Holdings 3.250% 10/2037,Fixed Income,Financials,,EUR,,Dunmore Holdings,3.25,2037-10-16,BBB-,9.72,227.0,600.0
+ZZB000000496,Thornbury Software 1.875% 09/2034,Fixed Income,Information Technology,,EUR,,Thornbury Software,1.875,2034-09-15,BBB,7.0,171.0,750.0
+ZZB000000504,Kestrel Capital 3% 05/2034,Fixed Income,Financials,,EUR,,Kestrel Capital,3.0,2034-05-04,A-,6.68,142.0,800.0
+ZZB000000512,Ivybridge Brands 2.375% 06/2030,Fixed Income,Consumer Staples,,EUR,,Ivybridge Brands,2.375,2030-06-10,A-,3.25,135.0,600.0
+ZZB000000520,Stanmore Properties 1.875% 06/2034,Fixed Income,Real Estate,,EUR,,Stanmore Properties,1.875,2034-06-06,A+,6.76,116.0,1250.0
+ZZB000000538,Thornbury Semiconductors 2.250% 01/2030,Fixed Income,Information Technology,,EUR,,Thornbury Semiconductors,2.25,2030-01-24,A+,2.92,77.0,750.0
+ZZB000000546,Upland Medical 2.875% 02/2037,Fixed Income,Health Care,,EUR,,Upland Medical,2.875,2037-02-07,BBB,9.11,187.0,1250.0
+ZZB000000553,Juniper Chemicals 3.750% 06/2038,Fixed Income,Materials,,EUR,,Juniper Chemicals,3.75,2038-06-24,BBB-,10.33,211.0,500.0
+ZZB000000561,Fenwick Mining 2.625% 01/2032,Fixed Income,Materials,,EUR,,Fenwick Mining,2.625,2032-01-23,A,4.68,104.0,500.0
+ZZB000000579,Stanmore Media 2.500% 10/2037,Fixed Income,Communication Services,,EUR,,Stanmore Media,2.5,2037-10-01,A,9.68,133.0,1250.0
+ZZB000000587,Thornbury Software 3% 07/2037,Fixed Income,Information Technology,,EUR,,Thornbury Software,3.0,2037-07-27,A,9.53,128.0,600.0
+ZZB000000595,Northfield Leisure 2.500% 06/2034,Fixed Income,Consumer Discretionary,,EUR,,Northfield Leisure,2.5,2034-06-06,A,6.76,111.0,500.0
+ZZB000000603,Marlowe Foods 2.625% 07/2035,Fixed Income,Consumer Staples,,EUR,,Marlowe Foods,2.625,2035-07-26,BBB-,7.76,199.0,500.0
+ZZB000000611,Arden Bank 3.750% 06/2031,Fixed Income,Financials,,EUR,,Arden Bank,3.75,2031-06-08,BBB+,4.13,141.0,800.0
+ZZB000000629,Pembury Bank 3.125% 12/2034,Fixed Income,Financials,,EUR,,Pembury Bank,3.125,2034-12-17,A-,7.23,152.0,1250.0
+ZZB000000637,Glenhaven Capital 3.500% 12/2031,Fixed Income,Financials,,EUR,,Glenhaven Capital,3.5,2031-12-28,BBB,4.62,170.0,1250.0
+ZZB000000645,Pembury Petroleum 1.875% 09/2035,Fixed Income,Energy,,EUR,,Pembury Petroleum,1.875,2035-09-15,A,7.88,130.0,800.0
+ZZB000000652,Oakridge Insurance 2.500% 02/2037,Fixed Income,Financials,,EUR,,Oakridge Insurance,2.5,2037-02-02,BBB+,9.1,171.0,800.0
+ZZB000000660,Kestrel Capital 3.250% 03/2033,Fixed Income,Financials,,EUR,,Kestrel Capital,3.25,2033-03-13,BBB,5.68,162.0,500.0
+ZZB000000678,Juniper Semiconductors 3.625% 02/2031,Fixed Income,Information Technology,,EUR,,Juniper Semiconductors,3.625,2031-02-28,BBB,3.88,169.0,800.0
+ZZB000000686,Fenwick Systems 2.125% 07/2036,Fixed Income,Information Technology,,EUR,,Fenwick Systems,2.125,2036-07-12,BBB+,8.61,191.0,1250.0
+ZZB000000694,Marlowe Foods 4.375% 09/2029,Fixed Income,Consumer Staples,,EUR,,Marlowe Foods,4.375,2029-09-07,BBB+,2.59,127.0,1250.0
+ZZB000000702,Dunmore Holdings 1.875% 06/2031,Fixed Income,Financials,,EUR,,Dunmore Holdings,1.875,2031-06-11,A+,4.13,93.0,1250.0
+ZZB000000710,Oakridge REIT 3.875% 05/2034,Fixed Income,Real Estate,,EUR,,Oakridge REIT,3.875,2034-05-14,BBB-,6.71,211.0,1000.0
+ZZB000000728,Driftwood Logistics 3.625% 12/2033,Fixed Income,Industrials,,EUR,,Driftwood Logistics,3.625,2033-12-31,BBB-,6.38,211.0,1250.0
+ZZB000000736,Ivybridge Systems 4.250% 03/2032,Fixed Income,Information Technology,,EUR,,Ivybridge Systems,4.25,2032-03-28,BBB,4.83,175.0,750.0
+ZZB000000744,Upland Systems 2.875% 01/2029,Fixed Income,Information Technology,,EUR,,Upland Systems,2.875,2029-01-03,BBB,1.99,179.0,1000.0
+ZZB000000751,Yarrow Aerospace 3% 08/2038,Fixed Income,Industrials,,EUR,,Yarrow Aerospace,3.0,2038-08-16,BBB-,10.45,208.0,800.0
+ZZB000000769,Glenhaven Logistics 3% 06/2031,Fixed Income,Industrials,,EUR,,Glenhaven Logistics,3.0,2031-06-06,BBB,4.12,155.0,500.0
+ZZB000000777,Linton Holdings 2.125% 07/2032,Fixed Income,Financials,,EUR,,Linton Holdings,2.125,2032-07-13,BBB+,5.09,163.0,750.0
+ZZB000000785,Elsworth Motors 3.875% 02/2029,Fixed Income,Consumer Discretionary,,EUR,,Elsworth Motors,3.875,2029-02-05,BBB+,2.07,143.0,600.0
+ZZB000000793,Quayside Telecom 3.375% 03/2036,Fixed Income,Communication Services,,EUR,,Quayside Telecom,3.375,2036-03-05,A-,8.3,148.0,750.0
+ZZB000000801,Pembury Petroleum 3.250% 06/2038,Fixed Income,Energy,,EUR,,Pembury Petroleum,3.25,2038-06-25,BBB,10.33,177.0,1000.0

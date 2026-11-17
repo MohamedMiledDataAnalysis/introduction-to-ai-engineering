@@ -1,0 +1,6 @@
+.venv/
+__pycache__/
+*.pyc
+.Rhistory
+.DS_Store
+*.pdf
