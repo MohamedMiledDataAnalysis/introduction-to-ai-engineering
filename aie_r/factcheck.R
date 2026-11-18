@@ -5,7 +5,7 @@ figure_re <- paste0("([\u00a3\u20ac$])?\\s?(\\d{1,3}(?:,\\d{3})+(?:\\.\\d+)?|\\d
 
 extract_figures <- function(text) {
   m <- gregexpr(figure_re, text, perl = TRUE, ignore.case = TRUE)[[1]]
-  empty <- data.frame(raw = character(0), value = numeric(0), decimals = integer(0), unit = character(0), scale = numeric(0))
+  empty <- data.frame(raw = character(0), value = numeric(0), decimals = integer(0), unit = character(0), scale = numeric(0), start = integer(0))
   if (m[1] == -1) return(empty)
   starts <- attr(m, "capture.start"); lens <- attr(m, "capture.length")
   out <- list()
@@ -26,7 +26,7 @@ extract_figures <- function(text) {
     scale <- if (unit %in% c("money", "number")) scale_of[[if (sc == "") "1" else sc]] else 1
     decimals <- if (grepl("\\.", num)) nchar(sub(".*\\.", "", num)) else 0
     out[[length(out) + 1]] <- data.frame(raw = trimws(substr(text, m[i], m[i] + attr(m, "match.length")[i] - 1)), value = as.numeric(gsub(",", "", num)),
-                                         decimals = decimals, unit = unit, scale = scale)
+                                         decimals = decimals, unit = unit, scale = scale, start = as.integer(m[i]))
   }
   if (length(out) == 0) return(empty)
   do.call(rbind, out)

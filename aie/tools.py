@@ -225,6 +225,15 @@ def _fund_docs_index():
         c["fund"] = "HGEF"
         c["id"] = f"HGEF-SFDR#{len(chunks) + 1}"
         chunks.append(c)
+    # The table of key facts before the first section (ISIN, SFDR classification, ongoing charges...) and the
+    # SFDR disclosure's title and reference period are not in any '## ' section: index them as one chunk each.
+    heads = [(c.upper(), "factsheet", f"data/am/documents/{c}_factsheet_2026_09.md") for c in ("hgef", "hecb", "hbma")]
+    heads.append(("HGEF", "SFDR", "data/am/documents/hgef_sfdr_periodic_2026.md"))
+    for code, kind, path in heads:
+        head = open(path, encoding="utf-8").read().split("\n## ")[0]
+        lines = [l for l in head.split("\n") if l.strip() and not l.startswith(">")]
+        text = "Key facts\n" + lines[0].lstrip("# ").strip() + "\n" + "\n".join(lines[1:])
+        chunks.append({"id": f"{code}-{kind}#{len(chunks) + 1}", "title": "Key facts", "text": text, "fund": code})
     return chunks
 
 

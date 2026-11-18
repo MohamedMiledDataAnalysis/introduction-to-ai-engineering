@@ -146,6 +146,20 @@ arrears_buckets <- function(cutoff_date) {
       add(paste(readLines(sprintf("data/am/documents/%s_factsheet_2026_09.md", lc), encoding = "UTF-8"), collapse = "\n"), code, "factsheet")
     }
     add(paste(readLines("data/am/documents/hgef_sfdr_periodic_2026.md", encoding = "UTF-8"), collapse = "\n"), "HGEF", "SFDR")
+    # key facts before the first '## ' section: one chunk per factsheet and for the SFDR disclosure
+    heads <- list(c("HGEF", "factsheet", "data/am/documents/hgef_factsheet_2026_09.md"),
+                  c("HECB", "factsheet", "data/am/documents/hecb_factsheet_2026_09.md"),
+                  c("HBMA", "factsheet", "data/am/documents/hbma_factsheet_2026_09.md"),
+                  c("HGEF", "SFDR", "data/am/documents/hgef_sfdr_periodic_2026.md"))
+    for (h in heads) {
+      lines <- readLines(h[3], encoding = "UTF-8")
+      first <- which(startsWith(lines, "## "))[1]
+      lines <- lines[seq_len(first - 1)]
+      lines <- lines[nzchar(trimws(lines)) & !startsWith(lines, ">")]
+      text <- paste(c("Key facts", trimws(sub("^#+ ", "", lines[1])), lines[-1]), collapse = "\n")
+      chunks[[length(chunks) + 1]] <- list(id = paste0(h[1], "-", h[2], "#", length(chunks) + 1),
+                                           title = "Key facts", text = text, fund = h[1])
+    }
     .cache$fund_docs <- chunks; .cache$bm25_index <- bm25_index; .cache$bm25_search <- bm25_search
   }
   .cache$fund_docs
