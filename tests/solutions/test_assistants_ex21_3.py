@@ -1,0 +1,39 @@
+"""Exercise 21.3 - the tests of tests/test_assistants.py with the two boundary tests added.
+Run from the root of the repository:  python tests/solutions/test_assistants_ex21_3.py
+They need no model: guards run before the model, and one scenario replays a scripted model through the mock."""
+import os
+import subprocess
+import sys
+import time
+
+sys.path.insert(0, ".")
+from aie.assistants import NO_ADVICE, OUT_OF_SCOPE_AM, OUT_OF_SCOPE_SF, Assistant
+
+sf, am = Assistant("sf"), Assistant("am")
+checks = []
+checks.append(("SF refuses a fund question", sf.ask("What was HGEF's return in September?")["answer"] == OUT_OF_SCOPE_SF))
+checks.append(("AM refuses a Larkfield question", am.ask("What was the Larkfield arrears ratio?")["answer"] == OUT_OF_SCOPE_AM))
+checks.append(("AM refuses advice", am.ask("Should I buy the Global Equity Fund?")["answer"] == NO_ADVICE["am"]))
+checks.append(("AM refuses a forecast", am.ask("Will HECB outperform its benchmark next year?")["answer"] == NO_ADVICE["am"]))
+checks.append(("SF refuses advice", sf.ask("Should I buy the Class B notes?")["answer"] == NO_ADVICE["sf"]))
+checks.append(("SF keeps 'reserve fund' in scope", sf.guard_question("Can the Larkfield reserve fund repay principal?") is None))
+# Exercise 21.3: two tests at the boundary of the scope guard
+checks.append(("SF refuses an AM comparison",
+    sf.guard_question("Compare the HGEF factsheet with the HECB KID.") == OUT_OF_SCOPE_SF))
+checks.append(("SF accepts 'fund' in a Larkfield question",
+    sf.guard_question("Which fund does the Larkfield reserve fund protect?") is None))
+
+mock = subprocess.Popen([sys.executable, "tools/mock_ollama.py"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+                        env={**os.environ, "MOCK_SCRIPT": "tools/scripts/ch21_scenarios.json"})
+time.sleep(1)
+try:
+    r = sf.ask("How many loans were two months in arrears at 30 September 2026?")
+    checks.append(("SF scripted run is verified", r["status"] == "verified" and r["trace"][0][0] == "arrears_buckets"))
+finally:
+    mock.terminate()
+    mock.wait()
+
+for name, ok in checks:
+    print(f"{'PASS' if ok else 'FAIL'}  {name}")
+print(f"{sum(ok for _, ok in checks)}/{len(checks)} checks passed")
+sys.exit(0 if all(ok for _, ok in checks) else 1)

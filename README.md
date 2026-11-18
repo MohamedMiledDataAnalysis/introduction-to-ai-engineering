@@ -41,7 +41,7 @@ aie/         the Python library built through the book
 aie_r/       the same library in R
 prompts/     versioned prompts and JSON schemas
 chapters/    code for each chapter, chNN/python and chNN/r
-solutions/   the corrections of all 126 exercises, the same as in the book
+solutions/   the corrections of all 126 exercises, the same as in the book (more on the final project)
 evals/       evaluation sets, candidate answers and drafts
 tools/       mock model server and its scripted replies (for tests)
 services/    the agents as web services: FastAPI (Python) and plumber (R)
@@ -61,12 +61,21 @@ the plan, step by step (with the code explained line by line), reading the resul
 mistakes to avoid, and trade-offs. Where a correction prints a script under its path, that script is
 in `chapters/` and runs from the repository root.
 
-For the exercises that develop the R Shiny applications (23.1, 23.3, 23.4 and 24.4), the repository goes further
-than the book. After the printed correction, a section *Going further on GitHub* gives the complete application
-with the change (`apps/solutions/exNN_M/app.R`), every changed line in context, the full test with its output
-(`tests/solutions/test_exNN_M.R`) and screenshots (`solutions/img/`). Run the tests from the repository root:
+Every correction is the same in the book and here, with one addition. For the exercises of the final
+project that develop code (21.2, 21.3, 21.4, 22.3, 23.1, 23.3, 23.4 and 24.4), the book prints the minimum
+solution with its recommendations and tips; here, after the printed text, a section *Going further on GitHub*
+gives the full code in Python and R (`chapters/ch21/`, `chapters/ch22/`) or the complete application
+(`apps/solutions/`), every changed line in context, the full tests with their output (`tests/solutions/`)
+and screenshots (`solutions/img/`). Run them from the repository root:
 
 ```bash
+python chapters/ch21/python/solutions/ex21_2_arrears_share.py      # and the .R twin in chapters/ch21/r/solutions/
+python tests/solutions/test_assistants_ex21_3.py
+python chapters/ch21/python/solutions/ex21_3_probe_boundary.py
+MOCK_SCRIPT=tools/scripts/ex21_4_commentary.json python tools/mock_ollama.py &  # Exercise 21.4 needs the scripted model
+python chapters/ch21/python/solutions/ex21_4_commentary_tool.py
+kill %1                                                            # stop the mock before starting it on another script
+python chapters/ch22/python/solutions/ex22_3_missing_warning.py
 LANG=C.UTF-8 Rscript tests/solutions/test_ex23_1.R
 LANG=C.UTF-8 Rscript tests/solutions/test_ex23_3.R
 MOCK_SCRIPT=tools/scripts/ch23_review.json python tools/mock_ollama.py &   # Exercise 23.4 needs the scripted model

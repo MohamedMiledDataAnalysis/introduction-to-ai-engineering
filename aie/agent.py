@@ -29,8 +29,10 @@ def facts_from_results(results):
             if unit == "money":
                 facts[path + "#plain"] = (obj, "number")
 
-    for name, result in results:
-        walk(json.loads(result), name)
+    calls = {}
+    for name, result in results:                       # a second call of the same tool gets its own names
+        calls[name] = calls.get(name, 0) + 1
+        walk(json.loads(result), name if calls[name] == 1 else f"{name}#{calls[name]}")
     return facts
 
 

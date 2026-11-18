@@ -14,7 +14,12 @@ facts_from_results <- function(results) {
       if (unit == "money") facts[[paste0(path, "#plain")]] <<- list(value = obj, unit = "number")
     }
   }
-  for (r in results) walk(fromJSON(r$result, simplifyVector = FALSE), r$name)
+  calls <- list()
+  for (r in results) {                                 # a second call of the same tool gets its own names
+    calls[[r$name]] <- (if (is.null(calls[[r$name]])) 0 else calls[[r$name]]) + 1
+    walk(fromJSON(r$result, simplifyVector = FALSE),
+         if (calls[[r$name]] == 1) r$name else paste0(r$name, "#", calls[[r$name]]))
+  }
   facts
 }
 

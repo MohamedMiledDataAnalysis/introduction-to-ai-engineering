@@ -1,0 +1,4 @@
+[
+  {"content": "", "tool_calls": [{"name": "draft_investor_commentary", "arguments": {"cutoff_date": "2026-09-30"}}]},
+  {"content": "Here is the draft for 30 September 2026, for your approval: In the period ending 2026-09-30, principal receipts of £4.88 million were applied sequentially and repaid £4.88 million of Class A notes. The arrears ratio fell to 0.84% from 0.97%, and the annualised prepayment rate was 14.8%. The reserve fund stands at its required amount of £6,082,667.80."}
+]

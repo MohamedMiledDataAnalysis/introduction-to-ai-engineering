@@ -146,6 +146,232 @@ Python and R give the same four results.
 
 **Trade-offs.** Narrow the check by requiring a figure that matches a `fund_performance` result in the trace: the check then fires only on returns actually quoted, at the cost of passing the trace to the check. Broad checks are simple and over-flag; narrow checks are precise and depend on more of the system. Here, over-flagging costs a minute of review; under-flagging puts an incomplete fund communication in front of a distributor.
 
+**On GitHub.** The companion repository goes further: the check in Python and R, the narrow version of the trade-off, both tested on eight labelled answers, and the integration in the assistant, in `solutions/ch22_corrections.md`.
+
+#### Going further on GitHub: the check in both languages, broad and narrow, measured
+
+This part is in the companion repository only. It gives the book’s check and the narrow check of the trade-off, both in Python and R. Both are measured on eight labelled answers, and the integration in the assistant is shown.
+
+**The complete script, in Python.**
+
+`chapters/ch22/python/solutions/ex22_3_missing_warning.py`
+
+``` python
+# Exercise 22.3 - The past-performance warning as a check, broad and narrow
+# Run from the root of the repository:  python chapters/ch22/python/solutions/ex22_3_missing_warning.py
+import json
+import re
+import sys
+
+sys.path.insert(0, ".")
+from aie.agent import facts_from_results
+from aie.factcheck import check_text, extract_figures
+from aie.tools import fund_performance
+
+WARNING = re.compile(r"past performance (does not|is not a reliable)", re.I)
+RETURN_WORDS = re.compile(r"\b(return(ed)?|performance|gained|lost)\b", re.I)
+
+
+def missing_warning(answer):
+    """The book's check: a percentage, a performance word, and no warning."""
+    has_figure = any(f.unit == "percent" for f in extract_figures(answer))
+    return bool(has_figure and RETURN_WORDS.search(answer)
+                and not WARNING.search(answer))
+
+
+def missing_warning_narrow(answer, results):
+    """The trade-off of the book: fire only if the answer quotes a return that a fund_performance call returned."""
+    returns = {k: v for k, v in facts_from_results(results).items() if k.endswith("return_pct")}
+    quotes_a_return = any(hits for _, hits in check_text(answer, returns))
+    return bool(quotes_a_return and not WARNING.search(answer))
+
+
+def apply_warning_check(result, domain="am"):
+    """What Assistant.ask() does after the forbidden-phrase check (the book's integration)."""
+    if domain == "am" and missing_warning(result["answer"]):
+        result["status"] = "needs_review"
+        result["unsupported"].append("past performance warning missing")
+    return result
+
+
+# 1. The four sentences of the book
+book = ["HGEF returned 6.46% over one year to 30 September 2026.",
+        "HGEF returned 6.46% over one year to 30 September 2026. Past performance does not predict future returns.",
+        "HECB's ongoing costs are 0.40%.",
+        "Ongoing costs of 0.40% reduce the return each year."]
+print("The four sentences of the book:")
+for s in book:
+    print(f"  {str(missing_warning(s)):<6} {s}")
+
+# 2. A larger set of answers, each labelled with the right decision, and the trace the agent would have
+perf = [("fund_performance", json.dumps(fund_performance("HGEF", 12))),
+        ("fund_performance", json.dumps(fund_performance("HECB", 12)))]
+labelled = [  # (answer, a warning is required?)
+    ("HGEF returned 6.46% over one year, against 7.86% for its benchmark.", True),
+    ("HGEF returned 6.46% over one year. Past performance is not a reliable indicator of future results.", False),
+    ("HGEF trailed its benchmark by 1.40% over one year.", True),
+    ("HECB's ongoing costs are 0.40%.", False),
+    ("Ongoing costs of 0.40% reduce the return each year.", False),
+    ("The fund's largest holding is 4.2% of the portfolio.", False),
+    ("HGEF's performance fee is 0%; there is none.", False),
+    ("Information technology is 16.08% of HGEF, against 17.34% for the benchmark.", False),
+]
+print("\nBroad and narrow check on labelled answers:")
+broad_err = narrow_err = 0
+for answer, required in labelled:
+    b, n = missing_warning(answer), missing_warning_narrow(answer, perf)
+    broad_err += b != required
+    narrow_err += n != required
+    print(f"  required {str(required):<5} broad {str(b):<5} narrow {str(n):<5} {answer[:70]}")
+print(f"Wrong decisions: broad {broad_err} of {len(labelled)}, narrow {narrow_err} of {len(labelled)}")
+
+# 3. The integration: an agent result before and after the check
+r = apply_warning_check({"answer": book[0], "status": "verified", "unsupported": []})
+print("\nAfter the check:", r["status"], r["unsupported"])
+```
+
+- `missing_warning()` is the check of the book.
+- `missing_warning_narrow()` keeps from the agent’s facts only the returns (`fund_return_pct`, `benchmark_return_pct`, `relative_return_pct`) and fires only when the answer quotes one of them without the warning. `facts_from_results()` builds the facts exactly as the agent’s verifier does.
+- `perf` holds two calls of `fund_performance`, HGEF and HECB, as the trace would after a comparison question.
+- `labelled` pairs each answer with the right decision, so that the script counts wrong decisions instead of printing results to read by eye.
+
+**Output**
+
+``` text
+The four sentences of the book:
+  True   HGEF returned 6.46% over one year to 30 September 2026.
+  False  HGEF returned 6.46% over one year to 30 September 2026. Past performance does not predict future returns.
+  False  HECB's ongoing costs are 0.40%.
+  True   Ongoing costs of 0.40% reduce the return each year.
+
+Broad and narrow check on labelled answers:
+  required True  broad True  narrow True  HGEF returned 6.46% over one year, against 7.86% for its benchmark.
+  required False broad False narrow False HGEF returned 6.46% over one year. Past performance is not a reliable 
+  required True  broad False narrow True  HGEF trailed its benchmark by 1.40% over one year.
+  required False broad False narrow False HECB's ongoing costs are 0.40%.
+  required False broad True  narrow False Ongoing costs of 0.40% reduce the return each year.
+  required False broad False narrow False The fund's largest holding is 4.2% of the portfolio.
+  required False broad True  narrow True  HGEF's performance fee is 0%; there is none.
+  required False broad False narrow False Information technology is 16.08% of HGEF, against 17.34% for the bench
+Wrong decisions: broad 3 of 8, narrow 1 of 8
+
+After the check: needs_review ['past performance warning missing']
+```
+
+**Reading the result.** The broad check makes three wrong decisions out of eight, of two kinds:
+
+- It misses *“trailed its benchmark by 1.40%”*: no word of `RETURN_WORDS` appears.
+- It flags *“Ongoing costs of 0.40% reduce the return each year”* (the false fail of the book) and *“performance fee is 0%”*.
+
+The narrow check makes one wrong decision. It catches the trailing sentence, because 1.40% is HGEF’s relative return, and it passes the costs sentence. It still flags *“0%”*: a figure written with no decimals matches any return that rounds to 0, and HECB’s relative return, −0.48%, does. A figure without decimals carries little information, and the matching cannot do better than the figure.
+
+**The complete script, in R.**
+
+`chapters/ch22/r/solutions/ex22_3_missing_warning.R`
+
+``` r
+# Exercise 22.3 - The past-performance warning as a check, broad and narrow
+# Run from the root of the repository:  Rscript chapters/ch22/r/solutions/ex22_3_missing_warning.R
+suppressPackageStartupMessages(source("aie_r/agent.R"))
+
+missing_warning <- function(answer) {
+  # the book's check: a percentage, a performance word, and no warning
+  figs <- extract_figures(answer)
+  any(figs$unit == "percent") &&
+    grepl("\\b(return(ed)?|performance|gained|lost)\\b", answer, ignore.case = TRUE, perl = TRUE) &&
+    !grepl("past performance (does not|is not a reliable)", answer, ignore.case = TRUE)
+}
+
+missing_warning_narrow <- function(answer, results) {
+  # the trade-off of the book: fire only if the answer quotes a return that a fund_performance call returned
+  f <- facts_from_results(results)
+  returns <- f[endsWith(names(f), "return_pct")]
+  quotes_a_return <- any(vapply(check_text(answer, returns), function(r) length(r$hits) > 0, TRUE))
+  quotes_a_return && !grepl("past performance (does not|is not a reliable)", answer, ignore.case = TRUE)
+}
+
+apply_warning_check <- function(result, domain = "am") {
+  # what ask_assistant() does after the forbidden-phrase check (the book's integration)
+  if (domain == "am" && missing_warning(result$answer)) {
+    result$status <- "needs_review"
+    result$unsupported <- c(result$unsupported, "past performance warning missing")
+  }
+  result
+}
+
+# 1. The four sentences of the book
+book <- c("HGEF returned 6.46% over one year to 30 September 2026.",
+          "HGEF returned 6.46% over one year to 30 September 2026. Past performance does not predict future returns.",
+          "HECB's ongoing costs are 0.40%.",
+          "Ongoing costs of 0.40% reduce the return each year.")
+cat("The four sentences of the book:\n")
+for (s in book) cat(sprintf("  %-6s %s\n", if (missing_warning(s)) "True" else "False", s))
+
+# 2. A larger set of answers, each labelled with the right decision, and the trace the agent would have
+as_result <- function(code) list(name = "fund_performance",
+  result = as.character(toJSON(fund_performance(code, 12), auto_unbox = TRUE, digits = NA)))
+perf <- list(as_result("HGEF"), as_result("HECB"))
+labelled <- data.frame(stringsAsFactors = FALSE,
+  answer = c("HGEF returned 6.46% over one year, against 7.86% for its benchmark.",
+             "HGEF returned 6.46% over one year. Past performance is not a reliable indicator of future results.",
+             "HGEF trailed its benchmark by 1.40% over one year.",
+             "HECB's ongoing costs are 0.40%.",
+             "Ongoing costs of 0.40% reduce the return each year.",
+             "The fund's largest holding is 4.2% of the portfolio.",
+             "HGEF's performance fee is 0%; there is none.",
+             "Information technology is 16.08% of HGEF, against 17.34% for the benchmark."),
+  required = c(TRUE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE))
+labelled$broad <- vapply(labelled$answer, missing_warning, TRUE)
+labelled$narrow <- vapply(labelled$answer, missing_warning_narrow, TRUE, results = perf)
+cat("\nBroad and narrow check on labelled answers:\n")
+for (i in seq_len(nrow(labelled)))
+  cat(sprintf("  required %-5s broad %-5s narrow %-5s %s\n", labelled$required[i], labelled$broad[i],
+              labelled$narrow[i], substr(labelled$answer[i], 1, 70)))
+cat(sprintf("Wrong decisions: broad %d of %d, narrow %d of %d\n", sum(labelled$broad != labelled$required),
+            nrow(labelled), sum(labelled$narrow != labelled$required), nrow(labelled)))
+
+# 3. The integration: an agent result before and after the check
+r <- apply_warning_check(list(answer = book[1], status = "verified", unsupported = character(0)))
+cat("\nAfter the check:", r$status, r$unsupported, "\n")
+```
+
+**Output**
+
+``` text
+The four sentences of the book:
+  True   HGEF returned 6.46% over one year to 30 September 2026.
+  False  HGEF returned 6.46% over one year to 30 September 2026. Past performance does not predict future returns.
+  False  HECB's ongoing costs are 0.40%.
+  True   Ongoing costs of 0.40% reduce the return each year.
+
+Broad and narrow check on labelled answers:
+  required TRUE  broad TRUE  narrow TRUE  HGEF returned 6.46% over one year, against 7.86% for its benchmark.
+  required FALSE broad FALSE narrow FALSE HGEF returned 6.46% over one year. Past performance is not a reliable 
+  required TRUE  broad FALSE narrow TRUE  HGEF trailed its benchmark by 1.40% over one year.
+  required FALSE broad FALSE narrow FALSE HECB's ongoing costs are 0.40%.
+  required FALSE broad TRUE  narrow FALSE Ongoing costs of 0.40% reduce the return each year.
+  required FALSE broad FALSE narrow FALSE The fund's largest holding is 4.2% of the portfolio.
+  required FALSE broad TRUE  narrow TRUE  HGEF's performance fee is 0%; there is none.
+  required FALSE broad FALSE narrow FALSE Information technology is 16.08% of HGEF, against 17.34% for the bench
+Wrong decisions: broad 3 of 8, narrow 1 of 8
+
+After the check: needs_review past performance warning missing 
+```
+
+- `vapply(labelled$answer, missing_warning_narrow, TRUE, results = perf)` calls the narrow check once per answer and passes the same trace each time.
+- `f[endsWith(names(f), "return_pct")]` keeps the returns from the facts, as the dictionary comprehension does in Python.
+
+Python and R give the same decisions.
+
+**A correction to the library found by this exercise.** Before this exercise, a second call of the same tool overwrote the facts of the first in `facts_from_results()`, because both were named `fund_performance.fund_return_pct`. HGEF’s 6.46% was then *unsupported* in an answer comparing HGEF and HECB. The functions in `aie/agent.py` and `aie_r/agent.R` now name the facts of a second call `fund_performance#2.fund_return_pct`. The facts of a single call keep their names, so every result printed in the book is unchanged.
+
+**More mistakes to avoid.**
+
+- Testing a check only on the sentences that motivated it. The labelled set shows a miss (*trailed*) that the four sentences of the book could not reveal.
+- Using the narrow check where no trace exists, for example on a commentary written by hand: there are no tool results to match, and it never fires.
+
+**More trade-offs.** Use the broad check where text arrives without a trace, and the narrow one inside the agent, where the trace is always there. Both can run: an answer flagged by either goes to review. That costs a few more reviews and catches more missing warnings, and that is the right balance for a fund communication.
+
 ### Exercise 22.4
 
 **What the question asks.** For *“Is HGEF an Article 8 fund, and did it meet its sustainability commitments last year?”*, trace the agent’s steps and write the answer it should give, with citations.
