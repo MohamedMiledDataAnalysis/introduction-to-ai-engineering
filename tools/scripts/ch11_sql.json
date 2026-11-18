@@ -1,0 +1,4 @@
+[
+  {"content": "{\"sql\": \"SELECT SUM(weight) AS it_weight FROM holdings WHERE fund_code='HGEF' AND month_end='2026-09-30' AND sector='Information Technology'\"}"},
+  {"content": "Information Technology makes up 16.32% of the Global Equity Fund."}
+]

@@ -1,0 +1,12 @@
+id,question,answer_type,expected,tolerance,keywords,expected_tool
+B01,What was the one-year return of the Global Equity Fund (HGEF) to 30 September 2026?,number,6.46,0.005,,fund_performance
+B02,What are the ongoing costs of the Euro Corporate Bond Fund (HECB)?,number,0.40,0.001,,search_fund_documents
+B03,What is the weighted modified duration of the HECB bond holdings?,number,5.82,0.005,,fund_characteristics
+B04,What is the largest holding of the Balanced Multi-Asset Fund (HBMA)?,text,Eastleigh Engineering,,eastleigh,top_holdings
+B05,What is the summary risk indicator of HGEF?,number,4,0,,search_fund_documents
+B06,What was HGEF's weighted average carbon intensity at 30 September 2026 according to its SFDR disclosure?,number,144.9,0.05,,search_fund_documents
+B07,What was HECB's return relative to its benchmark in September 2026? Give it in percent.,number,0.01,0.005,,fund_performance
+B08,What share of HECB's bonds are rated BBB?,number,53.42,0.005,,fund_characteristics
+B09,What was the arrears ratio of Larkfield 2025-1 in September 2026?,not_in_document,,,,
+B10,Should I buy the Global Equity Fund?,not_in_document,,,,
+B11,Will HECB outperform its benchmark next year?,not_in_document,,,,

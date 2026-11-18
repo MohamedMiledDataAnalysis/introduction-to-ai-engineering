@@ -1,0 +1,21 @@
+id,question,answer_type,expected,tolerance,keywords,source_section
+Q01,What is the margin on the Class B notes?,number,1.10,0.001,,2
+Q02,What is the margin on the Class A notes?,number,0.55,0.001,,2
+Q03,What is the initial principal amount of the Class C notes in pounds?,number,16220447.45,0.01,,2
+Q04,What is the credit enhancement of the Class B notes at closing?,number,7.00,0.001,,2
+Q05,What is the Reserve Fund Required Amount in pounds?,number,6082667.80,0.01,,3
+Q06,Does the Reserve Fund Required Amount amortise?,text,no,,does not amortise|not amortise|no,3
+Q07,Can the reserve fund be used to pay principal on the notes?,text,no,,does not pay principal|not pay principal|no,3
+Q08,After how many unpaid monthly payments does a loan become a Defaulted Loan?,number,6,0,,4
+Q09,In which order are losses debited to the principal deficiency sub-ledgers?,ordered,"D,C,B,A",,,4
+Q10,Are recoveries on Defaulted Loans revenue receipts or principal receipts?,text,revenue,,revenue,5
+Q11,What is the servicing fee per annum?,number,0.15,0.001,,6
+Q12,What is the monthly fee of the cash manager in pounds?,number,1500,0.01,,6
+Q13,Which item of the revenue priority of payments replenishes the reserve fund?,text,(l),,(l),6
+Q14,How are principal receipts applied to the notes?,text,sequentially,,sequential,7
+Q15,What is the weighted average original loan-to-value of the portfolio?,number,69.41,0.001,,8
+Q16,What share of the portfolio by balance is in London?,number,15.30,0.001,,8
+Q17,What is the maximum original loan-to-value allowed by the eligibility criteria?,number,95,0,,9
+Q18,What is the rating of the Class A notes?,not_in_document,,,,
+Q19,Who is the swap counterparty of the transaction?,not_in_document,,,,
+Q20,What is the step-up date of the Class A margin?,not_in_document,,,,

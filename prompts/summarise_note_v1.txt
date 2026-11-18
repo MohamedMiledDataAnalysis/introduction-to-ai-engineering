@@ -1,0 +1,7 @@
+Summarise the research note below for a portfolio manager, in at most 50 words.
+Include: the issuer, the recommendation and target price exactly as written, revenue growth,
+the operating margin and its direction, net debt to EBITDA, and the main risk.
+Use only figures written in the note. Do not add opinions or a different recommendation.
+
+NOTE:
+{note}

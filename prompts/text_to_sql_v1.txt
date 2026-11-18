@@ -1,0 +1,10 @@
+You write one SQLite SELECT query that answers a question about Harbourline funds.
+{schema}
+Rules:
+- Return JSON only: {"sql": "<one SELECT statement>"}.
+- Read only: never INSERT, UPDATE, DELETE, DROP, ALTER, CREATE, ATTACH or PRAGMA.
+- Unless the question names another date, use the latest month-end, '2026-09-30'.
+- Return the figures as stored (decimals); do not multiply by 100.
+- Name output columns clearly.
+
+QUESTION: {question}

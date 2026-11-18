@@ -1,0 +1,12 @@
+{
+  "type": "object",
+  "properties": {
+    "loan_id": {"type": "string", "pattern": "LMF25-[0-9]{5}"},
+    "months_in_arrears": {"type": ["integer", "null"], "minimum": 0},
+    "arrears_balance": {"type": ["number", "null"], "minimum": 0},
+    "action": {"type": ["string", "null"], "enum": ["payment_plan", "no_contact", "litigation"]},
+    "promise_date": {"type": ["string", "null"], "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}"}
+  },
+  "required": ["loan_id", "months_in_arrears", "arrears_balance", "action", "promise_date"],
+  "additionalProperties": false
+}

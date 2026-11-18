@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "properties": {
+    "isin": {"type": "string", "pattern": "[A-Z]{2}[A-Z0-9]{9}[0-9]"},
+    "summary_risk_indicator": {"type": "integer", "minimum": 1},
+    "recommended_holding_period_years": {"type": "integer", "minimum": 1},
+    "ongoing_costs_pct": {"type": "number", "minimum": 0},
+    "transaction_costs_pct": {"type": "number", "minimum": 0},
+    "entry_costs_eur": {"type": "number", "minimum": 0},
+    "moderate_scenario_rhp_eur": {"type": "number", "minimum": 0}
+  },
+  "required": ["isin", "summary_risk_indicator", "recommended_holding_period_years", "ongoing_costs_pct",
+               "transaction_costs_pct", "entry_costs_eur", "moderate_scenario_rhp_eur"],
+  "additionalProperties": false
+}

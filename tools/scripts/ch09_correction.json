@@ -1,0 +1,6 @@
+[
+  {"content": "", "tool_calls": [{"name": "waterfall_summary", "arguments": {"cutoff_date": "2026-09-30"}}]},
+  {"content": "", "tool_calls": [{"name": "search_prospectus", "arguments": {"query": "excess spread residual certificates revenue priority of payments"}}]},
+  {"content": "In September 2026 revenue receipts were £1,855,022.33 and excess spread of £629,429.96 was paid to the residual certificate holders under item (m) [LMF#6.2]."},
+  {"content": "In September 2026 revenue receipts were £1,855,022.33 and excess spread of £692,429.96 was paid to the residual certificate holders under item (m) [LMF#6.2]."}
+]

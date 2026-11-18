@@ -1,0 +1,4 @@
+[
+  {"content": "", "tool_calls": [{"name": "arrears_buckets", "arguments": {"cutoff_date": "2026-09-30"}}]},
+  {"content": "At 30 September 2026, 6 loans were two months in arrears, with a balance of £1,088,476.03."}
+]

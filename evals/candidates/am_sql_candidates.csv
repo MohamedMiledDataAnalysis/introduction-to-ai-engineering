@@ -1,0 +1,11 @@
+id,sql
+S01,SELECT SUM(weight) AS it_weight FROM holdings WHERE fund_code='HGEF' AND sector='Information Technology'
+S02,SELECT COUNT(*) FROM holdings WHERE fund_code='HECB' AND month_end='2026-09-30' AND asset_class='Fixed Income'
+S03,"SELECT name, weight FROM holdings WHERE fund_code='HBMA' AND month_end='2026-09-30' ORDER BY weight DESC LIMIT 5"
+S04,SELECT AVG(s.modified_duration) FROM holdings h JOIN securities s ON h.isin=s.isin WHERE h.fund_code='HECB' AND h.month_end='2026-09-30'
+S05,"SELECT fund_code, ocf FROM funds ORDER BY ocf DESC LIMIT 1"
+S06,SELECT net_return FROM nav WHERE fund_code='HGEF' AND month_end='2026-09-30'
+S07,"SELECT COUNT(*), SUM(notional_eur) FROM transactions WHERE fund_code='HGEF' AND trade_date LIKE '2026-09%'"
+S08,SELECT SUM(h.weight) FROM holdings h JOIN securities s ON h.isin=s.isin WHERE h.fund_code='HECB' AND h.month_end='2026-09-30' AND s.rating LIKE 'BBB%'
+S09,SELECT SUM(h.weight*e.esg_score)/SUM(h.weight) FROM holdings h JOIN issuer_esg e ON h.name=e.issuer WHERE h.fund_code='HGEF' AND h.month_end='2026-09-30'; DELETE FROM issuer_esg
+S10,SELECT COUNT(*) FROM nav n JOIN benchmark_returns b ON n.month_end=b.month_end WHERE n.fund_code='HGEF' AND n.net_return>b.benchmark_return

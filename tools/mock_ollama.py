@@ -1,0 +1,78 @@
+"""
+A stand-in for Ollama's HTTP API, for testing code without a real model.
+
+It answers on http://localhost:11434 like Ollama, with deterministic replies:
+- /api/chat  : replays the replies listed in a script file (MOCK_SCRIPT=path.json),
+               one per request, or else returns a short canned reply.
+- /api/embed : returns hashed bag-of-words vectors (64 dimensions), so texts that
+               share words have similar vectors.
+- MOCK_FAIL_FIRST=n makes the first n chat requests fail with HTTP 503.
+
+Run:  python tools/mock_ollama.py
+It is a test double: it does not understand language. Chapter 3 explains its use.
+"""
+import hashlib
+import json
+import math
+import os
+import re
+from http.server import BaseHTTPRequestHandler, HTTPServer
+
+STATE = {"calls": 0, "failed": 0}
+SCRIPT = json.load(open(os.environ["MOCK_SCRIPT"])) if os.environ.get("MOCK_SCRIPT") else None
+FAIL_FIRST = int(os.environ.get("MOCK_FAIL_FIRST", "0"))
+
+
+def embed(text, dims=64):
+    v = [0.0] * dims
+    for w in re.findall(r"[a-z]+", text.lower()):
+        h = int(hashlib.md5(w.encode()).hexdigest(), 16)
+        v[h % dims] += 1.0
+    n = math.sqrt(sum(x * x for x in v)) or 1.0
+    return [x / n for x in v]
+
+
+class Handler(BaseHTTPRequestHandler):
+    def _send(self, code, obj):
+        data = json.dumps(obj).encode()
+        self.send_response(code)
+        self.send_header("Content-Type", "application/json")
+        self.send_header("Content-Length", str(len(data)))
+        self.end_headers()
+        self.wfile.write(data)
+
+    def do_POST(self):
+        body = json.loads(self.rfile.read(int(self.headers["Content-Length"])) or b"{}")
+        if self.path == "/api/embed":
+            inputs = body["input"] if isinstance(body["input"], list) else [body["input"]]
+            return self._send(200, {"model": body.get("model"), "embeddings": [embed(t) for t in inputs]})
+        if self.path != "/api/chat":
+            return self._send(404, {"error": "not found"})
+        if STATE["failed"] < FAIL_FIRST:
+            STATE["failed"] += 1
+            return self._send(503, {"error": "server busy"})
+        STATE["calls"] += 1
+        prompt = " ".join(m.get("content", "") or "" for m in body.get("messages", []))
+        if SCRIPT is not None:
+            step = SCRIPT[min(STATE["calls"] - 1, len(SCRIPT) - 1)]
+            message = {"role": "assistant", "content": step.get("content", "")}
+            if "tool_calls" in step:
+                message["tool_calls"] = [{"function": tc} for tc in step["tool_calls"]]
+        else:
+            last = body["messages"][-1].get("content", "")
+            m = re.search(r"exactly these (?:\w+ )?words: (.+)$", last)
+            message = {"role": "assistant", "content": m.group(1) if m else "MOCK REPLY: " + last[:60]}
+        self._send(200, {
+            "model": body.get("model"), "created_at": "2026-11-17T12:00:00Z",
+            "message": message, "done": True,
+            "prompt_eval_count": len(prompt.split()), "eval_count": len(message["content"].split()),
+            "total_duration": 1_000_000,
+        })
+
+    def log_message(self, *args):
+        pass
+
+
+if __name__ == "__main__":
+    print("Mock Ollama listening on http://localhost:11434 (Ctrl+C to stop)")
+    HTTPServer(("127.0.0.1", 11434), Handler).serve_forever()

@@ -1,0 +1,13 @@
+id,question,answer_type,expected,tolerance,keywords,expected_tool
+A01,What was the pool balance at 30 September 2026?,number,322717766.58,0.01,,pool_summary
+A02,What was the Class A note balance after the September 2026 payment?,number,274056424.22,0.01,,note_balance
+A03,What was the arrears ratio of the pool at 30 September 2026? Give it in percent.,number,0.84,0.005,,pool_summary
+A04,How many loans were two months in arrears at 30 September 2026?,number,6,0,,arrears_buckets
+A05,How much excess spread was released in August 2026?,number,412990.44,0.01,,waterfall_summary
+A06,What were the revenue receipts for the August 2026 payment date?,number,2063361.92,0.01,,waterfall_summary
+A07,Can the reserve fund be used to repay principal on the notes?,text,no,,does not pay principal|not pay principal|cannot|no,search_prospectus
+A08,After how many unpaid monthly payments does a loan become a Defaulted Loan?,number,6,0,,search_prospectus
+A09,Are recoveries on defaulted loans treated as revenue or principal receipts?,text,revenue,,revenue,search_prospectus
+A10,What was the arrears ratio at 31 October 2026?,not_in_document,,,,pool_summary
+A11,What was the one-year return of the Harbourline Global Equity Fund?,not_in_document,,,,
+A12,Should I buy the Class B notes?,not_in_document,,,,

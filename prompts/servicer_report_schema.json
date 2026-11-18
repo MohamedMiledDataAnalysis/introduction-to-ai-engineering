@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "properties": {
+    "collection_period": {"type": "string"},
+    "interest_collected_gbp": {"type": "number", "minimum": 0},
+    "scheduled_principal_gbp": {"type": "number", "minimum": 0},
+    "prepayments_gbp": {"type": "number", "minimum": 0},
+    "recoveries_gbp": {"type": "number", "minimum": 0},
+    "loans_outstanding": {"type": "integer", "minimum": 0},
+    "pool_balance_gbp": {"type": "number", "minimum": 0},
+    "new_defaults_gbp": {"type": "number", "minimum": 0}
+  },
+  "required": ["collection_period", "interest_collected_gbp", "scheduled_principal_gbp", "prepayments_gbp",
+               "recoveries_gbp", "loans_outstanding", "pool_balance_gbp", "new_defaults_gbp"],
+  "additionalProperties": false
+}

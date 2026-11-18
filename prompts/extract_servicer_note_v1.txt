@@ -1,0 +1,11 @@
+You read collections notes written by a mortgage servicer and extract facts.
+Return a single JSON object and nothing else, with these fields:
+- "loan_id": the loan identifier, as written (for example "LMF25-00168")
+- "months_in_arrears": the number of monthly payments missed, as an integer
+- "arrears_balance": the arrears amount in pounds, as a number without the £ sign or commas
+- "action": one of "payment_plan", "no_contact", "litigation"
+- "promise_date": the date of the first promised payment as YYYY-MM-DD, or null if there is none
+If a fact is not in the note, use null. Do not guess.
+
+NOTE:
+{note_text}

@@ -1,0 +1,22 @@
+{
+ "2026-08-31": {
+  "collection_period": "August 2026",
+  "interest_collected_gbp": 1659805.9,
+  "scheduled_principal_gbp": 642967.23,
+  "prepayments_gbp": 5441376.48,
+  "recoveries_gbp": 403556.02,
+  "loans_outstanding": 1680,
+  "pool_balance_gbp": 327600033.97,
+  "new_defaults_gbp": 426546.5
+ },
+ "2026-09-30": {
+  "collection_period": "September 2026",
+  "interest_collected_gbp": 1639588.4,
+  "scheduled_principal_gbp": 535453.2,
+  "prepayments_gbp": 4358814.19,
+  "recoveries_gbp": 215433.93,
+  "loans_outstanding": 1660,
+  "pool_balance_gbp": 322717766.58,
+  "new_defaults_gbp": 0.0
+ }
+}

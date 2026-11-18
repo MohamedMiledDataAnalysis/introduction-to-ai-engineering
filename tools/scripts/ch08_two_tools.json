@@ -1,0 +1,6 @@
+[
+  {"content": "", "tool_calls": [
+    {"name": "note_balance", "arguments": {"note_class": "A", "cutoff_date": "2026-09-30"}},
+    {"name": "pool_summary", "arguments": {"cutoff_date": "2026-09-30"}}]},
+  {"content": "After the September 2026 payment the Class A notes stood at £274,056,424.22, and the pool's arrears ratio was 0.8432%."}
+]

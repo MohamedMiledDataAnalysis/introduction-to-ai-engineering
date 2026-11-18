@@ -1,0 +1,8 @@
+You extract figures from a mortgage servicer's monthly report. The text below was extracted from a PDF,
+so table cells may appear on separate lines. Return one JSON object with the fields of the schema:
+collection_period (as written), interest_collected_gbp, scheduled_principal_gbp, prepayments_gbp,
+recoveries_gbp, loans_outstanding, pool_balance_gbp, new_defaults_gbp (0 if the report says there were none).
+Amounts are numbers without "GBP" or commas. Use only this report.
+
+REPORT:
+{report}

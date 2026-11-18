@@ -1,0 +1,68 @@
+{
+ "R01": {
+  "issuer": "Upland Telecom",
+  "recommendation": "Hold",
+  "target_price_eur": 32.72,
+  "revenue_growth_pct": 2.9,
+  "operating_margin_pct": 27.9,
+  "previous_margin_pct": 26.2,
+  "net_debt_to_ebitda": 3.1,
+  "main_risk": "currency movements",
+  "fund_weight_pct": 5.03
+ },
+ "R02": {
+  "issuer": "Eastleigh Engineering",
+  "recommendation": "Hold",
+  "target_price_eur": 46.44,
+  "revenue_growth_pct": 8.2,
+  "operating_margin_pct": 14.9,
+  "previous_margin_pct": 15.5,
+  "net_debt_to_ebitda": 1.0,
+  "main_risk": "currency movements",
+  "fund_weight_pct": 3.99
+ },
+ "R03": {
+  "issuer": "Zephyr Materials",
+  "recommendation": "Hold",
+  "target_price_eur": 53.85,
+  "revenue_growth_pct": 3.6,
+  "operating_margin_pct": 9.5,
+  "previous_margin_pct": 9.5,
+  "net_debt_to_ebitda": 1.1,
+  "main_risk": "currency movements",
+  "fund_weight_pct": 3.8
+ },
+ "R04": {
+  "issuer": "Corbett Capital",
+  "recommendation": "Buy",
+  "target_price_eur": 82.91,
+  "revenue_growth_pct": 6.6,
+  "operating_margin_pct": 29.3,
+  "previous_margin_pct": 31.3,
+  "net_debt_to_ebitda": 1.7,
+  "main_risk": "a pending regulatory review",
+  "fund_weight_pct": 3.72
+ },
+ "R05": {
+  "issuer": "Holloway Energy",
+  "recommendation": "Sell",
+  "target_price_eur": 86.88,
+  "revenue_growth_pct": 12.7,
+  "operating_margin_pct": 26.2,
+  "previous_margin_pct": 24.8,
+  "net_debt_to_ebitda": 1.1,
+  "main_risk": "currency movements",
+  "fund_weight_pct": 3.15
+ },
+ "R06": {
+  "issuer": "Northfield Software",
+  "recommendation": "Buy",
+  "target_price_eur": 114.11,
+  "revenue_growth_pct": 6.3,
+  "operating_margin_pct": 28.4,
+  "previous_margin_pct": 26.6,
+  "net_debt_to_ebitda": 1.4,
+  "main_risk": "customer concentration",
+  "fund_weight_pct": 3.1
+ }
+}

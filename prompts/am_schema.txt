@@ -1,0 +1,13 @@
+Tables of the Harbourline database (SQLite):
+- funds(fund_code, name, share_class, isin, sfdr, ocf, benchmark, launch, aum_eur_m, sri, rhp_years)
+    ocf is a decimal (0.0075 = 0.75%). fund_code is HGEF, HECB or HBMA.
+- securities(isin, name, issuer, asset_class, sector, country, currency, market_cap_eur_bn, coupon_pct,
+             maturity, rating, modified_duration, spread_bp, amount_outstanding_eur_m)
+- holdings(month_end, fund_code, isin, weight, name, asset_class, sector, currency, market_value_eur)
+    one row per fund, month-end and holding; weight is a decimal (0.025 = 2.5%); cash has isin 'CASH-EUR'.
+    month_end is text 'YYYY-MM-DD'; the latest month-end is '2026-09-30'.
+- nav(month_end, fund_code, nav_per_share, net_return)        net_return is a decimal, per month
+- benchmark_returns(month_end, fund_code, benchmark_return)   decimal, per month
+- issuer_esg(issuer, esg_score, carbon_intensity_tco2e_per_eur_m, controversy_flag, excluded_activity)
+    issuer matches securities.issuer for bonds and securities.name for equities
+- transactions(trade_id, trade_date, fund_code, isin, side, notional_eur, broker, commission_eur)

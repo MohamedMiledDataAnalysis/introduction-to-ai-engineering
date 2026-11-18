@@ -1,0 +1,93 @@
+[
+ {
+  "loan_id": "LMF25-01521",
+  "field": "RREL30",
+  "old": 414769.23,
+  "new": -414769.23,
+  "rule": "negative_balance"
+ },
+ {
+  "loan_id": "LMF25-00766",
+  "field": "RREL30",
+  "old": 201415.96,
+  "new": 311985.0,
+  "rule": "balance_above_original"
+ },
+ {
+  "loan_id": "LMF25-01650",
+  "field": "RREL24",
+  "old": "2043-06-30",
+  "new": "2015-06-30",
+  "rule": "maturity_before_origination"
+ },
+ {
+  "loan_id": "LMF25-00907",
+  "field": "RREL69",
+  "old": "PERF",
+  "new": "DFLT",
+  "rule": "default_without_180_days"
+ },
+ {
+  "loan_id": "LMF25-01970",
+  "field": "RREL69",
+  "old": "PERF",
+  "new": "ARRE",
+  "rule": "arrears_without_balance"
+ },
+ {
+  "loan_id": "LMF25-00888",
+  "field": "RREC12",
+  "old": 59.43,
+  "new": 187.4,
+  "rule": "ltv_implausible"
+ },
+ {
+  "loan_id": "LMF25-01968",
+  "field": "RREL43",
+  "old": 6.99,
+  "new": 59.0,
+  "rule": "rate_out_of_range"
+ },
+ {
+  "loan_id": "LMF25-00151",
+  "field": "RREL11",
+  "old": "UKH",
+  "new": null,
+  "rule": "missing_region"
+ },
+ {
+  "loan_id": "LMF25-01266",
+  "field": "RREL68",
+  "old": "0",
+  "new": 60,
+  "rule": "performing_with_days_in_arrears"
+ },
+ {
+  "loan_id": "LMF25-01941",
+  "field": "RREC16",
+  "old": 49.42,
+  "new": 98.5,
+  "rule": "original_ltv_above_95"
+ },
+ {
+  "loan_id": "LMF25-00778",
+  "field": "RREL6",
+  "old": "2026-09-30",
+  "new": "2026-08-31",
+  "rule": "wrong_cutoff_date"
+ },
+ {
+  "loan_id": "LMF25-01890",
+  "field": "RREL29",
+  "old": 167900.0,
+  "new": 1679000.0,
+  "rule": "original_balance_typo"
+ },
+ {
+  "loan_id": "LMF25-01629",
+  "field": "RREL2",
+  "old": null,
+  "new": "duplicate row",
+  "rule": "duplicate_loan"
+ }
+]

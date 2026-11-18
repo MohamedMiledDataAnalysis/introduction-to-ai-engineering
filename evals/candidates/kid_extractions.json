@@ -1,0 +1,29 @@
+{
+ "HGEF": {
+  "isin": "ZZF000000018",
+  "summary_risk_indicator": 7,
+  "recommended_holding_period_years": 5,
+  "ongoing_costs_pct": 0.75,
+  "transaction_costs_pct": 0.11,
+  "entry_costs_eur": 0.0,
+  "moderate_scenario_rhp_eur": 14020.0
+ },
+ "HECB": {
+  "isin": "ZZF000000026",
+  "summary_risk_indicator": 2,
+  "recommended_holding_period_years": 3,
+  "ongoing_costs_pct": 0.75,
+  "transaction_costs_pct": 0.11,
+  "entry_costs_eur": 0.0,
+  "moderate_scenario_rhp_eur": 10690.0
+ },
+ "HBMA": {
+  "isin": "ZZF000000034",
+  "summary_risk_indicator": 3,
+  "recommended_holding_period_years": 4,
+  "ongoing_costs_pct": 0.6,
+  "transaction_costs_pct": 0.09,
+  "entry_costs_eur": 0.0,
+  "moderate_scenario_rhp_eur": 10430.0
+ }
+}

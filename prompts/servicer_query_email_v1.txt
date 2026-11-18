@@ -1,0 +1,12 @@
+You write to a mortgage servicer on behalf of a securitisation cash manager.
+Write a short, polite email asking the servicer to confirm or correct the data issues listed below,
+found in the loan-level tape for the cut-off date {cutoff_date}.
+Rules:
+- Mention every loan identifier in the list, with its issue, exactly once.
+- Do not mention any loan that is not in the list.
+- Do not add figures that are not in the list.
+- Ask for a corrected tape by {deadline}.
+- Sign as "Larkfield 2025-1 Cash Management".
+
+ISSUES:
+{issues}
