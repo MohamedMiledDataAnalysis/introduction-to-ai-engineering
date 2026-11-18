@@ -41,15 +41,25 @@ aie/         the Python library built through the book
 aie_r/       the same library in R
 prompts/     versioned prompts and JSON schemas
 chapters/    code for each chapter, chNN/python and chNN/r
+solutions/   the corrections of all 126 exercises, the same as in the book
 evals/       evaluation sets, candidate answers and drafts
 tools/       mock model server and its scripted replies (for tests)
 services/    the agents as web services: FastAPI (Python) and plumber (R)
 agents/      evaluation scripts of the two final-project agents
 apps/        the two R Shiny applications (sf_app, am_app)
 governance/  AI inventory and model card generators
-tests/       tests of the assistants and of both applications
+tests/       tests of the assistants, of both applications and of solutions/
 docs/        data dictionary
 ```
+
+## Corrections of the exercises
+
+The folder `solutions/` holds the corrections of every exercise of the book, chapter by chapter
+(start with `solutions/README.md`). They are generated from the book's own source, so each correction
+is the same text, code and figures as the printed one. Each has seven parts: what the question asks,
+the plan, step by step (with the code explained line by line), reading the result, checking the answer,
+mistakes to avoid, and trade-offs. Where a correction prints a script under its path, that script is
+in `chapters/` and runs from the repository root.
 
 ## Run the final project
 
@@ -61,6 +71,8 @@ python tests/test_assistants.py
 Rscript tests/test_assistants.R
 Rscript tests/test_sf_app.R
 Rscript tests/test_am_app.R
+python tests/test_solutions_files.py   # scripts in solutions/ = files in chapters/
+Rscript tests/test_solutions_files.R
 
 # the applications (Ollama running for the Assistant tab)
 Rscript -e 'shiny::runApp("apps/sf_app", port = 8101)'

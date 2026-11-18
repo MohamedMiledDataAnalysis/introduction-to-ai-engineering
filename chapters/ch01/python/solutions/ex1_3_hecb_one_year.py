@@ -11,4 +11,5 @@ bench_1y = (1 + bench).prod() - 1
 print(f"Fund 1 year:      {fund_1y:.2%}")
 print(f"Benchmark 1 year: {bench_1y:.2%}")
 print(f"Relative:         {fund_1y - bench_1y:+.2%}")
-print(f"Relative from the rounded figures: {round(fund_1y * 100, 2) - round(bench_1y * 100, 2):+.2f}%")
+print(f"Relative from the rounded figures: "
+      f"{round(fund_1y * 100, 2) - round(bench_1y * 100, 2):+.2f}%")

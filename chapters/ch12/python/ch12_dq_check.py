@@ -13,9 +13,12 @@ found = run_rules(tape, "2026-09-30")
 print(found.groupby("rule").size().to_string(), "\n")
 
 key = lambda df: set(zip(df["loan_id"], df["rule"]))
-tp, fp, fn = key(found) & key(truth), key(found) - key(truth), key(truth) - key(found)
-print(f"true positives {len(tp)}, false positives {len(fp)}, false negatives {len(fn)}")
-print(f"precision {len(tp) / len(key(found)):.0%}, recall {len(tp) / len(key(truth)):.0%}")
+tp, fp, fn = key(found) & key(truth), key(found) - key(truth), \
+             key(truth) - key(found)
+print(f"true positives {len(tp)}, false positives {len(fp)}, "
+      f"false negatives {len(fn)}")
+print(f"precision {len(tp) / len(key(found)):.0%}, "
+      f"recall {len(tp) / len(key(truth)):.0%}")
 for loan, rule in sorted(fp):
     print("  extra flag:", loan, rule)
 for loan, rule in sorted(fn):

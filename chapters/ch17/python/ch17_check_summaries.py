@@ -11,6 +11,7 @@ for nid, versions in summaries.items():
     note = open(f"data/am/research/{nid}.md", encoding="utf-8").read()
     for label, text in versions.items():
         problems = check_summary(text, note, key_facts[nid])
-        print(f"{nid} summary {label}: {'accepted' if not problems else 'REJECTED'}")
+        print(f"{nid} summary {label}: "
+              f"{'accepted' if not problems else 'REJECTED'}")
         for p in problems:
             print("    -", p)

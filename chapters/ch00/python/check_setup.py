@@ -16,7 +16,8 @@ print("Loan tape rows:", len(tape))
 
 payload = {
     "model": MODEL,
-    "messages": [{"role": "user", "content": "Reply with exactly these three words: Ollama is ready"}],
+    "messages": [{"role": "user",
+                  "content": "Reply with exactly these three words: Ollama is ready"}],
     "stream": False,
 }
 try:
@@ -24,7 +25,8 @@ try:
     response.raise_for_status()
     print("Model reply:", response.json()["message"]["content"].strip())
 except requests.exceptions.ConnectionError:
-    print("Ollama is not running. Start the Ollama application, then run this script again.")
+    print("Ollama is not running. Start the Ollama application, "
+          "then run this script again.")
 except requests.exceptions.HTTPError as err:
     print("Ollama answered with an error:", err)
     print(f"Check that you downloaded the model with: ollama pull {MODEL}")

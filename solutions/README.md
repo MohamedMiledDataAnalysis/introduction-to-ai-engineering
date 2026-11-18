@@ -1,0 +1,34 @@
+# Corrections of the exercises
+
+These are the corrections printed in *Introduction to AI Engineering*, generated from the book's source,
+so the text, the code and the figures are the same as in the book. Each correction has seven parts:
+what the question asks, the plan, step by step (with the code explained line by line), reading the result,
+checking the answer, mistakes to avoid, and trade-offs.
+
+| Chapter | Corrections |
+|---|---|
+| [Chapter 0: Setting Up Your Computer](ch00_corrections.md) | 4 |
+| [Chapter 1: What an AI Engineer Does](ch01_corrections.md) | 6 |
+| [Chapter 2: How Language Models Work](ch02_corrections.md) | 5 |
+| [Chapter 3: Calling a Model from Code](ch03_corrections.md) | 5 |
+| [Chapter 4: Prompts as Code](ch04_corrections.md) | 5 |
+| [Chapter 5: Evaluation: Knowing Whether It Works](ch05_corrections.md) | 6 |
+| [Chapter 6: Guardrails: Checking Every Figure](ch06_corrections.md) | 5 |
+| [Chapter 7: Retrieval: Giving the Model the Right Passages](ch07_corrections.md) | 5 |
+| [Chapter 8: Tools: Letting the Model Use Your Code](ch08_corrections.md) | 5 |
+| [Chapter 9: Agents: Letting the Model Plan the Steps](ch09_corrections.md) | 5 |
+| [Chapter 10: Structured Finance: A Prospectus Assistant with Citations](ch10_corrections.md) | 5 |
+| [Chapter 11: Asset Management: Asking the Fund Database in English](ch11_corrections.md) | 5 |
+| [Chapter 12: Structured Finance: Checking a Received Loan Tape](ch12_corrections.md) | 5 |
+| [Chapter 13: Asset Management: Drafting the Factsheet Commentary](ch13_corrections.md) | 5 |
+| [Chapter 14: Structured Finance: Producing the Investor Report](ch14_corrections.md) | 5 |
+| [Chapter 15: Asset Management: Extracting Data from Key Information Documents](ch15_corrections.md) | 5 |
+| [Chapter 16: Structured Finance: Reading Servicer Reports in PDF](ch16_corrections.md) | 5 |
+| [Chapter 17: Asset Management: Summarising Research Notes](ch17_corrections.md) | 5 |
+| [Chapter 18: Serving: From a Script to a Service](ch18_corrections.md) | 5 |
+| [Chapter 19: Monitoring: Logs, Costs and Quality Over Time](ch19_corrections.md) | 5 |
+| [Chapter 20: Governance: Model Risk, Regulation and Data](ch20_corrections.md) | 5 |
+| [Chapter 21: The Structured Finance Agent](ch21_corrections.md) | 5 |
+| [Chapter 22: The Asset Management Agent](ch22_corrections.md) | 5 |
+| [Chapter 23: The Structured Finance Application in R Shiny](ch23_corrections.md) | 5 |
+| [Chapter 24: The Asset Management Application, and Your Next Steps](ch24_corrections.md) | 5 |

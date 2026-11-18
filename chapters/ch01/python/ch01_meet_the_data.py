@@ -22,7 +22,8 @@ print(f"  Notes - PDL - pool:      GBP {notes_out - pdl - pool:,.2f}")
 nav = pd.read_csv("data/am/fund_nav_monthly.csv")
 bm = pd.read_csv("data/am/benchmark_returns_monthly.csv")
 
-fund_1m = nav.loc[(nav["fund_code"] == "HGEF") & (nav["month_end"] == cut), "net_return"].iloc[0]
+fund_1m = nav.loc[(nav["fund_code"] == "HGEF")
+                  & (nav["month_end"] == cut), "net_return"].iloc[0]
 bm_1m = bm.loc[bm["month_end"] == cut, "HGEF"].iloc[0]
 
 print("\nHarbourline Global Equity Fund, September 2026")

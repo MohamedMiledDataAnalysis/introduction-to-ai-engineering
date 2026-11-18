@@ -15,7 +15,7 @@ req <- request(ollama_url) |>
   req_body_json(list(
     model    = model,
     messages = list(list(role = "user",
-                         content = "Reply with exactly these three words: Ollama is ready")),
+      content = "Reply with exactly these three words: Ollama is ready")),
     stream   = FALSE
   )) |>
   req_timeout(300)
@@ -26,7 +26,8 @@ result <- tryCatch(
     cat("Model reply:", trimws(resp_body_json(resp)$message$content), "\n")
   },
   httr2_failure = function(e) {
-    cat("Ollama is not running. Start the Ollama application, then run this script again.\n")
+    cat("Ollama is not running. Start the Ollama application,",
+        "then run this script again.\n")
   },
   httr2_http = function(e) {
     cat("Ollama answered with an error:", conditionMessage(e), "\n")

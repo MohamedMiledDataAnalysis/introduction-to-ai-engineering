@@ -1,13 +1,14 @@
 # Chapter 2 - Which section of the prospectus is closest to a question?
 # Bag-of-words vectors weighted by TF-IDF, compared with cosine similarity.
-text     <- paste(readLines("data/sf/rmbs/larkfield_2025_1_prospectus_excerpt.md",
-                            encoding = "UTF-8"), collapse = "\n")
+text     <- paste(readLines(
+  "data/sf/rmbs/larkfield_2025_1_prospectus_excerpt.md",
+  encoding = "UTF-8"), collapse = "\n")
 sections <- strsplit(text, "\n## ", fixed = TRUE)[[1]][-1]
 titles   <- sub("\n.*", "", sections)
 
-stop_words <- c("the", "of", "to", "and", "a", "in", "on", "is", "by", "for", "each", "or",
-                "be", "are", "it", "its", "at", "as", "an", "any", "all", "this", "that",
-                "with", "can", "how")
+stop_words <- c("the", "of", "to", "and", "a", "in", "on", "is", "by", "for",
+                "each", "or", "be", "are", "it", "its", "at", "as", "an",
+                "any", "all", "this", "that", "with", "can", "how")
 tokens <- function(s) {
   w <- regmatches(tolower(s), gregexpr("[a-z]+", tolower(s)))[[1]]
   w[!w %in% stop_words]
@@ -16,7 +17,8 @@ tokens <- function(s) {
 docs  <- lapply(sections, function(s) table(tokens(s)))
 n     <- length(docs)
 vocab <- unique(unlist(lapply(docs, names)))
-df    <- sapply(vocab, function(w) sum(sapply(docs, function(d) w %in% names(d))))
+df    <- sapply(vocab, function(w)
+  sum(sapply(docs, function(d) w %in% names(d))))
 idf   <- log(n / df) + 1
 
 vec <- function(counts) {

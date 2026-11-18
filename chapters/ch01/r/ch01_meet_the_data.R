@@ -1,6 +1,3 @@
-# Chapter 1 - Applied example: meet the two datasets and reconcile them
-# Run from the root of the repository:  Rscript chapters/ch01/r/ch01_meet_the_data.R
-
 # ---- Structured finance: Larkfield Mortgage Funding 2025-1 ----
 tape  <- read.csv("data/sf/rmbs/larkfield_2025_1_loan_tape.csv")
 notes <- read.csv("data/sf/rmbs/larkfield_2025_1_notes.csv")
@@ -29,4 +26,5 @@ pct <- function(x) sprintf("%.2f%%", 100 * x)
 cat("\nHarbourline Global Equity Fund, September 2026\n")
 cat("  Fund return (net):      ", pct(fund_1m), "\n")
 cat("  Benchmark return:       ", pct(bm_1m), "\n")
-cat("  Relative return:        ", sprintf("%+.2f%%", 100 * (fund_1m - bm_1m)), "\n")
+cat("  Relative return:        ",
+    sprintf("%+.2f%%", 100 * (fund_1m - bm_1m)), "\n")

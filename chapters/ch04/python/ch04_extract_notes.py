@@ -9,13 +9,17 @@ from aie.validate import parse_json_reply, validate
 
 template, version = load_prompt("extract_servicer_note_v1")
 schema = json.load(open("prompts/servicer_note_schema.json"))
-notes = [json.loads(line) for line in open("data/sf/rmbs/servicer_notes_2026_09.jsonl", encoding="utf-8")]
+notes = [json.loads(line) for line in
+         open("data/sf/rmbs/servicer_notes_2026_09.jsonl", encoding="utf-8")]
 
-fields = ["loan_id", "months_in_arrears", "arrears_balance", "action", "promise_date"]
+fields = ["loan_id", "months_in_arrears", "arrears_balance", "action",
+          "promise_date"]
 correct = {f: 0 for f in fields}
 invalid = 0
 for note in notes:
-    reply = chat([{"role": "user", "content": render(template, note_text=note["text"])}], format=schema)
+    reply = chat([{"role": "user",
+                   "content": render(template, note_text=note["text"])}],
+                 format=schema)
     try:
         obj = parse_json_reply(reply["text"])
     except ValueError:
@@ -27,6 +31,7 @@ for note in notes:
     for f in fields:
         correct[f] += obj.get(f) == note["truth"][f]
 
-print(f"Prompt version {version}; {len(notes)} notes; {invalid} invalid replies")
+print(f"Prompt version {version}; {len(notes)} notes; "
+      f"{invalid} invalid replies")
 for f in fields:
     print(f"  {f:<18} {correct[f]:>2}/{len(notes)} correct")
