@@ -148,7 +148,16 @@ python chapters/ch03/python/ch03_repeatability.py
 
 The script asks the same one-sentence question five times with `temperature=0.0, seed=42`, then five times with `temperature=1.0, seed=None`. For each temperature, `Counter(answers)` counts each distinct reply once, so `len(Counter(answers))` is the number of different answers.
 
-**Reading the result.** At temperature 0 with seed 42: **1** distinct answer out of 5. At temperature 1 without a fixed seed: several, usually 4 or 5.
+**Reading the result.** The run with `qwen3.5:4b` printed:
+
+**What you should see**
+
+``` text
+Temperature 0.0: 1 distinct answers out of 5
+Temperature 1.0: 5 distinct answers out of 5
+```
+
+At temperature 0 with seed 42, the five answers are identical. At temperature 1 without a fixed seed, all five differ. The R script gave the same two counts, and so did a second run on another machine.
 
 **Checking the answer.** Print the five temperature-1 answers side by side. The facts are the same in each (borrowers move to the higher standard variable rate and refinance to a new fixed deal); the wording differs. At temperature 0, compare the strings with `==`: they are identical, character for character.
 
@@ -157,7 +166,7 @@ The script asks the same one-sentence question five times with `temperature=0.0,
 - Running the script with the mock server: the mock always returns its scripted reply, so both counts are 1 and you learn nothing about the model.
 - Concluding that temperature 0 makes answers *correct*. It makes them *repeatable*; a wrong answer at temperature 0 is wrong every time.
 
-**Trade-offs.** At temperature 0 the most likely token is always chosen, so the same input gives the same output, which is what tests need. Some providers do not guarantee identical outputs even at temperature 0 (their servers batch requests differently), so log the model’s answer rather than assume it. Use temperature 0 for anything you test or publish; use a higher temperature when you want several drafts to choose from.
+**Trade-offs.** At temperature 0 the most likely token is always chosen, so the same input gives the same output, which is what tests need. Identical outputs at temperature 0 hold on one machine, not across machines: paid providers batch requests differently from one call to the next, and a local model on another processor can change a word (the first call of this chapter did). Log the model’s answer rather than assume it. Use temperature 0 for anything you test or publish; use a higher temperature when you want several drafts to choose from.
 
 ### Exercise 3.4
 

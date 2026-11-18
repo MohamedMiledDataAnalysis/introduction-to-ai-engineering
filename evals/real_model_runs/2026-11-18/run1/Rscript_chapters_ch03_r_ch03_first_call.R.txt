@@ -1,0 +1,8 @@
+Answer:        Based on the text provided, the interest rate for Class B notes is **Compounded Daily SONIA + 1.10% per annum**.
+
+In securitisation structures like this, the "margin" typically refers to the spread over the reference rate (SONIA). Therefore, the margin on the Class B notes is **1.10% per annum**. 
+Model:         ollama qwen3.5:4b 
+Input tokens:  357 
+Output tokens: 76 
+Seconds:       6.17 
+exit 0, 7 s

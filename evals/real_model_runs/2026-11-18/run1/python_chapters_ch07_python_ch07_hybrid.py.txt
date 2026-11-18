@@ -1,0 +1,4 @@
+k=1: bm25 14/17  embeddings 16/17  hybrid 16/17
+k=2: bm25 15/17  embeddings 17/17  hybrid 17/17
+k=3: bm25 17/17  embeddings 17/17  hybrid 17/17
+exit 0, 3 s

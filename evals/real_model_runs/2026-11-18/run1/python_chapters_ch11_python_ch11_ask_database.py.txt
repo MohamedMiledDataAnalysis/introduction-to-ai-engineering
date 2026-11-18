@@ -1,0 +1,5 @@
+SQL:     SELECT SUM(h.weight) AS total_weight FROM holdings h JOIN securities s ON h.isin = s.isin WHERE h.fund_code = 'HGEF' AND s.sector = 'Information Technology'
+Result:  {'columns': ['total_weight'], 'rows': [(5.846969,)], 'truncated': False}
+Answer:  The weight of Information Technology in the Global Equity Fund is 5.85%.
+Unsupported figures: ['5.85%']
+exit 0, 13 s

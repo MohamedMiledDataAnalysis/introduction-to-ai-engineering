@@ -105,6 +105,10 @@ cd services/r && Rscript -e 'plumber::pr_run(plumber::pr("plumber.R"), port = 80
 AIE_SERVICE_URL=http://127.0.0.1:8000 Rscript -e 'shiny::runApp("apps/sf_app", port = 8101)'
 ```
 
+## Run the model chapters on GitHub
+
+The workflow `.github/workflows/real-model.yml` runs every script that calls the model (Chapters 3, 4, 5, 7, 8, 9, 10 and 11, and the agent evaluations of Chapters 21 and 22) against `qwen3.5:4b` on a GitHub machine with 4 processors, 16 GB of memory and no graphics card. Open the **Actions** tab, choose **Run the real model**, then **Run workflow**. It takes about an hour; the outputs are printed in the log and saved as the result `real-model-outputs`. The outputs printed in the book come from these runs. Fork the repository to run it under your own account.
+
 ## Requirements
 
 Chapter 0 of the book installs everything: Python 3.12 or later, R 4.4 or later, Git, and Ollama for running language models on your own computer at no cost.

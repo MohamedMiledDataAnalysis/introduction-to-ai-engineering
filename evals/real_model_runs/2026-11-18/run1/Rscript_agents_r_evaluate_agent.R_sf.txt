@@ -1,0 +1,11 @@
+SF agent, prompt b7e2474c23
+  correct answers : 8/12 (95% interval 39%-86%)
+  right tool used : 12/12
+
+declined verified 
+       2       10 
+  A04 expected 6, found [30, 2026] | tools: arrears_buckets | At 30 September 2026, there were six loans two months in arrears.
+  A07 none of does not pay principal, not pay principal, cannot, no | tools: search_prospectus | The reserve fund is used to pay items (a), (b), and (c) and interest on Class A 
+  A08 expected 6, found [] | tools: search_prospectus | A loan becomes a Defaulted Loan after six or more monthly payments are due and u
+  A10 answered instead of declining | tools: pool_summary | The arrears ratio at 30 September 2026 was 0.84%.
+exit 0, 241 s

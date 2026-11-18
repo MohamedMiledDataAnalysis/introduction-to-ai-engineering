@@ -1,0 +1,7 @@
+Prompt version 49335149af; 18 notes; 0 invalid replies
+  loan_id            18/18 correct
+  months_in_arrears  14/18 correct
+  arrears_balance    18/18 correct
+  action             18/18 correct
+  promise_date       18/18 correct
+exit 0, 141 s

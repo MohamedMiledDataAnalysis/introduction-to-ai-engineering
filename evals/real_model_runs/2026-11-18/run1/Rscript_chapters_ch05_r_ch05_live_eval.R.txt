@@ -1,0 +1,5 @@
+Live run: 18/20 passed; 95% interval 70% to 97%
+  id                        reason
+ Q05 expected 6082667.80, found []
+ Q08          expected 6, found []
+exit 0, 409 s

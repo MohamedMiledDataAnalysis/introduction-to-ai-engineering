@@ -1,0 +1,14 @@
+  waterfall_summary  {'cutoff_date': '2026-09-30'}                                {"cutoff_date": "2026-09-30", "revenue_receipts_gbp": 185502
+  search_prospectus  {'query': 'excess spread allocation priority payment waterfa {"query": "excess spread allocation priority payment waterfa
+  search_prospectus  {'query': 'excess spread distribution priority payments', 'k {"query": "excess spread distribution priority payments", "p
+  search_prospectus  {'query': 'excess spread distribution priority payments', 'k {"query": "excess spread distribution priority payments", "p
+  search_prospectus  {'query': 'excess spread distribution priority payments', 'k {"query": "excess spread distribution priority payments", "p
+  search_prospectus  {'query': 'excess spread distribution priority payments', 'k {"query": "excess spread distribution priority payments", "p
+  status=verified steps=6 unsupported=[]
+  answer: In September 2026, an excess spread of **£692,429.96** was released [LMF#10].
+
+According to the waterfall summary for the collection period ending on 2026-09-30, this amount is derived from revenue and principal receipts after accounting for new defaults and reserve fund balances [LMF#10].
+
+Regarding its allocation, the prospectus states that available revenue receipts are applied in a specific order of priority [LMF#6.1]. While the full list of priorities was not provided in the search results, the excess spread is typically used to pay interest on the notes and principal repayments according to the established payment waterfall structure.
+
+exit 0, 72 s

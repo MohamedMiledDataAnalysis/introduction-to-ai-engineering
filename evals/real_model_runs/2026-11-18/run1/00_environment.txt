@@ -1,0 +1,27 @@
+model: qwen3.5:4b
+  Model
+    architecture        qwen35             
+    parameters          4.2B               
+    context length      262144             
+    embedding length    2560               
+    quantization        Q4_K_M             
+    requires            0.30.0             
+    renderer            qwen3.5            
+    parser              qwen3.5            
+    template source     renderer_parser    
+
+  Capabilities
+    completion     
+    vision         
+    tools          
+    thinking       
+        levels     false, true    
+        default    true           
+
+  Projector
+ollama: ollama version is 0.40.16
+date: Wed Nov 18 18:26:35 UTC 2026
+4
+               total        used        free      shared  buff/cache   available
+Mem:              15           1           5           0           9          14
+Swap:              2           0           2

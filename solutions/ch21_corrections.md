@@ -51,7 +51,7 @@ A11 and A12 are declined by the guards on every run, whatever the model. The oth
 - Releasing on 11 of 12 when the failure is A07 or A09, which state a rule of the structure. Read *which* case failed, as Chapter 10’s criteria did for Q10 and Q14.
 - Fixing several things at once after one run.
 
-**Trade-offs.** Typical gaps with a small model: A05 and A06 (August 2026) answered with September’s figures because the model did not change the date; A10 (October 2026) answered with a September figure instead of saying the data ends. Fix one at a time: for dates, an example in the system prompt (*“for ‘August 2026’ use cutoff_date 2026-08-31”*); re-run. The Python and R agents share prompts, tools and data; with the same model at temperature 0 they usually make the same calls. Investigate any case that passes in one language and fails in the other: the difference is in how the two `chat()` functions build messages.
+**Trade-offs.** Typical gaps with a small model: A05 and A06 (August 2026) answered with September’s figures because the model did not change the date; A10 (October 2026) answered with a September figure instead of saying the data ends. Fix one at a time: for dates, an example in the system prompt (*“for ‘August 2026’ use cutoff_date 2026-08-31”*); re-run. The Python and R agents share prompts, tools and data; in the run printed in Step 2 they made the same calls and agreed on eleven cases of twelve, and the one difference (A10) disappeared in a second run. Investigate any case that passes in one language and fails in the other on every run: then the difference is in how the two languages build the messages.
 
 ### Exercise 21.2
 

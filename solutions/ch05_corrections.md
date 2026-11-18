@@ -236,10 +236,21 @@ The script sends the full excerpt and each question to the model at temperature 
 
 **Reading the result.** For each failed `id`, read the answer in the CSV:
 
-- wrong according to the prospectus: **model error**; note the kind (wrong table row, wrong rule, invented fact);
+- wrong according to the prospectus: **model error**; note the kind (wrong table row, wrong rule, invented fact, a refusal where the document answers);
 - right but failed: **scorer error**; fix the scorer as in Exercises 5.2 and 5.3.
 
-With a small local model, typical findings are confusions between neighbouring table rows (Q01/Q02, Q15/Q16) and answers to Q18–Q20 instead of refusals when the system prompt does not insist on declining.
+One run with `qwen3.5:4b` printed:
+
+**What you should see**
+
+``` text
+Live run: 18/20 passed; 95% interval 70% to 97%
+ id                        reason
+Q05 expected 6082667.80, found []
+Q08          expected 6, found []
+```
+
+The saved answers classify the two failures. Q05: *“The document does not state this.”* Section 3 states the Reserve Fund Required Amount, £6,082,667.80: a **model error**, a refusal where the document answers. Q08: *“A loan becomes a **Defaulted Loan** when six or more monthly payments are due and unpaid.”* Right, written in words: a **scorer error**, the false fail of Exercise 5.2. The three not-in-document cases (Q18 to Q20) were declined with the exact sentence of the prompt. Another run of the same script, in R, also declined Q17 (*“maximum original loan-to-value”*, 95% in Section 9): 17/20, with a second refusal error of the same kind. A small model told to decline when unsure sometimes declines too often; the pattern, not the single case, is the finding.
 
 **Checking the answer.** For each model error, find the sentence of the prospectus that contradicts the answer, and write its section number next to the error. For each scorer error, re-score the corrected scorer and confirm the case now passes. An error you cannot point to in the document is not yet classified.
 

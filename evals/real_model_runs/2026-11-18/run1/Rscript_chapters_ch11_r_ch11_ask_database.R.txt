@@ -1,0 +1,4 @@
+SQL:     SELECT SUM(h.weight) AS total_weight FROM holdings h JOIN securities s ON h.isin = s.isin WHERE h.fund_code = 'HGEF' AND s.sector = 'Information Technology' 
+  total_weight
+1     5.846969
+exit 0, 4 s

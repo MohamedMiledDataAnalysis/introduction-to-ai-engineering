@@ -1,0 +1,8 @@
+  waterfall_summary  {"cutoff_date":"2026-09-30"}                                 {"cutoff_date":"2026-09-30","revenue_receipts_gbp":1855022.3
+  search_prospectus  {"query":"excess spread allocation priority payment waterfal {"query":"excess spread allocation priority payment waterfal
+  status=verified steps=2 unsupported=[]
+  answer: The excess spread released in September 2026 was **£692,429.96**.
+
+According to the prospectus [LMF#10], the excess spread is a key risk factor as it absorbs losses during periods when loan interest rates are fixed but note coupon rates are floating. However, the specific allocation of this excess spread to different parties (such as reserve funds or note holders) is not detailed in the provided excerpt.
+
+exit 0, 28 s

@@ -1,0 +1,6 @@
+prompt bc9eed1576
+answers correct : 19/20 (76%-99%)
+answers grounded: 19/20
+retrieval hits  : 17/17
+  Q08  expected 6, found []  | problems: 
+exit 0, 152 s

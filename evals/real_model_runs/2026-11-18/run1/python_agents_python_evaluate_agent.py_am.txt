@@ -1,0 +1,7 @@
+AM agent, prompt 8caa33f43f
+  correct answers : 10/11 (95% interval 62%-98%)
+  right tool used : 11/11
+  status          : {'verified': 6, 'declined': 3, 'needs_review': 2}
+  tokens          : 19,112
+  B01 expected 6.46, found [30.0, 2026.0, 4.53] | tools: fund_performance | The one-year return of the Harbourline Global Equity Fund (HGEF) to 30 September
+exit 0, 223 s

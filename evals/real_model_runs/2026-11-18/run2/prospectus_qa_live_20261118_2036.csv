@@ -1,0 +1,42 @@
+"id","answer"
+"Q01","The margin on the Class B notes is 1.10% per annum."
+"Q02","The document does not state this.
+
+(Note: The text states that the interest rate for Class A notes is ""Compounded Daily SONIA + 0.55% per annum"". However, it does not explicitly define a ""margin"" separate from this spread over SONIA, nor does it provide a specific margin figure distinct from the 0.55% spread mentioned in the interest rate column.)"
+"Q03","£16,220,447.45"
+"Q04","The credit enhancement of the Class B notes at closing is **7.00%**."
+"Q05","The document does not state this."
+"Q06","The document does not state this.
+
+**Correction:** The document **does** state this. According to Section 3 (Reserve fund): ""The Reserve Fund Required Amount does not amortise."""
+"Q07","No, the reserve fund cannot be used to pay principal on the notes.
+
+According to Section 3 of the document: ""The reserve fund is a source of liquidity for senior expenses and for interest on the Class A and Class B notes; it does not pay principal..."""
+"Q08","A loan becomes a **Defaulted Loan** when six or more monthly payments are due and unpaid."
+"Q09","Based on the text provided, the order in which losses (Defaulted Loans) are debited to the principal deficiency sub-ledgers is:
+
+1.  **Class D**
+2.  **Class C**
+3.  **Class B**
+4.  **Class A**
+
+This is stated in section 4: ""first the Class D sub-ledger, then the Class C sub-ledger, then the Class B sub-ledger, and finally the Class A sub-ledger."""
+"Q10","Based on the text provided, **recoveries on Defaulted Loans** are classified as **revenue receipts**.
+
+This is stated in Section 5 (""Revenue and principal receipts""):
+> ""**Revenue receipts** comprise interest collected on the loans, including arrears of interest and of scheduled payments recovered from borrowers, and all **Recoveries** on Defaulted Loans."""
+"Q11","The servicing fee is 0.15% per annum of the aggregate current balance of the portfolio at the start of the collection period."
+"Q12","The monthly fee of the cash manager is £1,500."
+"Q13","Item (l) of the revenue priority of payments replenishes the reserve fund up to the Reserve Fund Required Amount."
+"Q14","Based on the text provided, available principal receipts are applied sequentially in the following order:
+
+- (a) to repay the Class A notes until they are redeemed in full;
+- (b) then to repay the Class B notes until they are redeemed in full;
+- (c) then to repay the Class C notes until they are redeemed in full;
+- (d) then to repay the Class D notes until they are redeemed in full."
+"Q15","The weighted average original loan-to-value of the portfolio is 69.41%."
+"Q16","15.30%"
+"Q17","The document does not state this."
+"Q18","The document does not state this."
+"Q19","The document does not state this."
+"Q20","The document does not state this."
