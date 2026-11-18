@@ -66,6 +66,7 @@ jobs:
             timeout 3600 "$@" > "outputs/$name.txt" 2>&1; code=$?
             echo "exit $code, $(( $(date +%s) - start )) s" >> "outputs/$name.txt"
             echo "$* -> exit $code"
+            echo "::group::output of $*"; cat "outputs/$name.txt"; echo "::endgroup::"   # also readable in the log
           }
           PY="chapters/ch03/python/ch03_first_call.py chapters/ch03/python/ch03_repeatability.py
               chapters/ch04/python/ch04_extract_notes.py chapters/ch05/python/ch05_live_eval.py
@@ -83,6 +84,7 @@ jobs:
             run Rscript agents/r/evaluate_agent.R am
           fi
           cp evals/candidates/*_agent_run_*.csv outputs/ 2>/dev/null || true
+          for f in outputs/*_agent_run_*.csv; do echo "::group::$f"; cat "$f"; echo "::endgroup::"; done
           cp ollama.log outputs/ 2>/dev/null || true
 
       - name: Save the outputs
