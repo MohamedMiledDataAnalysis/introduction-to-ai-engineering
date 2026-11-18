@@ -83,8 +83,13 @@ jobs:
             run Rscript agents/r/evaluate_agent.R sf
             run Rscript agents/r/evaluate_agent.R am
           fi
-          cp evals/candidates/*_agent_run_*.csv outputs/ 2>/dev/null || true
-          for f in outputs/*_agent_run_*.csv; do echo "::group::$f"; cat "$f"; echo "::endgroup::"; done
+          # every file the scripts wrote (answers, candidate runs, logs), kept and printed
+          git ls-files --others --exclude-standard | grep -v '^outputs/' | grep -v '^ollama.log$' > outputs/new_files.txt || true
+          git ls-files --others --ignored --exclude-standard | grep -E '^(evals|logs)/' >> outputs/new_files.txt || true
+          while read -r f; do
+            mkdir -p "outputs/files/$(dirname "$f")"; cp "$f" "outputs/files/$f"
+            echo "::group::file $f"; cat "$f"; echo "::endgroup::"
+          done < outputs/new_files.txt
           cp ollama.log outputs/ 2>/dev/null || true
 
       - name: Save the outputs
