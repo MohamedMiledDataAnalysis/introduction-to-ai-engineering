@@ -46,7 +46,7 @@ evals/       evaluation sets, candidate answers and drafts
 tools/       mock model server and its scripted replies (for tests)
 services/    the agents as web services: FastAPI (Python) and plumber (R)
 agents/      evaluation scripts of the two final-project agents
-apps/        the two R Shiny applications (sf_app, am_app)
+apps/        the two R Shiny applications (sf_app, am_app), and apps/solutions/ for Exercises 23.1, 23.3, 23.4, 24.4
 governance/  AI inventory and model card generators
 tests/       tests of the assistants, of both applications and of solutions/
 docs/        data dictionary
@@ -60,6 +60,19 @@ is the same text, code and figures as the printed one. Each has seven parts: wha
 the plan, step by step (with the code explained line by line), reading the result, checking the answer,
 mistakes to avoid, and trade-offs. Where a correction prints a script under its path, that script is
 in `chapters/` and runs from the repository root.
+
+For the exercises that develop the R Shiny applications (23.1, 23.3, 23.4 and 24.4), the repository goes further
+than the book. After the printed correction, a section *Going further on GitHub* gives the complete application
+with the change (`apps/solutions/exNN_M/app.R`), every changed line in context, the full test with its output
+(`tests/solutions/test_exNN_M.R`) and screenshots (`solutions/img/`). Run the tests from the repository root:
+
+```bash
+LANG=C.UTF-8 Rscript tests/solutions/test_ex23_1.R
+LANG=C.UTF-8 Rscript tests/solutions/test_ex23_3.R
+MOCK_SCRIPT=tools/scripts/ch23_review.json python tools/mock_ollama.py &   # Exercise 23.4 needs the scripted model
+LANG=C.UTF-8 Rscript tests/solutions/test_ex23_4.R
+Rscript tests/solutions/test_ex24_4.R
+```
 
 ## Run the final project
 

@@ -10,8 +10,9 @@ for md in sorted(Path("solutions").glob("ch*_corrections.md")):
         checked += 1
         lines = Path(path).read_text(encoding="utf-8").splitlines(keepends=True)
         i = 0
-        while i < len(lines) and lines[i].startswith("#"): i += 1   # title comment of the file
-        while i < len(lines) and lines[i].strip() == "": i += 1
+        if not code.startswith("#"):                                  # listing printed without the file's title comment
+            while i < len(lines) and lines[i].startswith("#"): i += 1
+            while i < len(lines) and lines[i].strip() == "": i += 1
         if "".join(lines[i:]) != code + "\n":
             print("DIFFERS", md.name, path); problems += 1
 print(f"{checked} scripts checked against solutions/: ", "all identical" if problems == 0 else f"{problems} differ")

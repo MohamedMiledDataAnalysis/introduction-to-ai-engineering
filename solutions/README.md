@@ -5,6 +5,11 @@ so the text, the code and the figures are the same as in the book. Each correcti
 what the question asks, the plan, step by step (with the code explained line by line), reading the result,
 checking the answer, mistakes to avoid, and trade-offs.
 
+For the exercises that develop the R Shiny applications (23.1, 23.3, 23.4 and 24.4), the repository goes
+further than the book: after the printed correction, a section *Going further on GitHub* gives the complete
+application with the change (`apps/solutions/`), every changed line in context, the full test with its output
+(`tests/solutions/`) and screenshots.
+
 | Chapter | Corrections |
 |---|---|
 | [Chapter 0: Setting Up Your Computer](ch00_corrections.md) | 4 |
@@ -30,5 +35,5 @@ checking the answer, mistakes to avoid, and trade-offs.
 | [Chapter 20: Governance: Model Risk, Regulation and Data](ch20_corrections.md) | 5 |
 | [Chapter 21: The Structured Finance Agent](ch21_corrections.md) | 5 |
 | [Chapter 22: The Asset Management Agent](ch22_corrections.md) | 5 |
-| [Chapter 23: The Structured Finance Application in R Shiny](ch23_corrections.md) | 5 |
-| [Chapter 24: The Asset Management Application, and Your Next Steps](ch24_corrections.md) | 5 |
+| [Chapter 23: The Structured Finance Application in R Shiny](ch23_corrections.md) | 5 (more on GitHub: 23.1, 23.3, 23.4) |
+| [Chapter 24: The Asset Management Application, and Your Next Steps](ch24_corrections.md) | 5 (more on GitHub: 24.4) |

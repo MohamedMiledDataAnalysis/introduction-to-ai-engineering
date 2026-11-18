@@ -126,6 +126,138 @@ Draft 2 prints `FALSE TRUE`; Draft 1 prints `TRUE FALSE`.
 
 **Trade-offs.** A disabled button is guidance, not control: anyone can copy the text. The control is the record: when *Approve* is clicked, write the draft, the check results, the approver and the time to a log, as Chapter 20 requires. Approval then means that a named person took responsibility for the sentences the code could not check.
 
+**On GitHub.** The companion repository goes further: the application also records each approval with the draft, the approver and the time (`apps/solutions/ex24_4/app.R`), with every changed line in context, a test of both drafts and of the server’s refusal, and screenshots, in `solutions/ch24_corrections.md`.
+
+#### Going further on GitHub: approving, and recording the approval
+
+This part is in the companion repository only. It adds what the book’s trade-off asks for: when *Approve* is clicked, the application records the draft, the number of figures checked, the approver and the time. The test runs with both drafts.
+
+**The complete application.** `apps/solutions/ex24_4/app.R`. The variable `AIE_DRAFT` chooses the draft, so that both can be shown without editing the file:
+
+``` bash
+AIE_DRAFT=2 Rscript -e 'shiny::runApp("apps/solutions/ex24_4", port = 8124)'   # two errors: disabled
+AIE_DRAFT=1 Rscript -e 'shiny::runApp("apps/solutions/ex24_4", port = 8125)'   # no error: enabled
+```
+
+**Every change, in context.**
+
+``` diff
+--- apps/am_app/app.R
++++ apps/solutions/ex24_4/app.R
+@@ -1,5 +1,6 @@
+-# Harbourline funds — the asset management application (Chapter 24)
+-# Run from the repository root:  Rscript -e 'shiny::runApp("apps/am_app", port = 8102)'
++# Exercise 24.4 - the AM application with an Approve button, enabled only when every figure is OK
++# Run from the repository root:  Rscript -e 'shiny::runApp("apps/solutions/ex24_4", port = 8124)'
++# AIE_DRAFT=1 shows the first draft (no errors); the default, 2, shows the second (two errors)
+ library(shiny); library(bslib); library(DT); library(jsonlite)
+-root <- normalizePath(Sys.getenv("AIE_ROOT", "../.."))
++root <- normalizePath(Sys.getenv("AIE_ROOT", "../../.."))
+ setwd(root)
+@@ -50,3 +51,3 @@
+     card(card_header("HGEF, September 2026: Brinson attribution (basis points)"), tableOutput("attr")),
+-    card(card_header("Draft commentary and its fact check"), textOutput("draft"), br(), tableOutput("check"))),
++    card(card_header("Draft commentary and its fact check"), textOutput("draft"), br(), tableOutput("check"), uiOutput("approve_ui"))),
+   nav_panel("Assistant",
+@@ -92,3 +93,3 @@
+   drafts <- drafts[nchar(drafts) > 0]
+-  draft <- drafts[2]                                   # the second draft has two errors for the checker to find
++  draft <- drafts[as.integer(Sys.getenv("AIE_DRAFT", "2"))]   # draft 2 has two errors; draft 1 has none
+   output$draft <- renderText(draft)
+@@ -99,2 +100,23 @@
+                Result = vapply(r, function(x) if (is.na(x$problem)) "OK" else x$problem, ""))
++  })
++
++  check_ok <- reactive({
++    r <- check_commentary(draft, hf$facts)
++    length(r) > 0 && all(vapply(r, function(x) is.na(x$problem), TRUE))
++  })
++  output$approve_ui <- renderUI({
++    b <- actionButton("approve", "Approve commentary", class = "btn-success")
++    if (check_ok()) b else tagAppendAttributes(b, disabled = "disabled")
++  })
++  # Going further than the book: the record of the approval (Chapter 20)
++  observeEvent(input$approve, {
++    req(check_ok())                                    # the server refuses too, not only the button
++    r <- check_commentary(draft, hf$facts)
++    dir.create("logs", showWarnings = FALSE)
++    row <- data.frame(time = format(Sys.time(), "%Y-%m-%dT%H:%M:%S"),
++                      approver = Sys.getenv("AIE_USER", Sys.info()[["user"]]),
++                      figures_checked = length(r), draft = draft)
++    f <- "logs/commentary_approvals.csv"
++    write.table(row, f, sep = ",", row.names = FALSE, col.names = !file.exists(f), append = file.exists(f))
++    showNotification("Commentary approved and recorded.", type = "message")
+   })
+```
+
+- `drafts[as.integer(Sys.getenv("AIE_DRAFT", "2"))]` keeps the default of Chapter 24 (draft 2) and lets the test load draft 1. `as.integer()` is needed because environment variables are always text.
+- `uiOutput("approve_ui")` is added inside the card, after the check table: the button appears under the figures it depends on.
+- `check_ok()` and `output$approve_ui` are the code of the book.
+- `observeEvent(input$approve, ...)` is the record. `req(check_ok())` stops the observer when the check fails: a disabled button can be re-enabled in the browser’s developer tools, so the server must refuse too.
+- `Sys.getenv("AIE_USER", Sys.info()[["user"]])` takes the approver’s name from the deployment (Posit Connect provides the signed-in user in `session$user`; use it there) and falls back on the operating-system user on your computer.
+- `showNotification()` confirms the approval on screen.
+
+**The test, in full.** It loads the application twice, once per draft, checks the button, then clicks it in both cases: only draft 1 may be recorded.
+
+`tests/solutions/test_ex24_4.R`
+
+``` r
+# Exercise 24.4 - the Approve button, tested with both drafts
+# Run from the repository root:  Rscript tests/solutions/test_ex24_4.R
+library(shiny)
+Sys.setenv(AIE_ROOT = getwd(), AIE_USER = "test.reviewer")
+unlink("logs/commentary_approvals.csv")
+for (d in c("2", "1")) {
+  Sys.setenv(AIE_DRAFT = d)
+  app <- suppressPackageStartupMessages(source("apps/solutions/ex24_4/app.R")$value)                   # the draft is chosen when the file is loaded
+  testServer(app, {
+    disabled <- grepl("disabled", as.character(output$approve_ui$html))
+    cat("Draft", d, "| check_ok:", check_ok(), "| button disabled:", disabled, "\n")
+    stopifnot(check_ok() == (d == "1"), disabled == (d == "2"))
+    session$setInputs(approve = 1)                                       # click, even on a disabled button
+  })
+}
+a <- read.csv("logs/commentary_approvals.csv")
+print(a[, c("approver", "figures_checked")], row.names = FALSE)
+stopifnot(nrow(a) == 1)                                                  # only draft 1 was recorded
+Sys.unsetenv(c("AIE_DRAFT", "AIE_USER"))
+cat("Exercise 24.4 test passed\n")
+```
+
+**Output**
+
+``` text
+Draft 2 | check_ok: FALSE | button disabled: TRUE 
+Draft 1 | check_ok: TRUE | button disabled: FALSE 
+      approver figures_checked
+ test.reviewer               5
+Exercise 24.4 test passed
+```
+
+- `Sys.setenv(AIE_DRAFT = d)` must come before `source()`: the draft is chosen when the file is loaded.
+- The click on draft 2 (`session$setInputs(approve = 1)`) imitates a user who re-enabled the button; the file has one row afterwards, so `req(check_ok())` refused it.
+
+**What you should see.** With draft 2, the check finds two errors and the button is greyed out:
+
+<figure>
+<img src="img/ex24_4_draft2_disabled.png" alt="Draft 2 with two errors in the fact check and a greyed-out Approve button" />
+<figcaption aria-hidden="true">Draft 2 with two errors in the fact check and a greyed-out Approve button</figcaption>
+</figure>
+
+With draft 1, every figure is OK; a click on *Approve commentary* records the approval and confirms it:
+
+<figure>
+<img src="img/ex24_4_draft1_approved.png" alt="Draft 1 with every figure OK, the Approve button enabled and the notification “Commentary approved and recorded”" />
+<figcaption aria-hidden="true">Draft 1 with every figure OK, the Approve button enabled and the notification “Commentary approved and recorded”</figcaption>
+</figure>
+
+**More mistakes to avoid.**
+
+- Relying on the disabled button alone. Test the server’s refusal, as the test above does.
+- Recording the approval without the draft’s text. A record that says *approved* without saying *what* cannot be checked a year later.
+
+**More trade-offs.** The CSV file keeps one row per approval on one server. For an audit trail several people rely on, write to a database table with the user’s identity from the sign-in system, not from an environment variable, which the user can set. That costs a database connection in the application and a decision on who may approve, which belongs to the firm’s governance of Chapter 20, not to the code.
+
 ### Exercise 24.5
 
 **What the question asks.** Write the checklist for deploying both applications and the service on a shared server in your firm, with at least six items.

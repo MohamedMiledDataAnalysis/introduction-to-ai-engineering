@@ -58,6 +58,101 @@ and run the test. Change the date to 2026-03-31: the tile still shows £6.08m, a
 
 **Trade-offs.** Five tiles of equal width are narrower: on a laptop screen the amounts wrap onto two lines. Shorten the labels or drop the decimals. A tile is read in a second: choose fewer, clearer tiles over more. A reserve that never moves may be better as a line in the reconciliation table than as a tile.
 
+**On GitHub.** The companion repository goes further: the complete application with the fifth tile (`apps/solutions/ex23_1/app.R`), every changed line in context, a test over three dates with its output, and a screenshot, in `solutions/ch23_corrections.md`.
+
+#### Going further on GitHub: building the tile in the application
+
+This part is in the companion repository only. It shows the complete application with the change, every line that changes, the full test with its output, and the screen you should see.
+
+**The complete application.** `apps/solutions/ex23_1/app.R` is the application of Chapter 23 with the fifth tile. Start it from the repository root:
+
+``` bash
+Rscript -e 'shiny::runApp("apps/solutions/ex23_1", port = 8111)'
+```
+
+and open `http://localhost:8111`. The file is a copy of `apps/sf_app/app.R`, so you can compare the two and see the whole exercise as a difference between files.
+
+**Every change, in context.** The lines starting with `-` are in the application of Chapter 23; the lines starting with `+` replace them in the solution.
+
+``` diff
+--- apps/sf_app/app.R
++++ apps/solutions/ex23_1/app.R
+@@ -1,5 +1,5 @@
+-# Larkfield 2025-1 — the structured finance application (Chapter 23)
+-# Run from the repository root:  Rscript -e 'shiny::runApp("apps/sf_app", port = 8101)'
++# Exercise 23.1 - the SF application with a fifth tile, Reserve fund
++# Run from the repository root:  Rscript -e 'shiny::runApp("apps/solutions/ex23_1", port = 8111)'
+ library(shiny); library(bslib); library(DT)
+-root <- normalizePath(Sys.getenv("AIE_ROOT", "../.."))   # runApp starts in apps/sf_app; work from the repository root
++root <- normalizePath(Sys.getenv("AIE_ROOT", "../../.."))   # runApp starts in apps/solutions/ex23_1; work from the repository root
+ setwd(root)
+@@ -41,3 +41,4 @@
+         value_box("Pool balance", textOutput("kpi_pool")), value_box("Arrears ratio", textOutput("kpi_arrears")),
+-        value_box("CPR (annualised)", textOutput("kpi_cpr")), value_box("Class A balance", textOutput("kpi_classa"))),
++        value_box("CPR (annualised)", textOutput("kpi_cpr")), value_box("Class A balance", textOutput("kpi_classa")),
++        value_box("Reserve fund", textOutput("kpi_reserve"))),
+       card(card_header("Arrears ratio and CPR since closing"), plotOutput("trend", height = 260)),
+@@ -71,2 +72,3 @@
+   output$kpi_classa  <- renderText(gbp(figures()$notes["A", "closing"] / 1e6, 2) |> paste0("m"))
++  output$kpi_reserve <- renderText(gbp(figures()$reserve / 1e6, 2) |> paste0("m"))
+   series <- reactive({
+```
+
+- Lines 1 and 2 are the file’s title and the command that runs it.
+- `"../../.."` replaces `"../.."`: the solution is one folder deeper (`apps/solutions/ex23_1`), and `runApp()` starts in that folder, so three levels up is the repository root. Forget this and `source("aie_r/assistants.R")` fails with *cannot open file*.
+- The closing bracket of `layout_columns(...)` moves from the fourth `value_box()` to the fifth: the new box must be inside the call, or it appears below the grid at full width.
+- The new `renderText()` sits beside the other four, reads the same `figures()` and formats the same way.
+
+**Develop it in four moves.** (1) Run `names(month_figures("2026-09-30"))` in the R console from the repository root and find `reserve`. (2) Add the `value_box()` and start the application: an empty tile proves the UI part works. (3) Add the `renderText()` and reload the browser page: the value appears. (4) Write the test, so that a later change cannot break the tile without you knowing.
+
+**The test, in full.** It checks three dates, not one: a reserve that never moves must show the same value at the first interest payment date, at the arrears peak and at the last date.
+
+`tests/solutions/test_ex23_1.R`
+
+``` r
+# Exercise 23.1 - the Reserve fund tile
+# Run from the repository root:  LANG=C.UTF-8 Rscript tests/solutions/test_ex23_1.R
+library(shiny)
+Sys.setenv(AIE_ROOT = getwd())
+app <- suppressPackageStartupMessages(source("apps/solutions/ex23_1/app.R")$value)
+testServer(app, {
+  for (d in c("2026-09-30", "2026-03-31", "2025-07-31")) {
+    session$setInputs(date = d)
+    cat(d, "| reserve fund tile:", output$kpi_reserve, "| raw value:", format(figures()$reserve, nsmall = 2), "\n")
+    stopifnot(output$kpi_reserve == "£6.08m")          # never drawn: the same at every date
+  }
+})
+cat("Exercise 23.1 test passed\n")
+```
+
+**Output**
+
+``` text
+2026-09-30 | reserve fund tile: £6.08m | raw value: 6082667.80 
+2026-03-31 | reserve fund tile: £6.08m | raw value: 6082667.80 
+2025-07-31 | reserve fund tile: £6.08m | raw value: 6082667.80 
+Exercise 23.1 test passed
+```
+
+- `figures()` is a reactive expression of the server; inside `testServer()` you can call it directly, as the server does.
+- `format(figures()$reserve, nsmall = 2)` prints the raw value: £6,082,667.80 rounds to the £6.08m of the tile.
+
+**What you should see.**
+
+<figure>
+<img src="img/ex23_1_reserve_tile.png" alt="The dashboard with five tiles: the Reserve fund tile shows £6.08m" />
+<figcaption aria-hidden="true">The dashboard with five tiles: the Reserve fund tile shows £6.08m</figcaption>
+</figure>
+
+The screen confirms the trade-off of the correction: with five tiles at a width of 1,280 pixels, *£322.72m* and *£274.06m* wrap onto two lines, while *£6.08m* fits.
+
+**More mistakes to avoid.**
+
+- A typo between the UI and the server (`textOutput("kpi_reserve")` but `output$kpi_resrve`): the tile stays empty and no error appears, because Shiny does not check that every output has a renderer. The test catches it.
+- Editing `apps/sf_app/app.R` and the solution at the same time. Keep the application of the chapter unchanged, so that the tests of Chapter 23 still describe it.
+
+**More trade-offs.** To stop the wrap, write the large amounts without decimals (`gbp(x / 1e6, 1)` gives *£322.7m*) or give the tiles a fixed minimum width with `layout_columns(col_widths = ...)` so that the fifth one moves to a second row. The first keeps one row and loses precision; the second keeps precision and pushes the chart down the page.
+
 ### Exercise 23.2
 
 **What the question asks.** Select 31 March 2026, write down the four tiles, and explain the arrears ratio with Chapter 14.
@@ -126,6 +221,98 @@ Both conditions hold.
 
 **Trade-offs.** The error sentence does not say *why* the assistant is unavailable. For the analyst, that is right: they cannot fix the service. For the support team, the reason must be logged; add `message(conditionMessage(e))` in the `error` handler of `tryCatch` so that it appears in the application’s log.
 
+**On GitHub.** The companion repository goes further: an application that logs the reason of the failure for the support team (`apps/solutions/ex23_3/app.R`), every changed line in context, the full test with its output, and a screenshot, in `solutions/ch23_corrections.md`.
+
+#### Going further on GitHub: the application that tells the support team why
+
+This part is in the companion repository only. The book’s trade-off recommends logging the reason for the failure; the solution application does it, and the test proves the analyst still sees the plain sentence.
+
+**The complete application.** `apps/solutions/ex23_3/app.R`. Start it in mode 2 with nothing listening on port 9:
+
+``` bash
+AIE_SERVICE_URL=http://127.0.0.1:9 Rscript -e 'shiny::runApp("apps/solutions/ex23_3", port = 8113)'
+```
+
+**Every change, in context.**
+
+``` diff
+--- apps/sf_app/app.R
++++ apps/solutions/ex23_3/app.R
+@@ -1,5 +1,5 @@
+-# Larkfield 2025-1 — the structured finance application (Chapter 23)
+-# Run from the repository root:  Rscript -e 'shiny::runApp("apps/sf_app", port = 8101)'
++# Exercise 23.3 - the SF application, which logs why the service is unavailable
++# Run from the repository root:  AIE_SERVICE_URL=http://127.0.0.1:9 Rscript -e 'shiny::runApp("apps/solutions/ex23_3", port = 8113)'
+ library(shiny); library(bslib); library(DT)
+-root <- normalizePath(Sys.getenv("AIE_ROOT", "../.."))   # runApp starts in apps/sf_app; work from the repository root
++root <- normalizePath(Sys.getenv("AIE_ROOT", "../../.."))   # runApp starts in apps/solutions/ex23_3; work from the repository root
+ setwd(root)
+@@ -20,3 +20,4 @@
+                      httr2::req_timeout(300) |> httr2::req_error(is_error = function(r) FALSE) |>
+-                     httr2::req_perform(), error = function(e) NULL)
++                     httr2::req_perform(),
++                   error = function(e) { message("Assistant service unavailable: ", conditionMessage(e)); NULL })
+   if (is.null(resp) || httr2::resp_status(resp) != 200)
+```
+
+- `"../../.."`: the solution is one folder deeper than `apps/sf_app` (see Exercise 23.1).
+- The error handler of `tryCatch()` now has a body in braces: `message(...)` writes the reason to the application’s log (the terminal where you ran `runApp()`, or the server’s log file), then `NULL` is returned as before, so `ask_agent()` still gives the user the fall-back sentence.
+- `conditionMessage(e)` is the text of the error, here *Failed to connect to 127.0.0.1 port 9*: what the support team needs and the analyst does not.
+
+**The test, in full.** It checks that two tabs keep working, that the assistant fails with status `error`, and that the trace is empty (no tool ran).
+
+`tests/solutions/test_ex23_3.R`
+
+``` r
+# Exercise 23.3 - the application in mode 2 with no service running
+# Run from the repository root:  LANG=C.UTF-8 Rscript tests/solutions/test_ex23_3.R
+library(shiny)
+Sys.setenv(AIE_ROOT = getwd(), AIE_SERVICE_URL = "http://127.0.0.1:9")   # before source(): the file reads it when loaded
+app <- suppressPackageStartupMessages(source("apps/solutions/ex23_3/app.R")$value)
+testServer(app, {
+  session$setInputs(date = "2026-03-31", rdate = "2026-03-31")
+  stopifnot(output$kpi_arrears == "1.80%")                               # Dashboard works
+  stopifnot(nchar(output$commentary) > 0)                                # Investor report works
+  session$setInputs(question = "What was the arrears ratio in September 2026?", ask = 1)
+  r <- log()[[1]]$r
+  cat("Assistant status:", r$status, "\n", "Answer shown:", r$answer, "\n")
+  stopifnot(r$status == "error", length(r$trace) == 0)                   # fails gracefully
+})
+Sys.unsetenv("AIE_SERVICE_URL")
+cat("Exercise 23.3 test passed\n")
+```
+
+**Output**
+
+``` text
+Assistant service unavailable: Failed to perform HTTP request.
+Caused by error in `curl::curl_fetch_memory()`:
+! Failed to connect to 127.0.0.1 port 9 after 0 ms: Couldn't connect to server
+Assistant status: error 
+ Answer shown: The assistant is unavailable; the figures on the dashboard remain available. 
+Exercise 23.3 test passed
+```
+
+The first three lines of the output are the `message()` of the application, what the support team reads; the next two lines are what the analyst sees.
+
+- `Sys.unsetenv("AIE_SERVICE_URL")` at the end restores the session, so a test run after this one in the same R session is not in mode 2 by accident.
+
+**What you should see.**
+
+<figure>
+<img src="img/ex23_3_service_down.png" alt="The Assistant tab with the sentence “The assistant is unavailable” and a red error badge" />
+<figcaption aria-hidden="true">The Assistant tab with the sentence “The assistant is unavailable” and a red error badge</figcaption>
+</figure>
+
+The sidebar shows *Mode: service at http://127.0.0.1:9*: the mode line recommended in the chapter’s tips tells anyone looking at the screen which configuration failed.
+
+**More mistakes to avoid.**
+
+- Logging the whole request to find the cause: the request carries the `x-api-key` header, and the key then sits in the log. Log `conditionMessage(e)` only.
+- Testing mode 2 against a port where another program listens. Port 9 (*discard*) has nothing listening on a normal machine, so the connection is refused at once instead of waiting for the 300-second timeout.
+
+**More trade-offs.** `message()` writes one line per failed question; with fifty analysts and a service down for an hour, the log fills with identical lines. A production application records the first failure and then one line a minute, or reports to the monitoring of Chapter 19, which already counts errors by hour.
+
 ### Exercise 23.4
 
 **What the question asks.** Add a review queue: every answer with status `needs_review` is appended to `logs/review_queue.csv` with the time, the question, the answer and the unsupported figures.
@@ -168,6 +355,100 @@ One row, with the unsupported figure.
 - Queueing `error` answers too: they contain no draft to review.
 
 **Trade-offs.** A CSV file is enough for one analyst. With several users on one server, two sessions can append at the same moment and corrupt a line; use the service’s JSONL log (one line per write) or a database table instead. A typo of one digit, caught by verification and routed to a person, is exactly what the queue is for.
+
+**On GitHub.** The companion repository goes further: the complete application with the queue (`apps/solutions/ex23_4/app.R`), every changed line in context, and an end-to-end test with the scripted model and its output, in `solutions/ch23_corrections.md`.
+
+#### Going further on GitHub: the review queue, tested end to end
+
+This part is in the companion repository only: the complete application, the change in context, and a test that runs the whole path, from a scripted model writing a wrong figure to the row in the queue.
+
+**The complete application.** `apps/solutions/ex23_4/app.R`:
+
+``` bash
+Rscript -e 'shiny::runApp("apps/solutions/ex23_4", port = 8114)'
+```
+
+**Every change, in context.**
+
+``` diff
+--- apps/sf_app/app.R
++++ apps/solutions/ex23_4/app.R
+@@ -1,5 +1,5 @@
+-# Larkfield 2025-1 — the structured finance application (Chapter 23)
+-# Run from the repository root:  Rscript -e 'shiny::runApp("apps/sf_app", port = 8101)'
++# Exercise 23.4 - the SF application with a review queue for answers that need review
++# Run from the repository root:  Rscript -e 'shiny::runApp("apps/solutions/ex23_4", port = 8114)'
+ library(shiny); library(bslib); library(DT)
+-root <- normalizePath(Sys.getenv("AIE_ROOT", "../.."))   # runApp starts in apps/sf_app; work from the repository root
++root <- normalizePath(Sys.getenv("AIE_ROOT", "../../.."))   # runApp starts in apps/solutions/ex23_4; work from the repository root
+ setwd(root)
+@@ -114,2 +114,9 @@
+     log(c(list(list(q = input$question, r = r)), log()))
++    if (identical(r$status, "needs_review")) {
++      dir.create("logs", showWarnings = FALSE)
++      row <- data.frame(time = format(Sys.time(), "%Y-%m-%dT%H:%M:%S"), question = input$question,
++                        answer = r$answer, unsupported = paste(r$unsupported, collapse = "; "))
++      f <- "logs/review_queue.csv"
++      write.table(row, f, sep = ",", row.names = FALSE, col.names = !file.exists(f), append = file.exists(f))
++    }
+     updateTextAreaInput(session, "question", value = "")
+```
+
+- The new block sits after `log(...)` and before `updateTextAreaInput(...)`: at that point `r` is known and `input$question` still holds the question. Placed after `updateTextAreaInput()`, the code still reads the question, because the input changes only when the observer has finished; placing it before makes that explicit.
+- `dir.create("logs", showWarnings = FALSE)` creates the folder on a fresh clone, where `logs/` does not exist because it is in `.gitignore`.
+
+**The test, in full.** Start the mock model on the script of this exercise, then run the test from the repository root:
+
+``` bash
+MOCK_SCRIPT=tools/scripts/ch23_review.json python tools/mock_ollama.py &
+LANG=C.UTF-8 Rscript tests/solutions/test_ex23_4.R
+```
+
+`tests/solutions/test_ex23_4.R`
+
+``` r
+# Exercise 23.4 - the review queue
+# Needs the mock model replaying the scripted answer with a wrong figure. From the repository root:
+#   MOCK_SCRIPT=tools/scripts/ch23_review.json python tools/mock_ollama.py &
+#   LANG=C.UTF-8 Rscript tests/solutions/test_ex23_4.R
+library(shiny)
+Sys.setenv(AIE_ROOT = getwd())
+unlink("logs/review_queue.csv")                                          # start from an empty queue
+app <- suppressPackageStartupMessages(source("apps/solutions/ex23_4/app.R")$value)
+testServer(app, {
+  session$setInputs(question = "How many loans were two months in arrears at 30 September 2026?", ask = 1)
+  r <- log()[[1]]$r
+  cat(r$status, "|", paste(r$unsupported, collapse = ", "), "\n")
+  stopifnot(r$status == "needs_review")
+  session$setInputs(question = "Should I buy the Class B notes?", ask = 2)
+  cat("Advice question:", log()[[1]]$r$status, "\n")
+})
+q <- read.csv("logs/review_queue.csv")
+print(q[, c("question", "unsupported")], row.names = FALSE)
+stopifnot(nrow(q) == 1, q$unsupported == "£1,098,476.03")                # only needs_review answers enter the queue
+cat("Exercise 23.4 test passed\n")
+```
+
+**Output**
+
+``` text
+needs_review | £1,098,476.03 
+Advice question: declined 
+                                                        question   unsupported
+ How many loans were two months in arrears at 30 September 2026? £1,098,476.03
+Exercise 23.4 test passed
+```
+
+- `unlink("logs/review_queue.csv")` empties the queue first: without it, a second run finds two rows and fails for a reason that has nothing to do with the code.
+- `ask = 2` for the second question: `observeEvent()` reacts when the value of the button changes, so a second click must have a new value.
+- The advice question is answered by the advice guard of Chapter 21 before any model call, so it does not use a reply of the mock script.
+
+**More mistakes to avoid.**
+
+- Reading the queue with `read.csv()` and comparing figures as numbers: `unsupported` holds text such as *£1,098,476.03*, which is the form the analyst must see.
+- Starting the mock without `MOCK_SCRIPT`: the canned reply contains no figure, the status is `verified` and the test fails at `stopifnot(r$status == "needs_review")`.
+
+**More trade-offs.** The queue records the answer; it does not yet record who reviewed it and what they decided. Add two columns, `reviewer` and `decision`, filled from a small review tab that lists the queue with `DT::datatable()`: the queue then becomes the audit trail Chapter 20 asks for, at the cost of a fifth tab and of deciding who may review.
 
 ### Exercise 23.5
 
