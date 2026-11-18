@@ -1,0 +1,93 @@
+# Runs the book's model chapters once against the real model, on a GitHub machine.
+# Start it by hand: Actions tab > "Run the real model" > Run workflow.
+# The outputs are saved as a downloadable result named real-model-outputs.
+name: Run the real model
+
+on:
+  workflow_dispatch:
+    inputs:
+      model:
+        description: "Ollama model used by every script"
+        default: "qwen3.5:4b"
+      languages:
+        description: "python, r, or both"
+        default: "both"
+
+jobs:
+  run:
+    runs-on: ubuntu-latest          # public repository: 4 processors, 16 GB of memory, no GPU
+    timeout-minutes: 360
+    env:
+      AIE_MODEL: ${{ inputs.model }}
+      LANG: C.UTF-8
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Ollama and start it
+        run: |
+          curl -fsSL https://ollama.com/install.sh | sh
+          (ollama serve > ollama.log 2>&1 &) ; sleep 5
+          ollama --version
+
+      - name: Download the models
+        run: |
+          ollama pull "$AIE_MODEL"
+          ollama pull nomic-embed-text
+          ollama list
+
+      - name: Python packages
+        if: inputs.languages != 'r'
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - if: inputs.languages != 'r'
+        run: pip install -r requirements.txt
+
+      - name: R and its packages
+        if: inputs.languages != 'python'
+        uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+      - if: inputs.languages != 'python'
+        run: |
+          sudo apt-get install -y libpoppler-cpp-dev
+          Rscript -e 'install.packages(c("httr2","jsonlite","digest","DBI","RSQLite","pdftools","sys"))'
+
+      - name: Run the model chapters
+        run: |
+          mkdir -p outputs
+          {
+            echo "model: $AIE_MODEL"; ollama show "$AIE_MODEL" | head -20
+            echo "ollama: $(ollama --version)"; echo "date: $(date -u)"; nproc; free -g
+          } > outputs/00_environment.txt
+          run() {   # run one script, keep its output and its duration
+            name=$(echo "$*" | tr ' /' '__')
+            start=$(date +%s)
+            timeout 3600 "$@" > "outputs/$name.txt" 2>&1; code=$?
+            echo "exit $code, $(( $(date +%s) - start )) s" >> "outputs/$name.txt"
+            echo "$* -> exit $code"
+          }
+          PY="chapters/ch03/python/ch03_first_call.py chapters/ch03/python/ch03_repeatability.py
+              chapters/ch04/python/ch04_extract_notes.py chapters/ch05/python/ch05_live_eval.py
+              chapters/ch07/python/ch07_hybrid.py chapters/ch08/python/ch08_ask_with_tools.py
+              chapters/ch09/python/ch09_agent_runs.py chapters/ch10/python/ch10_assistant_eval.py
+              chapters/ch11/python/ch11_ask_database.py"
+          if [ "${{ inputs.languages }}" != "r" ]; then
+            for f in $PY; do run python "$f"; done
+            run python agents/python/evaluate_agent.py sf
+            run python agents/python/evaluate_agent.py am
+          fi
+          if [ "${{ inputs.languages }}" != "python" ]; then
+            for f in $PY; do r=$(echo "$f" | sed 's#/python/#/r/#; s#\.py$#.R#'); [ -f "$r" ] && run Rscript "$r"; done
+            run Rscript agents/r/evaluate_agent.R sf
+            run Rscript agents/r/evaluate_agent.R am
+          fi
+          cp evals/candidates/*_agent_run_*.csv outputs/ 2>/dev/null || true
+          cp ollama.log outputs/ 2>/dev/null || true
+
+      - name: Save the outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: real-model-outputs
+          path: outputs/
