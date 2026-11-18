@@ -128,7 +128,7 @@ source("aie_r/prompts.R"); cat(load_prompt("extract_servicer_note_v2")$hash)
 
 - `load_prompt()` returns the text and the first ten hexadecimal characters of its SHA-256 hash. Python strips the final line break before hashing; R’s `readLines()` drops it too, so both hash the same characters.
 
-**Reading the result.** The two printed hashes are identical ten-character strings, different from v1’s `49335149af`. Any change to the file, even one space, changes the hash.
+**Reading the result.** Both languages print `13626251e7`, different from v1’s `49335149af`. The repository holds a reference copy of the file in `prompts/solutions/extract_servicer_note_v2.txt`; if your hash differs, compare your file with it line by line. Any change to the file, even one space, changes the hash.
 
 **Checking the answer.** Add a space at the end of one line, save and hash again: the hash changes in both languages, and still matches between them. Remove the space: the original hash returns.
 

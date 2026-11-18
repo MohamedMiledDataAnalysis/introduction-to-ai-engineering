@@ -4,18 +4,25 @@ import re
 
 
 def parse_json_reply(text):
-    """Extract the first JSON object from a reply, tolerating code fences and surrounding text."""
+    """Extract the first JSON object from a reply, tolerating code fences and surrounding text.
+
+    raw_decode() reads one complete JSON value and stops, so braces inside strings
+    ("note": "see {Section 4}") and text after the object do not disturb it.
+    """
     cleaned = re.sub(r"```(?:json)?", "", text).strip()
+    decoder = json.JSONDecoder()
     start = cleaned.find("{")
     if start == -1:
         raise ValueError("no JSON object in the reply")
-    depth = 0
-    for i, ch in enumerate(cleaned[start:], start):
-        depth += ch == "{"
-        depth -= ch == "}"
-        if depth == 0:
-            return json.loads(cleaned[start:i + 1])
-    raise ValueError("unbalanced braces in the reply")
+    while start != -1:
+        try:
+            obj, _ = decoder.raw_decode(cleaned, start)
+            if isinstance(obj, dict):
+                return obj
+        except json.JSONDecodeError:
+            pass
+        start = cleaned.find("{", start + 1)
+    raise ValueError("no valid JSON object in the reply")
 
 
 TYPES = {"string": str, "integer": int, "number": (int, float), "boolean": bool, "object": dict, "array": list}
@@ -45,7 +52,7 @@ def validate(obj, schema):
             errors.append(f"'{field}' has type {type(value).__name__}, expected {allowed}")
             continue
         if "enum" in rule and value not in rule["enum"]:
-            errors.append(f"'{field}' = {value!r} is not one of {rule['enum']}")
+            errors.append(f"'{field}' = {value!r} is not one of {[e for e in rule['enum'] if e is not None]}")
         if "minimum" in rule and value < rule["minimum"]:
             errors.append(f"'{field}' = {value} is below the minimum {rule['minimum']}")
         if "pattern" in rule and not re.fullmatch(rule["pattern"], value):

@@ -11,6 +11,11 @@ aie_provider <- Sys.getenv("AIE_PROVIDER", "ollama")
 aie_model    <- Sys.getenv("AIE_MODEL", "qwen3.5:4b")
 ollama_url   <- Sys.getenv("OLLAMA_URL", "http://localhost:11434")
 
+llm_error <- function(...) {
+  # a classed error, so that callers can tell "the model is unavailable" from a bug in their own code
+  stop(structure(class = c("llm_error", "error", "condition"), list(message = paste0(...), call = NULL)))
+}
+
 llm_post <- function(url, payload, headers = list(), timeout = 300, retries = 2) {
   req <- request(url) |>
     req_body_json(payload, auto_unbox = TRUE, null = "null") |>
@@ -20,21 +25,23 @@ llm_post <- function(url, payload, headers = list(), timeout = 300, retries = 2)
               is_transient = function(resp) resp_status(resp) %in% c(429, 500, 502, 503, 529),
               backoff = function(i) min(2^(i - 1), 8))
   if (length(headers)) req <- req_headers(req, !!!headers)
-  resp <- tryCatch(req_perform(req), error = function(e) stop("cannot reach ", url, ": ", conditionMessage(e)))
+  resp <- tryCatch(req_perform(req), error = function(e) llm_error("cannot reach ", url, ": ", conditionMessage(e)))
   if (resp_status(resp) != 200) {
-    stop(sprintf("HTTP %d: %s", resp_status(resp), substr(resp_body_string(resp), 1, 200)))
+    llm_error(sprintf("HTTP %d: %s", resp_status(resp), substr(resp_body_string(resp), 1, 200)))
   }
   resp_body_json(resp, simplifyVector = FALSE)
 }
 
 chat <- function(messages, model = aie_model, provider = aie_provider, system = NULL,
                  temperature = 0, seed = 42, max_tokens = 1024, format = NULL, tools = NULL,
-                 timeout = 300, retries = 2) {
+                 timeout = 300, retries = 2, think = FALSE, num_ctx = 16384) {
   start <- Sys.time()
   if (provider == "ollama") {
     msgs <- if (is.null(system)) messages else c(list(list(role = "system", content = system)), messages)
     payload <- list(model = model, messages = msgs, stream = FALSE,
-                    options = list(temperature = temperature, seed = seed, num_predict = max_tokens))
+                    think = think,                     # FALSE: answer directly, no hidden reasoning first
+                    options = list(temperature = temperature, seed = seed, num_predict = max_tokens,
+                                   num_ctx = num_ctx)) # context window; Ollama's own default can be 4,096
     if (!is.null(format)) payload$format <- format
     if (!is.null(tools)) payload$tools <- tools
     out <- llm_post(paste0(ollama_url, "/api/chat"), payload, timeout = timeout, retries = retries)
@@ -44,7 +51,12 @@ chat <- function(messages, model = aie_model, provider = aie_provider, system = 
                    tool_calls = calls,
                    input_tokens = if (is.null(out$prompt_eval_count)) 0 else out$prompt_eval_count,
                    output_tokens = if (is.null(out$eval_count)) 0 else out$eval_count)
+    if (result$input_tokens >= 0.9 * num_ctx)
+      warning(sprintf("prompt uses %d of %d context tokens: Ollama drops the oldest text beyond the window",
+                      result$input_tokens, num_ctx))
   } else if (provider == "anthropic") {
+    if (!is.null(tools) || !is.null(format))
+      stop("tools and format are implemented for Ollama only in this wrapper")
     key <- Sys.getenv("ANTHROPIC_API_KEY")
     if (key == "") stop("set the ANTHROPIC_API_KEY environment variable")
     payload <- list(model = model, max_tokens = max_tokens, messages = messages,

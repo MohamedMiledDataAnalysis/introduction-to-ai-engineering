@@ -23,6 +23,10 @@ def hgef_facts(month="2026-09-30"):
     for r in attr.itertuples():
         name = r.sector
         facts[f"{name} effect"] = (100 * r.total, "percent", [name.lower(), name.split()[0].lower()], True)
+        for part in ("allocation", "selection", "interaction"):           # the three parts of the total effect
+            facts[f"{name} {part} effect"] = (100 * getattr(r, part), "percent",
+                                              [part, "underweight" if part == "allocation" else part,
+                                               "overweight" if part == "allocation" else part], True)
         facts[f"{name} active weight"] = (100 * (r.portfolio_weight - r.benchmark_weight), "percent",
                                           [name.lower(), name.split()[0].lower(), "weight", "overweight",
                                            "underweight"], False)
@@ -60,7 +64,9 @@ def facts_for_prompt(attr, fund, bench):
     for r in list(ranked.head(2).itertuples()) + list(ranked.tail(2).itertuples())[::-1]:
         side = "overweight" if r.portfolio_weight > r.benchmark_weight else "underweight"
         lines.append(f"- {r.sector}: total effect {10000 * r.total:+.1f}bp "
-                     f"({'contributed' if r.total > 0 else 'detracted'}); the fund was {side} "
+                     f"({'contributed' if r.total > 0 else 'detracted'}), of which allocation "
+                     f"{10000 * r.allocation:+.1f}bp, selection {10000 * r.selection:+.1f}bp, interaction "
+                     f"{10000 * r.interaction:+.1f}bp; the fund was {side} "
                      f"({100 * r.portfolio_weight:.2f}% against {100 * r.benchmark_weight:.2f}%)")
     return "\n".join(lines)
 

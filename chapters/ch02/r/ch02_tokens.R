@@ -9,7 +9,7 @@ write.csv(one_month, tmp, row.names = FALSE, na = "", quote = FALSE)
 csv_text <- paste(readLines(tmp), collapse = "\n")
 
 chars_per_token <- 4      # budgeting rule for English text; measure yours
-context_window  <- 32000  # tokens; check the figure for your model
+context_window  <- 16384  # tokens: the window chat() asks for (Chapter 3)
 
 for (item in list(list("Prospectus excerpt", prospectus),
                   list("Loan tape, one month", csv_text))) {

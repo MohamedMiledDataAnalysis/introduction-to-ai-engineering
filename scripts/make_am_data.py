@@ -289,7 +289,7 @@ def perf(code):
     out["Year to date"] = ((1 + d[ytd]).prod() - 1, (1 + b[ytd]).prod() - 1)
     out["3 years p.a."] = ((1 + d).prod() ** (12 / len(d)) - 1, (1 + b).prod() ** (12 / len(b)) - 1)
     vol = d.std() * np.sqrt(12)
-    te = (d.values - b.values).std() * np.sqrt(12)
+    te = (d.values - b.values).std(ddof=1) * np.sqrt(12)        # sample standard deviation, as for the volatility
     return out, vol, te
 
 
@@ -300,6 +300,8 @@ for code, f in FUNDS.items():
     sect = hl.groupby("sector").weight.sum().sort_values(ascending=False)
     lines = [f"# {f['name']} — Monthly factsheet, 30 September 2026", "",
              "> FICTIONAL DOCUMENT FOR TEACHING. Harbourline Asset Management does not exist.", "",
+             "**For professional investors only.** A factsheet for retail investors must also show the "
+             "performance of each of the last five complete 12-month periods.", "",
              "| Item | Detail |", "|---|---|",
              f"| Share class | {f['share_class']} |", f"| ISIN | {f['isin']} |",
              f"| Launch date | {f['launch']} |", f"| Fund size | EUR {f['aum_eur_m']:,.0f} m |",
@@ -336,6 +338,7 @@ OBJ = {
 for code, f in FUNDS.items():
     k = KID_SCEN[code]
     rhp = f["rhp_years"]
+    perf_years = 2025 - int(f["launch"][:4])       # complete calendar years of performance, up to 2025 (PRIIPs Annex VIII)
     ann = lambda end: (end / 10_000) ** (1 / rhp) - 1
     tot_cost_1y = 10_000 * (k["ongoing"] + k["transaction"])
     text = f"""# Key Information Document — {f['name']}, {f['share_class']}
@@ -402,7 +405,7 @@ The assets of the fund are held separately by the depositary, Ellery Depositary 
 Write to Harbourline Asset Management S.A., Complaints Officer, 12 rue de la Fonderie, L-1531 Luxembourg (fictional address), or email complaints@harbourline.example.
 
 ## Other relevant information
-The prospectus, annual and semi-annual reports and past performance over the last 5 years are available at www.harbourline.example.
+The prospectus, annual and semi-annual reports and past performance over the last {perf_years} years are available at www.harbourline.example.
 """
     (OUT / "documents" / f"{code.lower()}_kid.md").write_text(text)
 
@@ -413,6 +416,11 @@ w = h.weight / h.weight.sum()
 waci_fund = (w * h.name.map(esg_map.carbon_intensity_tco2e_per_eur_m)).sum()
 waci_bm = (eq_bm_w * eq.name.map(esg_map.carbon_intensity_tco2e_per_eur_m)).sum()
 excl_count = int(eq_excl.sum())
+ref = holdings[(holdings.fund_code == "HGEF") & (holdings.isin != "CASH-EUR")
+               & (holdings.month_end > pd.Timestamp("2025-09-30").date())]
+avg = ref.groupby("isin").weight.sum() / ref.month_end.nunique()        # average weight over the 12 month-ends
+avg = avg.nlargest(15).rename("avg").reset_index().merge(eq[["isin", "name", "sector", "country"]], on="isin")
+top15 = "\n".join(f"| {r['name']} | {r.sector} | {r.avg:.2%} | {r.country} |" for _, r in avg.iterrows())
 sfdr = f"""# Periodic disclosure for the financial products referred to in Article 8 of Regulation (EU) 2019/2088
 
 > FICTIONAL DOCUMENT FOR TEACHING. Layout follows Annex IV of Delegated Regulation (EU) 2022/1288.
@@ -438,7 +446,11 @@ The fund promoted two characteristics: (1) the exclusion of companies deriving m
 The investment manager monitored greenhouse gas intensity of investee companies (indicator 3 of Table 1 of Annex I) and exposure to companies active in the fossil fuel sector (indicator 4) through the exclusion list and the WACI limit.
 
 ## What were the top investments of this financial product?
-See the September 2026 factsheet for the ten largest holdings at the end of the reference period.
+The list below includes the investments constituting the greatest proportion of investments of the financial product during the reference period (average of the twelve month-end weights).
+
+| Largest investments | Sector | % Assets | Country |
+|---|---|---:|---|
+{top15}
 
 ## What was the proportion of sustainability-related investments?
 Investments aligned with the environmental and social characteristics: {h.weight.sum():.1%}. Other investments (cash held for liquidity): {1 - h.weight.sum():.1%}.

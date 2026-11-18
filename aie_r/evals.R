@@ -19,7 +19,10 @@ score_one <- function(case, answer) {
   }
   if (kind == "text") {
     options <- tolower(trimws(strsplit(case$keywords, "|", fixed = TRUE)[[1]]))
-    ok <- any(vapply(options, function(k) grepl(k, tolower(answer), fixed = TRUE), TRUE))
+    # whole words only: the keyword "no" must not match inside "notes" or "not"
+    esc <- function(k) gsub("([][{}()+*^$|\\\\.?])", "\\\\\\1", k)
+    ok <- any(vapply(options, function(k)
+      grepl(paste0("(?<![a-z])", esc(k), "(?![a-z])"), tolower(answer), perl = TRUE), TRUE))
     return(list(ok, if (ok) "keyword found" else paste("none of", paste(options, collapse = ", "))))
   }
   if (kind == "ordered") {

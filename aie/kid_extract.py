@@ -7,7 +7,7 @@ import pandas as pd
 from aie.validate import validate
 
 SCHEMA = json.load(open("prompts/kid_schema.json"))
-DOC_FORMAT = {"ongoing_costs_pct": "{:.2f}%", "transaction_costs_pct": "{:.2f}%", "summary_risk_indicator": "{} on a scale",
+DOC_FORMAT = {"management_costs_pct": "{:.2f}%", "transaction_costs_pct": "{:.2f}%", "summary_risk_indicator": "{} on a scale",
               "recommended_holding_period_years": "{} years", "moderate_scenario_rhp_eur": "EUR {:,.0f}",
               "entry_costs_eur": "EUR {:,.0f}", "isin": "{}"}
 
@@ -28,8 +28,9 @@ def check_extraction(obj, document, fund_row):
         problems.append("isin check digit is wrong")
     if obj.get("summary_risk_indicator") != fund_row["sri"]:          # 3. agrees with the fund master data
         problems.append(f"risk indicator {obj.get('summary_risk_indicator')} differs from the fund master ({fund_row['sri']})")
-    if obj.get("ongoing_costs_pct") is not None and round(obj["ongoing_costs_pct"] / 100, 6) != round(fund_row["ocf"], 6):
-        problems.append(f"ongoing costs {obj['ongoing_costs_pct']}% differ from the fund master ({100 * fund_row['ocf']:.2f}%)")
+    if obj.get("management_costs_pct") is not None and round(obj["management_costs_pct"] / 100, 6) != round(fund_row["ocf"], 6):
+        problems.append(f"management costs {obj['management_costs_pct']}% differ from the fund master's "
+                        f"ongoing charges ({100 * fund_row['ocf']:.2f}%)")
     return problems
 
 

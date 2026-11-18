@@ -211,7 +211,7 @@ def check_key_facts(obj, note):
 
 These are flags, not instructions: the manager decides.
 
-**Checking the answer.** Test each proposed item against the rule *every figure comes from data and can be checked*: the fund weight is in the holdings table (HGEF holds 5.03% in Upland Telecom, also stated in R01); a recommendation change is a comparison of two key-fact records; a conflict flag is a join of key facts and holdings. None of them asks the model for an opinion.
+**Checking the answer.** Test each proposed item against the rule *every figure comes from data and can be checked*. The fund weight is in the holdings table (HGEF holds 5.03% in Upland Telecom, also stated in R01). A recommendation change is a comparison of two key-fact records. A conflict flag is a join of key facts and holdings. None of them asks the model for an opinion.
 
 **Mistakes to avoid.**
 

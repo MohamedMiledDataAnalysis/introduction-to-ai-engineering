@@ -1,6 +1,28 @@
 # Run model-written SQL safely: one read-only SELECT on allowed tables, with a row limit.
 library(DBI); library(RSQLite)
-forbidden_sql <- "\\b(insert|update|delete|drop|alter|create|attach|detach|pragma|replace|vacuum|reindex)\\b"
+forbidden_sql <- "\\b(insert|update|delete|drop|alter|create|attach|detach|pragma|replace\\s+into|vacuum|reindex)\\b"
+clause_end <- "(?i)\\b(where|group|order|having|limit|union|except|intersect|on|using)\\b|\\)"
+
+tables_in <- function(sql) {
+  # every table named after FROM or JOIN, including comma-separated lists: FROM funds f, holdings h
+  found <- character(0)
+  starts <- gregexpr("(?i)\\b(from|join)\\s+", sql, perl = TRUE)[[1]]
+  if (starts[1] == -1) return(found)
+  for (i in seq_along(starts)) {
+    kw <- tolower(substr(sql, starts[i], starts[i] + 3))
+    rest <- substring(sql, starts[i] + attr(starts, "match.length")[i])
+    e <- regexpr(clause_end, rest, perl = TRUE)
+    clause <- if (e > 0) substr(rest, 1, e - 1) else rest
+    parts <- strsplit(clause, ",", fixed = TRUE)[[1]]
+    if (kw == "join") parts <- parts[1]
+    for (p in parts) {
+      if (startsWith(trimws(p), "(")) next
+      m <- regmatches(p, regexpr("(?i)^\\s*[a-z_][a-z0-9_]*", p, perl = TRUE))
+      if (length(m)) found <- c(found, trimws(m))
+    }
+  }
+  found
+}
 default_tables <- c("funds", "securities", "holdings", "nav", "benchmark_returns", "issuer_esg", "transactions")
 
 check_sql <- function(sql, allowed_tables = default_tables) {
@@ -10,9 +32,10 @@ check_sql <- function(sql, allowed_tables = default_tables) {
   if (!grepl("^\\s*(select|with)\\b", s, ignore.case = TRUE, perl = TRUE)) problems <- c(problems, "not a SELECT query")
   m <- regmatches(s, regexpr(forbidden_sql, s, ignore.case = TRUE, perl = TRUE))
   if (length(m)) problems <- c(problems, paste("forbidden keyword:", m))
-  tabs <- regmatches(s, gregexpr("(?i)\\b(?:from|join)\\s+([a-z_][a-z0-9_]*)", s, perl = TRUE))[[1]]
-  tabs <- tolower(sub("(?i)^(from|join)\\s+", "", tabs, perl = TRUE))
-  for (t in setdiff(tabs, allowed_tables)) problems <- c(problems, paste("table not allowed:", t))
+  ctes <- regmatches(s, gregexpr("(?i)(\\bwith|,)\\s*[a-z_][a-z0-9_]*\\s+as\\s*\\(", s, perl = TRUE))[[1]]
+  ctes <- tolower(sub("(?i)^(with|,)\\s*([a-z_][a-z0-9_]*).*$", "\\2", ctes, perl = TRUE))   # WITH t AS (...)
+  tabs <- tolower(tables_in(s))
+  for (t in setdiff(tabs, c(allowed_tables, ctes))) problems <- c(problems, paste("table not allowed:", t))
   list(problems = problems, sql = s)
 }
 

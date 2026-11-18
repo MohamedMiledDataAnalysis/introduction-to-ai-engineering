@@ -4,11 +4,12 @@ text   <- paste(readLines("data/sf/rmbs/larkfield_2025_1_prospectus_excerpt.md",
 chunks <- chunk_markdown(text, "LMF")
 ids    <- vapply(chunks, `[[`, "", "id")
 index  <- bm25_index(chunks)
-vectors <- embed(vapply(chunks, `[[`, "", "text"))
+# nomic-embed-text expects a task prefix: "search_document: " for what is searched, "search_query: " for questions
+vectors <- embed(paste0("search_document: ", vapply(chunks, `[[`, "", "text")))
 
 cases <- read.csv("evals/sf_prospectus_qa.csv", colClasses = "character")
 cases <- cases[cases$source_section != "", ]
-q_vectors <- embed(cases$question)
+q_vectors <- embed(paste0("search_query: ", cases$question))
 section_of <- function(id) sub("\\..*", "", sub(".*#", "", id))
 
 for (k in 1:3) {

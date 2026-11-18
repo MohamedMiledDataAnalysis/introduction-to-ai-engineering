@@ -15,7 +15,9 @@ NO_ADVICE = {"sf": "This assistant cannot give investment advice or forecasts. "
 AM_WORDS = re.compile(r"\b(harbourline|hgef|hecb|hbma|factsheet|kid|sfdr|equity fund|bond fund)\b", re.I)
 SF_WORDS = re.compile(r"\b(larkfield|lmf|class [abcd]\b|tape|waterfall|prospectus|reserve fund|arrears|cpr)\b", re.I)
 ADVICE = re.compile(r"\b(should (i|we|my client)|recommend|worth (buying|investing)|best fund|good investment|forecast|"
-                    r"predict|will (\w+ ){1,3}(rise|fall|go up|go down|recover|outperform|underperform|beat))\b", re.I)
+                    r"predict|will (\w+ ){1,3}(rise|fall|go up|go down|recover|outperform|underperform|beat)|"
+                    r"(best|right|suitable|better) (\w+ ){0,2}for (me|my|our|a client)|"
+                    r"(buy|sell|invest in|switch to) (\w+ ){0,3}(now|today|this year))\b", re.I)
 
 
 class Assistant:

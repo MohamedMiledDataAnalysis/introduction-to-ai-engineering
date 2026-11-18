@@ -2,6 +2,8 @@
 
 > FICTIONAL DOCUMENT FOR TEACHING. Harbourline Asset Management does not exist.
 
+**For professional investors only.** A factsheet for retail investors must also show the performance of each of the last five complete 12-month periods.
+
 | Item | Detail |
 |---|---|
 | Share class | I EUR Acc |
@@ -24,7 +26,7 @@
 | Year to date | 3.71% | 4.09% | -0.37% |
 | 3 years p.a. | 2.98% | 3.38% | -0.40% |
 
-Annualised volatility (3 years): 4.11%. Annualised tracking error (3 years): 0.15%.
+Annualised volatility (3 years): 4.11%. Annualised tracking error (3 years): 0.16%.
 
 Past performance does not predict future returns.
 

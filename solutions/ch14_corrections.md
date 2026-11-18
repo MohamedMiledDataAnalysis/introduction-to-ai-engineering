@@ -2,7 +2,7 @@
 
 ## Exercises
 
-**Exercise 14.1.** Produce the investor report for every interest payment date from July 2025 to September 2026. Confirm that all reconciliations pass, and list the months with new defaults.
+**Exercise 14.1.** Produce the investor report for every collection period from July 2025 to September 2026. Confirm that all reconciliations pass, and list the months with new defaults.
 
 **Exercise 14.2.** Write `draft_commentary(f)` that sends `facts_for_prompt(f)` to the model with a prompt of your own, checks the draft with `check_commentary()`, and falls back to the template if any figure is unsupported. Run it for September 2026 and for March 2026.
 
@@ -16,7 +16,7 @@
 
 ### Exercise 14.1
 
-**What the question asks.** Produce the investor report for each of the fifteen interest payment dates from July 2025 to September 2026, confirm that every reconciliation passes, and list the months with new defaults.
+**What the question asks.** Produce the investor report for each of the fifteen collection periods from July 2025 to September 2026, confirm that every reconciliation passes, and list the months with new defaults.
 
 **The plan.** (1) List the dates from the tape, without the closing date. (2) For each date: compute the figures, reconcile, write the report. (3) Print the result of the gate and the new defaults.
 
@@ -59,7 +59,7 @@ for d in dates:
 
 September 2026 has none.
 
-**Checking the answer.** The nine amounts sum to £2,706,364.36, the cumulative defaulted balance of the deal to date. Every default was debited to the PDL and cured by excess spread in the same month, which is why the PDL balance was zero at every month-end in Exercise 1.6: the two exercises confirm each other.
+**Checking the answer.** The nine amounts sum to £2,706,364.36, the cumulative defaulted balance of the deal to date. Every default was debited to the PDL. In six of the nine months, excess spread cured the debit in full the same month. In December 2025, January 2026 and April 2026 it fell short: the Class D sub-ledger carried £103,135.69, £125,998.10 and £21,141.27 at those month-ends, and nothing was paid to the residual certificate holders. The excess spread of February 2026 cleared the first balance, that of May 2026 the second, and the PDL has been zero since. Exercise 1.6 confirms it from the other side: notes minus PDL equals the pool in all 16 months.
 
 **Mistakes to avoid.**
 
@@ -74,7 +74,7 @@ September 2026 has none.
 
 **The plan.** (1) Write a versioned prompt. (2) Fill it with `facts_for_prompt(f)`. (3) Check the reply with `check_commentary()`. (4) Return the draft or the template, with a record of which was used.
 
-**Step by step.** Save as `prompts/investor_commentary_v1.txt`:
+**Step by step.** Save as `prompts/investor_commentary_v1.txt` (the repository’s reference copy is `prompts/solutions/investor_commentary_v1.txt`):
 
 ``` text
 You write the commentary of a UK RMBS investor report, in British English,

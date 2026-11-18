@@ -32,7 +32,7 @@
 
 All three funds are behind their benchmarks over three years. Over one year HGEF returned 6.46%; over three years, −2.74%.
 
-**Checking the answer.** Compare each gap with three years of ongoing charges, since fund returns are net of fees and benchmark returns are not: HECB’s gap, −1.29%, is close to $3 \times 0.40\% = 1.20\%$; HGEF’s, −1.68%, is smaller than $3 \times 0.75\% = 2.25\%$, so before fees HGEF was ahead of its benchmark over the period; HBMA’s, −0.66%, is smaller than $3 \times 0.60\% = 1.80\%$. The figures are consistent with what each fund charges.
+**Checking the answer.** Compare each gap with three years of ongoing charges, since fund returns are net of fees and benchmark returns are not. HECB’s gap, −1.29%, is close to $3 \times 0.40\% = 1.20\%$. HGEF’s, −1.68%, is smaller than $3 \times 0.75\% = 2.25\%$, so before fees HGEF was ahead of its benchmark over the period. HBMA’s, −0.66%, is smaller than $3 \times 0.60\% = 1.80\%$. The figures are consistent with what each fund charges.
 
 **Mistakes to avoid.**
 
@@ -57,7 +57,7 @@ to `draft <- drafts[1]`. The file `evals/drafts/hgef_commentary_2026_09.txt` hol
 
 **Reading the result.** The check table for Draft 1: 4.53% fund return OK, 5.03% benchmark return OK, 13.7bp Real Estate effect OK (*detracted*, and the effect is −13.7bp), 7.8bp Materials effect OK, 4.8bp Consumer Discretionary effect OK. Five figures, no problem.
 
-**Checking the answer.** The check verifies figures, their labels and their directions. Draft 1 also makes two claims without figures, which only a person can check against the attribution file: *“Stock selection and sector allocation both detracted”* (the column totals are −26.2bp and −14.9bp: true) and Consumer Discretionary *“helped by stock selection”* (its selection effect is +4.55bp: true). Both are supported, but by the reviewer, not by the code.
+**Checking the answer.** The check verifies figures, their labels and their directions. Draft 1 also makes three claims without figures, which only a person can check against the attribution file. *“Stock selection and sector allocation both detracted”*: the column totals are −26.2bp and −14.9bp, true. Real estate detracted *“mostly through the underweight”*: allocation is −11.0bp of the −13.7bp, true. Consumer Discretionary was *“helped by stock selection”*: its selection effect is +4.55bp, true. All three are supported, but by the reviewer, not by the code.
 
 **Mistakes to avoid.**
 

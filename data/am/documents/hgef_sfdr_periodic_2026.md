@@ -23,7 +23,25 @@ The fund promoted two characteristics: (1) the exclusion of companies deriving m
 The investment manager monitored greenhouse gas intensity of investee companies (indicator 3 of Table 1 of Annex I) and exposure to companies active in the fossil fuel sector (indicator 4) through the exclusion list and the WACI limit.
 
 ## What were the top investments of this financial product?
-See the September 2026 factsheet for the ten largest holdings at the end of the reference period.
+The list below includes the investments constituting the greatest proportion of investments of the financial product during the reference period (average of the twelve month-end weights).
+
+| Largest investments | Sector | % Assets | Country |
+|---|---|---:|---|
+| Upland Telecom | Communication Services | 4.95% | US |
+| Eastleigh Engineering | Industrials | 3.93% | DE |
+| Zephyr Materials | Materials | 3.84% | US |
+| Corbett Capital | Financials | 3.66% | US |
+| Holloway Energy | Energy | 3.15% | AU |
+| Northfield Telecom | Communication Services | 3.04% | US |
+| Northfield Software | Information Technology | 3.03% | US |
+| Dunmore Water | Utilities | 2.97% | US |
+| Stanmore Media | Communication Services | 2.91% | US |
+| Driftwood Systems | Information Technology | 2.79% | US |
+| Arden Systems | Information Technology | 2.40% | US |
+| Quayside Mining | Materials | 2.26% | US |
+| Kestrel Properties | Real Estate | 2.17% | US |
+| Marlowe Medical | Health Care | 2.16% | US |
+| Redfern Beverages | Consumer Staples | 2.15% | US |
 
 ## What was the proportion of sustainability-related investments?
 Investments aligned with the environmental and social characteristics: 98.5%. Other investments (cash held for liquidity): 1.5%.

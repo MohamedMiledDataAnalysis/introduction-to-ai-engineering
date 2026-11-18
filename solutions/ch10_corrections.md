@@ -165,7 +165,7 @@ Q25,Will the Class A notes be repaid in full?,text,does not guarantee,,does not 
 2.  **Scope.** The prospectus excerpt only; no deal performance figures (those come from the reporting tools of Chapter 14); no predictions; no other deals.
 3.  **How it works.** Retrieval of three passages; drafting by the model with a citation after every sentence; automatic checks (each citation provided, each figure present in the cited passages); review queue.
 4.  **Controls.** Every answer approved by an analyst before sending; failed checks shown to the analyst; forbidden phrases flagged; all drafts, sources and approvals logged.
-5.  **Evaluation.** Baseline 13/20 (95% interval 43% to 82%); the assistant’s results on retrieval, correctness and grounding (from Exercise 10.3); the release criteria and whether each is met; the date, the model and the prompt version.
+5.  **Evaluation.** Baseline 12/20 (95% interval 39% to 78%); the assistant’s results on retrieval, correctness and grounding (from Exercise 10.3); the release criteria and whether each is met; the date, the model and the prompt version.
 6.  **Limits and next steps.** A 20-case set gives wide intervals; questions outside the excerpt are declined; questions from real investor emails are added to the set each month.
 
 **Reading the result.** A page with no adjectives about quality: every claim is a fact the reader can check (a number, a rule, a name).

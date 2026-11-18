@@ -19,6 +19,7 @@ payload = {
     "messages": [{"role": "user",
                   "content": "Reply with exactly these three words: Ollama is ready"}],
     "stream": False,
+    "think": False,     # answer directly; Chapter 3 explains
 }
 try:
     response = requests.post(OLLAMA_URL, json=payload, timeout=300)

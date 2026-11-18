@@ -74,7 +74,7 @@ registry <- list(
   note_balance = list(fn = note_balance, description = "Opening and closing balance, principal and interest paid, and coupon of one class of Larkfield 2025-1 notes at a month-end.",
     parameters = list(type = "object", properties = list(note_class = list(type = "string", enum = list("A", "B", "C", "D")), cutoff_date = date_rule),
                       required = list("note_class", "cutoff_date"), additionalProperties = FALSE)),
-  waterfall_summary = list(fn = waterfall_summary, description = "Revenue and principal receipts, new defaults, reserve fund balance and excess spread of Larkfield 2025-1 for one interest payment date.",
+  waterfall_summary = list(fn = waterfall_summary, description = "Revenue and principal receipts, new defaults, reserve fund balance and excess spread of Larkfield 2025-1 for one collection period, named by its end date.",
     parameters = list(type = "object", properties = list(cutoff_date = date_rule), required = list("cutoff_date"), additionalProperties = FALSE)),
   fund_performance = list(fn = fund_performance, description = "Net return of a Harbourline fund and of its benchmark over the last 1, 3, 12 or 36 months to the latest month-end.",
     parameters = list(type = "object", properties = list(fund_code = list(type = "string", enum = list("HGEF", "HECB", "HBMA")),

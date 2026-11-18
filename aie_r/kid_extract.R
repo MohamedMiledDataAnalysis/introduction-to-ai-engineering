@@ -1,7 +1,7 @@
 # Extract KID data into a schema, one document per call, and check every value three ways.
 source("aie_r/validate.R")
 kid_schema <- fromJSON("prompts/kid_schema.json", simplifyVector = FALSE)
-doc_format <- list(ongoing_costs_pct = function(v) sprintf("%.2f%%", v), transaction_costs_pct = function(v) sprintf("%.2f%%", v),
+doc_format <- list(management_costs_pct = function(v) sprintf("%.2f%%", v), transaction_costs_pct = function(v) sprintf("%.2f%%", v),
                    summary_risk_indicator = function(v) paste(v, "on a scale"),
                    recommended_holding_period_years = function(v) paste(v, "years"),
                    moderate_scenario_rhp_eur = function(v) paste("EUR", formatC(v, format = "d", big.mark = ",")),
@@ -27,7 +27,7 @@ check_extraction <- function(obj, document, fund_row) {
   if (!is.null(obj$isin) && !isin_valid(obj$isin)) problems <- c(problems, "isin check digit is wrong")
   if (!identical(as.integer(obj$summary_risk_indicator), as.integer(fund_row$sri)))
     problems <- c(problems, sprintf("risk indicator %s differs from the fund master (%s)", obj$summary_risk_indicator, fund_row$sri))
-  if (!is.null(obj$ongoing_costs_pct) && round(obj$ongoing_costs_pct / 100, 6) != round(fund_row$ocf, 6))
-    problems <- c(problems, sprintf("ongoing costs %s%% differ from the fund master (%.2f%%)", obj$ongoing_costs_pct, 100 * fund_row$ocf))
+  if (!is.null(obj$management_costs_pct) && round(obj$management_costs_pct / 100, 6) != round(fund_row$ocf, 6))
+    problems <- c(problems, sprintf("management costs %s%% differ from the fund master's ongoing charges (%.2f%%)", obj$management_costs_pct, 100 * fund_row$ocf))
   problems
 }

@@ -2,14 +2,27 @@
 library(jsonlite)
 
 parse_json_reply <- function(text) {
+  # Scan from the first "{" to its matching "}", skipping braces inside strings
+  # ("note": "see {Section 4}") and escaped quotes; text after the object is ignored.
   cleaned <- trimws(gsub("```(json)?", "", text))
   start <- regexpr("{", cleaned, fixed = TRUE)
   if (start == -1) stop("no JSON object in the reply")
   chars <- strsplit(substring(cleaned, start), "")[[1]]
-  depth <- cumsum((chars == "{") - (chars == "}"))
-  end <- which(depth == 0)[1]
-  if (is.na(end)) stop("unbalanced braces in the reply")
-  fromJSON(paste(chars[1:end], collapse = ""), simplifyVector = FALSE)
+  depth <- 0; in_string <- FALSE; escaped <- FALSE
+  for (i in seq_along(chars)) {
+    ch <- chars[i]
+    if (in_string) {
+      if (escaped) escaped <- FALSE
+      else if (ch == "\\") escaped <- TRUE
+      else if (ch == '"') in_string <- FALSE
+    } else if (ch == '"') in_string <- TRUE
+    else if (ch == "{") depth <- depth + 1
+    else if (ch == "}") {
+      depth <- depth - 1
+      if (depth == 0) return(fromJSON(paste(chars[1:i], collapse = ""), simplifyVector = FALSE))
+    }
+  }
+  stop("unbalanced braces in the reply")
 }
 
 validate <- function(obj, schema) {

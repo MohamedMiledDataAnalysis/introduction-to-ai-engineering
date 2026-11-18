@@ -170,7 +170,7 @@ Both errors of a mis-copied identifier are reported. And the template itself alw
 **Mistakes to avoid.**
 
 - Making everything blocking “to be safe”. The waterfall then never runs on time, and the team learns to override the block.
-- Classifying by how surprising the error looks. A missing region looks careless and is minor; a default two weeks early looks small and moves money between noteholders.
+- Classifying by how surprising the error looks. A missing region looks careless and is minor; a default two weeks early looks small and moves money from the residual certificate holders to the noteholders, through the PDL cure at items (e) to (k).
 
 **Trade-offs.** Severity changes what happens next, so it belongs in the code: add it to each rule’s definition, sort the servicer email by severity, and block the waterfall run while any blocking flag is open. Other teams may draw the line differently (some treat `rate_out_of_range` as blocking, because the interest collected depends on it); write the classification down and have the head of cash management approve it.
 

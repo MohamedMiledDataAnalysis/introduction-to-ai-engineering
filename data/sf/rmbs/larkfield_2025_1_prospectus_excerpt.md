@@ -2,7 +2,7 @@
 
 *(incorporated in England and Wales with limited liability)*
 
-**Residential Mortgage-Backed Floating Rate Notes due 2060**
+**Residential Mortgage-Backed Floating Rate Notes due 2063**
 
 > FICTIONAL DOCUMENT FOR TEACHING. Larkfield Mortgage Funding 2025-1 PLC, Larkfield Building Society, Northgate Trust Services Limited and Northgate Trustees Limited do not exist. The structure follows the layout of a UK prime owner-occupied RMBS prospectus. This excerpt is the source document for the retrieval, extraction and agent exercises in *Introduction to AI Engineering*.
 
@@ -18,8 +18,8 @@
 | Note trustee and security trustee | Northgate Trustees Limited |
 | Closing date | 30 June 2025 |
 | Pool cut-off date | 30 June 2025 |
-| Interest payment dates | The last calendar day of each month, the first being 31 July 2025 |
-| Final maturity date | Interest payment date falling in June 2060 |
+| Interest payment dates | The 20th day of each month (or the next business day), the first being 20 August 2025; each interest payment date applies the receipts of the collection period ending on the last calendar day of the preceding month |
+| Final maturity date | Interest payment date falling in June 2063 |
 | Portfolio | 2,000 first-lien, owner-occupied residential mortgage loans secured on properties in England, Wales and Scotland |
 | Aggregate current balance at the pool cut-off date | £405,511,186.36 |
 
@@ -124,7 +124,7 @@ Each loan, on the pool cut-off date:
 2. was originated by Larkfield Building Society in the ordinary course of its business;
 3. has an original loan-to-value ratio not exceeding 95%;
 4. is not in arrears and has never been more than one monthly payment in arrears since origination;
-5. has a final maturity date no later than 31 December 2057;
+5. has a final maturity date no later than 30 April 2060;
 6. is owed by a borrower who is a natural person resident in the United Kingdom.
 
 ## 10. Selected risk factors

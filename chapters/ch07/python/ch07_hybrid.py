@@ -10,11 +10,12 @@ from aie.retrieval import BM25, chunk_markdown, cosine, reciprocal_rank_fusion
 text = open("data/sf/rmbs/larkfield_2025_1_prospectus_excerpt.md", encoding="utf-8").read()
 chunks = chunk_markdown(text, "LMF")
 index = BM25(chunks)
-vectors = embed([c["text"] for c in chunks])            # one call embeds every chunk
+# nomic-embed-text expects a task prefix: "search_document: " for what is searched, "search_query: " for questions
+vectors = embed(["search_document: " + c["text"] for c in chunks])       # one call embeds every chunk
 
 cases = pd.read_csv("evals/sf_prospectus_qa.csv", dtype=str, keep_default_na=False)
 cases = cases[cases["source_section"] != ""]
-q_vectors = embed(cases["question"].tolist())
+q_vectors = embed(["search_query: " + q for q in cases["question"]])
 
 for k in (1, 2, 3):
     hits = {"bm25": 0, "embeddings": 0, "hybrid": 0}

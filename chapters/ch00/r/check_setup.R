@@ -16,7 +16,8 @@ req <- request(ollama_url) |>
     model    = model,
     messages = list(list(role = "user",
       content = "Reply with exactly these three words: Ollama is ready")),
-    stream   = FALSE
+    stream   = FALSE,
+    think    = FALSE    # answer directly; Chapter 3 explains
   )) |>
   req_timeout(300)
 

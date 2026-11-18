@@ -8,9 +8,9 @@
 
 **Exercise 15.3.** Add the stress scenario at the end of the RHP to the schema, the prompt and the checks. Which check catches a stress value taken from the favourable row?
 
-**Exercise 15.4.** The product team changes HECB’s ongoing costs to 0.38% in the master data, but the KID still says 0.40%. What does `check_extraction()` report on a correct extraction, and what should happen next?
+**Exercise 15.4.** The product team changes HECB’s ongoing charges figure to 0.38% in the master data, but the KID still says 0.40%. What does `check_extraction()` report on a correct extraction, and what should happen next?
 
-**Exercise 15.5.** Compare the model with a regular-expression extractor written for Harbourline’s KIDs. Write the extractor for ongoing costs and the SRI, then explain why it would fail on another manager’s KIDs, and why the model would not need rewriting.
+**Exercise 15.5.** Compare the model with a regular-expression extractor written for Harbourline’s KIDs. Write the extractor for the management costs and the SRI, then explain why it would fail on another manager’s KIDs, and why the model would not need rewriting.
 
 ## Corrections
 
@@ -40,7 +40,7 @@ for code in ("HGEF", "HECB", "HBMA"):
 ```
 
 - `extract_kid(code)` sends one KID to the model with the schema of `prompts/kid_schema.json`; one document per call, so costs of two funds cannot be mixed.
-- `check_extraction()` runs the three checks: each value written in the document as the KID writes it; a valid ISIN check digit; agreement with the fund master (risk indicator and ongoing costs).
+- `check_extraction()` runs the three checks: each value written in the document as the KID writes it; a valid ISIN check digit; agreement with the fund master (risk indicator, and management costs against the ongoing charges figure).
 - `wrong` compares each field with the truth file: this is what the checks are trying to predict without knowing the truth.
 
 **Reading the result.** For each field, four outcomes are possible: right and accepted (good), wrong and rejected (good: caught), right and rejected (a check too strict: inspect it), wrong and accepted (the dangerous case: a check is missing). Costs and the RHP are usually right: they sit in clear sentences. The SRI and the scenarios are where small models err: the SRI sentence contains both 1 and 7 (*“3 on a scale of 1 … to 7”*), and the scenario table has two columns of similar numbers.
@@ -146,7 +146,7 @@ if values != sorted(values):
 
 ### Exercise 15.4
 
-**What the question asks.** HECB’s ongoing costs are changed to 0.38% in the master data while the KID still says 0.40%. Say what `check_extraction()` reports for a correct extraction, and what should happen next.
+**What the question asks.** HECB’s ongoing charges figure is changed to 0.38% in the master data while the KID still says 0.40%. Say what `check_extraction()` reports for a correct extraction, and what should happen next.
 
 **The plan.** (1) Change the master value in a copy. (2) Check the correct extraction. (3) Diagnose. (4) Route the issue.
 
@@ -165,7 +165,7 @@ print(check_extraction(truth["HECB"], doc, f.loc["HECB"]))
 **Reading the result.**
 
 ``` text
-['ongoing costs 0.4% differ from the fund master (0.38%)']
+["management costs 0.4% differ from the fund master's ongoing charges (0.38%)"]
 ```
 
 Check 1 passes (0.40% is in the KID); check 3 fails.
@@ -181,7 +181,7 @@ Check 1 passes (0.40% is in the KID); check 3 fails.
 
 ### Exercise 15.5
 
-**What the question asks.** Write a regular-expression extractor for ongoing costs and the SRI on Harbourline’s KIDs, compare it with the model, explain why it would fail on another manager’s KIDs and why the model would not need rewriting.
+**What the question asks.** Write a regular-expression extractor for the management costs and the SRI on Harbourline’s KIDs, compare it with the model, explain why it would fail on another manager’s KIDs and why the model would not need rewriting.
 
 **The plan.** (1) Write a pattern for each field from the KID’s wording. (2) Run it on the three KIDs and compare with the truth. (3) Imagine other wordings. (4) Compare maintenance.
 
@@ -194,7 +194,7 @@ def regex_extract(document):
     sri = re.search(r"Risk indicator:\*\* (\d) on a scale", document)
     oc = re.search(r"operating costs \| ([\d.]+)% of the value", document)
     return {"summary_risk_indicator": int(sri.group(1)) if sri else None,
-            "ongoing_costs_pct": float(oc.group(1)) if oc else None}
+            "management_costs_pct": float(oc.group(1)) if oc else None}
 ```
 
 - The SRI pattern copies Harbourline’s sentence, *“**Risk indicator:** 3 on a scale of 1 … to 7”*, and captures the first digit after it.

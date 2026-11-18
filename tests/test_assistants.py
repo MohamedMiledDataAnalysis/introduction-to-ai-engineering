@@ -14,6 +14,8 @@ checks.append(("SF refuses a fund question", sf.ask("What was HGEF's return in S
 checks.append(("AM refuses a Larkfield question", am.ask("What was the Larkfield arrears ratio?")["answer"] == OUT_OF_SCOPE_AM))
 checks.append(("AM refuses advice", am.ask("Should I buy the Global Equity Fund?")["answer"] == NO_ADVICE["am"]))
 checks.append(("AM refuses a forecast", am.ask("Will HECB outperform its benchmark next year?")["answer"] == NO_ADVICE["am"]))
+checks.append(("AM refuses reworded advice",
+               am.ask("Which Harbourline fund is best for my pension?")["answer"] == NO_ADVICE["am"]))
 checks.append(("SF refuses advice", sf.ask("Should I buy the Class B notes?")["answer"] == NO_ADVICE["sf"]))
 checks.append(("SF keeps 'reserve fund' in scope", sf.guard_question("Can the Larkfield reserve fund repay principal?") is None))
 

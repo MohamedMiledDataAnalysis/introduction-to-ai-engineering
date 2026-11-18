@@ -302,7 +302,7 @@ and to the `checks` vector of `tests/test_assistants.R`:
     is.null(guard_question(sf, "Which fund does the Larkfield reserve fund protect?")),
 ```
 
-**Reading the result.** The first question contains *HGEF*, *factsheet*, *HECB* and *KID*, and no SF word: refused. The second contains *fund*, which is not an AM word on its own, and *Larkfield* and *reserve fund*, which are SF words: accepted. Both tests pass: 9/9.
+**Reading the result.** The first question contains *HGEF*, *factsheet*, *HECB* and *KID*, and no SF word: refused. The second contains *fund*, which is not an AM word on its own, and *Larkfield* and *reserve fund*, which are SF words: accepted. Both tests pass: 10/10.
 
 **Checking the answer.** Probe the boundary further: *“What is the bond fund duration?”* is refused (*bond fund* is an AM word); *“Which notes does the reserve fund protect?”* is accepted. Adding *fund* alone to `AM_WORDS` changes nothing for the second question, because its SF words keep it in scope. Simplify the rule to *refuse any question with an AM word* as well, and the second test fails at once: the test protects the boundary against a well-meant change.
 
@@ -313,7 +313,7 @@ and to the `checks` vector of `tests/test_assistants.R`:
 
 **Trade-offs.** Keyword guards are cheap, instant and testable, and they miss unusual phrasings (*“the euro credit product”*). Every miss found in production becomes a new test and, if needed, a new word. A model-based classifier would catch more phrasings at the cost of a model call and of its own evaluation; keep the keyword guard first either way, since it is free and certain on the cases it covers.
 
-**On GitHub.** The companion repository goes further: both test files with the two new tests (9/9), and a script in Python and R that probes the boundary and shows which change of the guard the second test catches, in `solutions/ch21_corrections.md`.
+**On GitHub.** The companion repository goes further: both test files with the two new tests (10/10), and a script in Python and R that probes the boundary and shows which change of the guard the second test catches, in `solutions/ch21_corrections.md`.
 
 #### Going further on GitHub: the complete test files, and the boundary probed
 
@@ -328,12 +328,13 @@ PASS  SF refuses a fund question
 PASS  AM refuses a Larkfield question
 PASS  AM refuses advice
 PASS  AM refuses a forecast
+PASS  AM refuses reworded advice
 PASS  SF refuses advice
 PASS  SF keeps 'reserve fund' in scope
 PASS  SF refuses an AM comparison
 PASS  SF accepts 'fund' in a Larkfield question
 PASS  SF scripted run is verified
-9/9 checks passed
+10/10 checks passed
 ```
 
 **Output**
@@ -343,12 +344,13 @@ PASS  SF refuses a fund question
 PASS  AM refuses a Larkfield question 
 PASS  AM refuses advice 
 PASS  AM refuses a forecast 
+PASS  AM refuses reworded advice 
 PASS  SF refuses advice 
 PASS  SF keeps 'reserve fund' in scope 
 PASS  SF refuses an AM comparison 
 PASS  SF accepts 'fund' in a Larkfield question 
 PASS  SF scripted run is verified 
-9/9 checks passed
+10/10 checks passed
 ```
 
 **The probe, in Python.** It runs five questions through the guard as shipped. It then runs them again after two changes a colleague could make.
@@ -534,7 +536,7 @@ def draft_investor_commentary(cutoff_date):
 REGISTRY["draft_investor_commentary"] = (
     draft_investor_commentary,
     "Draft the commentary of the Larkfield 2025-1 investor report for one "
-    "interest payment date, after the reconciliations pass. The draft must be "
+    "collection period, after the reconciliations pass. The draft must be "
     "approved by an analyst before publication.",
     {"type": "object",
      "properties": {"cutoff_date": {"type": "string",
@@ -594,7 +596,7 @@ from aie.assistants import Assistant
 from aie.investor_report import TAPE, check_commentary, facts, month_figures, reconcile, template_commentary
 from aie.tools import REGISTRY, run_tool
 
-DATES = sorted(pd.read_csv(TAPE)["RREL6"].unique())[1:]          # interest payment dates: no report at closing
+DATES = sorted(pd.read_csv(TAPE)["RREL6"].unique())[1:]          # collection period ends: no report at closing
 SUFFIX = {"money": "_gbp", "percent": "_pct", "number": ""}
 
 
@@ -620,7 +622,7 @@ def draft_investor_commentary(cutoff_date):
 REGISTRY["draft_investor_commentary"] = (
     draft_investor_commentary,
     "Draft the commentary of the Larkfield 2025-1 investor report for one "
-    "interest payment date, after the reconciliations pass. The draft must be "
+    "collection period, after the reconciliations pass. The draft must be "
     "approved by an analyst before publication.",
     {"type": "object",
      "properties": {"cutoff_date": {"type": "string",
@@ -727,7 +729,7 @@ draft_investor_commentary <- function(cutoff_date) {
 }
 
 registry$draft_investor_commentary <- list(fn = draft_investor_commentary,
-  description = paste("Draft the commentary of the Larkfield 2025-1 investor report for one interest payment date,",
+  description = paste("Draft the commentary of the Larkfield 2025-1 investor report for one collection period,",
                       "after the reconciliations pass. The draft must be approved by an analyst before publication."),
   parameters = list(type = "object", properties = list(cutoff_date = date_rule),
                     required = list("cutoff_date"), additionalProperties = FALSE))

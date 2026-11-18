@@ -8,7 +8,7 @@ All data is fictional. Layouts follow real templates, named below.
 
 One row per loan per monthly data cut-off date, from 30 June 2025 (pool cut-off) to 30 September 2026. A loan redeemed in full appears in the month of redemption with status `REDM` and no longer appears afterwards. A defaulted loan stays in the tape with status `DFLT` and a current principal balance of zero.
 
-Field codes and names are those of Annex II (Underlying exposures information — residential real estate) of Delegated Regulation (EU) 2020/1224, onshored in the UK. Collateral fields (`RREC`) sit on the same row as the loan for teaching convenience; in a regulatory submission they form a separate section.
+Field codes and names are those of Annex II (Underlying exposures information — residential real estate) of Delegated Regulation (EU) 2020/1224 in the EU, reproduced for the UK in chapter 11 of the FCA's Securitisation sourcebook (SECN 11) since 1 November 2024, with the same field codes. Collateral fields (`RREC`) sit on the same row as the loan for teaching convenience; in a regulatory submission they form a separate section.
 
 | Code | Field name | Content in this file |
 |---|---|---|
@@ -36,7 +36,7 @@ Field codes and names are those of Annex II (Underlying exposures information �
 | RREL40 | Debt To Income Ratio | Current balance divided by primary income, % |
 | RREL42 | Interest Rate Type | `FLCF` fixed rate with compulsory future switch to floating |
 | RREL43 | Current Interest Rate | % per annum |
-| RREL46 | Current Interest Rate Margin | Reversion margin over Bank of England Base Rate, % |
+| RREL46 | Current Interest Rate Margin | Margin over Bank of England Base Rate that applies after the fixed period ends, %. In a real submission this reversion margin goes in RREL50 (Revision Margin 1), and RREL46 holds the margin in force today, which a fixed-rate loan does not have; the file simplifies. |
 | RREL51 | Interest Revision Date 1 | End of the initial fixed-rate period |
 | RREL63 | Prepayment Date | Date of redemption in full |
 | RREL64 | Cumulative Prepayments | GBP since the pool cut-off date |
@@ -44,7 +44,7 @@ Field codes and names are those of Annex II (Underlying exposures information �
 | RREL66 | Date Last In Arrears | |
 | RREL67 | Arrears Balance | GBP |
 | RREL68 | Number Of Days In Arrears | Months in arrears × 30 |
-| RREL69 | Account Status | `PERF` performing, `ARRE` arrears, `RNAR` restructured — no arrears, `DFLT` defaulted, `REDM` redeemed |
+| RREL69 | Account Status | `PERF` performing, `ARRE` arrears, `RNAR` restructured — no arrears, `DFLT` defaulted under the transaction's definition (six monthly payments unpaid; in a real submission, check the ESMA code list, where `DFLT` refers to the definition of default of Article 178 of the CRR), `REDM` redeemed |
 | RREL71 | Default Amount | Balance at default, GBP |
 | RREL72 | Default Date | |
 | RREL73 | Allocated Losses | Default amount minus recoveries, once recoveries are received |
@@ -75,7 +75,7 @@ Field codes and names are those of Annex II (Underlying exposures information �
 
 ## 2. Structured finance — Redwater Auto Receivables Trust 2025-A (US auto ABS)
 
-`redwater_2025_a_asset_level.csv` — one row per loan for the reporting period September 2026. Column names are the asset-level field tags of SEC Regulation AB II, Schedule AL, auto loans. Rates are decimals (0.0725 = 7.25%). `vehicleNewUsedCode`: 1 new, 2 used. `currentDelinquencyStatus`: days past due. `zeroBalanceCode` 3: charged off.
+`redwater_2025_a_asset_level.csv` — one row per loan for the reporting period September 2026. Column names are the asset-level field tags of SEC Regulation AB II, Schedule AL, auto loans. Rates are decimals (0.0725 = 7.25%). `vehicleNewUsedCode`: 1 new, 2 used. `currentDelinquencyStatus`: days past due. `zeroBalanceCode` 4: charged off (1 prepaid or matured, 2 third-party sale, 3 repurchased or replaced).
 
 ## 3. Asset management — Harbourline Asset Management
 

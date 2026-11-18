@@ -9,7 +9,9 @@ no_advice <- c(sf = paste("This assistant cannot give investment advice or forec
 am_words <- "\\b(harbourline|hgef|hecb|hbma|factsheet|kid|sfdr|equity fund|bond fund)\\b"
 sf_words <- "\\b(larkfield|lmf|class [abcd]\\b|tape|waterfall|prospectus|reserve fund|arrears|cpr)\\b"
 advice_words <- paste0("\\b(should (i|we|my client)|recommend|worth (buying|investing)|best fund|good investment|forecast|",
-                       "predict|will (\\w+ ){1,3}(rise|fall|go up|go down|recover|outperform|underperform|beat))\\b")
+                       "predict|will (\\w+ ){1,3}(rise|fall|go up|go down|recover|outperform|underperform|beat)|",
+                       "(best|right|suitable|better) (\\w+ ){0,2}for (me|my|our|a client)|",
+                       "(buy|sell|invest in|switch to) (\\w+ ){0,3}(now|today|this year))\\b")
 
 new_assistant <- function(domain) {
   if (domain == "sf") {

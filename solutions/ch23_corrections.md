@@ -4,7 +4,7 @@
 
 **Exercise 23.1.** Add a fifth tile, *Reserve fund*, to the dashboard. Which field of `month_figures()` do you use, and what does the tile show for 30 September 2026?
 
-**Exercise 23.2.** Select the interest payment date 31 March 2026. Write down the four tiles and explain the arrears ratio by reference to Chapter 14.
+**Exercise 23.2.** Select the collection period ending 31 March 2026. Write down the four tiles and explain the arrears ratio by reference to Chapter 14.
 
 **Exercise 23.3.** Start the application in mode 2 with no service running. What does the user see when asking a question, and what do the other tabs do? Write the test.
 
@@ -105,7 +105,7 @@ and open `http://localhost:8111`. The file is a copy of `apps/sf_app/app.R`, so 
 
 **Develop it in four moves.** (1) Run `names(month_figures("2026-09-30"))` in the R console from the repository root and find `reserve`. (2) Add the `value_box()` and start the application: an empty tile proves the UI part works. (3) Add the `renderText()` and reload the browser page: the value appears. (4) Write the test, so that a later change cannot break the tile without you knowing.
 
-**The test, in full.** It checks three dates, not one: a reserve that never moves must show the same value at the first interest payment date, at the arrears peak and at the last date.
+**The test, in full.** It checks three dates, not one: a reserve that never moves must show the same value for the first collection period, the arrears peak and the last period.
 
 `tests/solutions/test_ex23_1.R`
 
@@ -163,7 +163,7 @@ The screen confirms the trade-off of the correction: with five tiles at a width 
 
 **Reading the result.** Pool balance **£352.87m**, arrears ratio **1.80%**, CPR **16.8%**, Class A balance **£304.20m**. The three reconciliation checks pass.
 
-The trend chart shows the arrears ratio rising from 0.50% at the first interest payment date (31 July 2025) to its peak of 1.80% on 31 March 2026, then falling. Exercise 14.3 traced what became of the 34 loans in arrears in March: 16 returned to performing, 7 were restructured with no arrears, 8 defaulted, 2 redeemed and 1 remained in arrears. Cures and defaults both remove loans from the arrears buckets, which is why the ratio fell to 0.84% by September, less than half its peak.
+The trend chart shows the arrears ratio rising from 0.50% for the first collection period (ending 31 July 2025) to its peak of 1.80% on 31 March 2026, then falling. Exercise 14.3 traced what became of the 34 loans in arrears in March: 16 returned to performing, 7 were restructured with no arrears, 8 defaulted, 2 redeemed and 1 remained in arrears. Cures and defaults both remove loans from the arrears buckets, which is why the ratio fell to 0.84% by September, less than half its peak.
 
 **Checking the answer.** Open the Investor report tab for March: the template commentary reads *“The arrears ratio rose to 1.80% from 1.74%”*. The same figures, from the same function, in words. In `testServer()`, `session$setInputs(date = "2026-03-31")` gives `output$kpi_arrears == "1.80%"`.
 
@@ -456,11 +456,13 @@ Exercise 23.4 test passed
 
 **The plan.** Compare the two ways of producing a tile on cost, risk and availability, then state the rule.
 
-**Step by step and reading the result.**
+**Step by step.** Take each property of a tile in turn.
 
 1.  **Cost and speed.** Each tile would cost a model call, several seconds and tokens, at every date change; `month_figures()` takes under a second and costs nothing.
 2.  **Risk.** A deterministic function returns the right figure every time; the agent returns it *most* of the time, and the evaluation of Chapter 21 measures how often. A dashboard read by investors’ analysts cannot be right most of the time.
 3.  **Availability.** The dashboard would be empty whenever the model is down, which Exercise 23.3 showed it is not today.
+
+**Reading the result.** The three reasons point the same way: a tile through the agent is slower, costlier, less reliable and fragile, and it gains nothing, since the agent obtains the pool balance by calling `pool_summary`, which reads the same data as `month_figures()`. The answer to the colleague is no, with a reason for each of the three properties a dashboard needs.
 
 **Checking the answer.** Measure reason 1: time `month_figures("2026-09-30")` (under a second in R, including reading the files) and one agent answer to *“What is the pool balance at 30 September 2026?”* with your model (several seconds, plus tokens). Four tiles mean four calls per date change.
 

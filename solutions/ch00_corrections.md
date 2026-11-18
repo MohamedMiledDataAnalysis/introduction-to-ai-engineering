@@ -28,7 +28,7 @@ ollama list
 
 - `ollama` is the program installed in Step 6 of this chapter; `list` asks it for the models stored on your disk.
 
-**Reading the result.** The table has four columns: `NAME` (for example `qwen3.5:4b`), `ID` (a short hash of the model file), `SIZE` (in GB) and `MODIFIED` (when you downloaded it). After Chapter 0 you have at least one line, `qwen3.5:4b`, the chat model; its size is several gigabytes, and the exact figure depends on the version Ollama downloaded. If you followed the tip of Step 6, `gemma4:12b` appears too. Chapter 7 adds `nomic-embed-text`, the embedding model.
+**Reading the result.** The table has four columns: `NAME` (for example `qwen3.5:4b`), `ID` (a short hash of the model file), `SIZE` (in GB) and `MODIFIED` (when you downloaded it). After Chapter 0 you have at least one line, `qwen3.5:4b`, the chat model; its size is several gigabytes, and the exact figure depends on the version Ollama downloaded. If you followed the tip of Step 6, `qwen3.5:9b` appears too. Chapter 7 adds `nomic-embed-text`, the embedding model.
 
 **Checking the answer.** The name in the table must be spelt exactly as in the scripts: `qwen3.5:4b`, with the colon and the tag. Run `ollama run qwen3.5:4b "Say hello"`: if a reply appears, the model listed is the model that works.
 
@@ -53,12 +53,14 @@ payload = {
     "messages": [{"role": "user",
                   "content": "What does the abbreviation SONIA stand for?"}],
     "stream": False,
+    "think": False,     # answer directly; Chapter 3 explains
 }
 ```
 
 - `"model": MODEL` names the model to use; `MODEL` is defined at the top of the script.
 - `"messages"` is a list of messages; here one message, with `"role": "user"` (it comes from you) and `"content"`, the question.
 - `"stream": False` asks Ollama to send the whole reply at once instead of word by word.
+- `"think": False` asks the model to answer directly. `qwen3.5` writes a hidden reasoning before its answer unless told not to; Chapter 3 explains why the book switches it off.
 
 Then run, three times:
 
@@ -75,7 +77,7 @@ python chapters/ch00/python/check_setup.py
 - Concluding that the model is wrong because the sentences change. Variation in wording is expected; variation in a fact would be a problem.
 - Editing the `"role"` instead of the `"content"`: a message with `"role": "What does..."` is refused by Ollama.
 
-**Trade-offs.** Variation is useful when you want several drafts to choose from; it is a problem when you want a test to give the same result every day. Chapter 3 sets `temperature` to 0 and fixes a `seed` to make replies reproducible, at the cost of always getting the same draft.
+**Trade-offs.** Variation is useful when you want several drafts to choose from; it is a problem when you want a test to give the same result every day. Chapter 3 sets `temperature` to 0 and fixes a `seed` (the starting number of the random draws, Chapter 2) to make replies reproducible, at the cost of always getting the same draft.
 
 ### Exercise 0.3
 

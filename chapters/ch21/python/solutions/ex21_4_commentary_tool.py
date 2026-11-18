@@ -16,7 +16,7 @@ from aie.assistants import Assistant
 from aie.investor_report import TAPE, check_commentary, facts, month_figures, reconcile, template_commentary
 from aie.tools import REGISTRY, run_tool
 
-DATES = sorted(pd.read_csv(TAPE)["RREL6"].unique())[1:]          # interest payment dates: no report at closing
+DATES = sorted(pd.read_csv(TAPE)["RREL6"].unique())[1:]          # collection period ends: no report at closing
 SUFFIX = {"money": "_gbp", "percent": "_pct", "number": ""}
 
 
@@ -42,7 +42,7 @@ def draft_investor_commentary(cutoff_date):
 REGISTRY["draft_investor_commentary"] = (
     draft_investor_commentary,
     "Draft the commentary of the Larkfield 2025-1 investor report for one "
-    "interest payment date, after the reconciliations pass. The draft must be "
+    "collection period, after the reconciliations pass. The draft must be "
     "approved by an analyst before publication.",
     {"type": "object",
      "properties": {"cutoff_date": {"type": "string",

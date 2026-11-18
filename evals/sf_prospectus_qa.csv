@@ -12,7 +12,7 @@ Q10,Are recoveries on Defaulted Loans revenue receipts or principal receipts?,te
 Q11,What is the servicing fee per annum?,number,0.15,0.001,,6
 Q12,What is the monthly fee of the cash manager in pounds?,number,1500,0.01,,6
 Q13,Which item of the revenue priority of payments replenishes the reserve fund?,text,(l),,(l),6
-Q14,How are principal receipts applied to the notes?,text,sequentially,,sequential,7
+Q14,How are principal receipts applied to the notes?,text,sequentially,,sequential|sequentially,7
 Q15,What is the weighted average original loan-to-value of the portfolio?,number,69.41,0.001,,8
 Q16,What share of the portfolio by balance is in London?,number,15.30,0.001,,8
 Q17,What is the maximum original loan-to-value allowed by the eligibility criteria?,number,95,0,,9

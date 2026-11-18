@@ -10,7 +10,7 @@
 
 **Exercise 2.4.** In the token program, count the tokens for the Harbourline HGEF factsheet (`data/am/documents/hgef_factsheet_2026_09.md`) and for all three Key Information Documents together. Would the three KIDs fit in a window of 8,000 tokens with room for an answer of 500 tokens?
 
-**Exercise 2.5.** With Ollama running, send the HGEF factsheet to your model with the question *“What is the fund’s one-year return?”* through `chapters/ch03/python/ch03_first_call.py` adapted to the factsheet. Read `input_tokens` in the reply. How far is the real count from the estimate of Exercise 2.4?
+**Exercise 2.5.** With Ollama running, send the HGEF factsheet to your model with the question *“What is the fund’s one-year return?”*, by adapting the request of `chapters/ch00/python/check_setup.py` (Chapter 0). Read `prompt_eval_count` in Ollama’s reply: the real number of input tokens. How far is it from the estimate of Exercise 2.4?
 
 ## Corrections
 
@@ -92,7 +92,12 @@ One line only: every occurrence of *reserve* in the excerpt is followed by *fund
 question = "What happens when a borrower misses six payments?"
 ```
 
-The program then: splits the prospectus into sections (`re.split(r"\n## ", text)`), turns each section and the question into word counts without common words (`tokens()` removes the `STOP` list), weights each word by its rarity across sections (`idf`), and compares the question with each section by cosine similarity (`cosine()`): 1 means the same direction, 0 nothing in common.
+The program then works in four steps:
+
+1.  It splits the prospectus into sections (`re.split(r"\n## ", text)`).
+2.  It turns each section and the question into word counts without common words (`tokens()` removes the `STOP` list).
+3.  It weights each word by its rarity across sections (`idf`).
+4.  It compares the question with each section by cosine similarity (`cosine()`): 1 means the same direction, 0 nothing in common.
 
 **Reading the result.**
 
@@ -104,7 +109,7 @@ The program then: splits the prospectus into sections (`re.split(r"\n## ", text)
   0.037  10. Selected risk factors
 ```
 
-Section 4 comes first, and it is the right one: it defines a Defaulted Loan as one with *six or more monthly payments due and unpaid*, and says what happens next (the loss is recorded in the principal deficiency ledger). But the score is low: 0.112, against 0.641 for the reserve fund question of the applied example.
+Section 4 comes first, and it is the right one: it defines a Defaulted Loan as one with *six or more monthly payments due and unpaid*, and says what happens next (the loss is recorded in the principal deficiency ledger). But the score is low: 0.112, against 0.642 for the reserve fund question of the applied example.
 
 **Checking the answer.** Print the question’s words after the stop list: `what, happens, when, borrower, misses, six, payments`. Section 4 says *six or more monthly payments are due and unpaid*. Only *six* and *payments* appear in both: two words out of seven. That explains the low score; the section came first because no other section contains both.
 
@@ -142,7 +147,7 @@ print(f"Three KIDs together: ~{kids:,.0f} tokens")
 **What you should see**
 
 ``` text
-hgef_factsheet_2026_09.md     1,877 characters  ~   469 tokens
+hgef_factsheet_2026_09.md     2,031 characters  ~   508 tokens
 hgef_kid.md                   4,153 characters  ~ 1,038 tokens
 hecb_kid.md                   4,188 characters  ~ 1,047 tokens
 hbma_kid.md                   4,001 characters  ~ 1,000 tokens
@@ -164,11 +169,25 @@ $3{,}086 + 500 = 3{,}586$ tokens, less than half of 8,000. The three KIDs fit, w
 
 **What the question asks.** Send the HGEF factsheet and a question to your model, read the real input token count, and compare it with the estimate of Exercise 2.4.
 
-**The plan.** Adapt the first-call script of Chapter 3, run it, read `input_tokens`, and check the answer’s figure against the factsheet.
+**The plan.** Adapt the request of Chapter 0’s check script, run it, read `prompt_eval_count`, and check the answer’s figure against the factsheet.
 
-**Step by step.** In a copy of `chapters/ch03/python/ch03_first_call.py`, replace the prospectus section by the factsheet’s text (`open("data/am/documents/hgef_factsheet_2026_09.md", encoding="utf-8").read()`) and the question by *“What is the fund’s one-year return?”*. The script prints the reply and the counts returned by Ollama: `prompt_eval_count`, which the book’s `chat()` function reports as `input_tokens`, and `eval_count` (`output_tokens`).
+**Step by step.** In a copy of `chapters/ch00/python/check_setup.py`, keep the `payload` and replace the message’s content by the factsheet followed by the question:
 
-**Reading the result.** Your `input_tokens` will be above the factsheet’s estimate of 469, because the count includes the system prompt and the question, and because tables and percentages use more tokens per character than prose. With `qwen3.5:4b`, expect a difference of about 20% on this document.
+``` python
+factsheet = open("data/am/documents/hgef_factsheet_2026_09.md",
+                 encoding="utf-8").read()
+payload["messages"] = [{"role": "user", "content": factsheet
+    + "\n\nQuestion: What is the fund's one-year return?"}]
+reply = requests.post(OLLAMA_URL, json=payload, timeout=300).json()
+print(reply["message"]["content"])
+print("Input tokens:", reply["prompt_eval_count"],
+      "| output tokens:", reply["eval_count"])
+```
+
+- `payload["messages"] = ...` replaces the test message of Chapter 0 by the document and the question in one user message.
+- `reply["prompt_eval_count"]` is the number of input tokens the model read; `reply["eval_count"]` the number it wrote. Chapter 3’s `chat()` function reports the same two counts as `input_tokens` and `output_tokens`.
+
+**Reading the result.** Your count will be above the factsheet’s estimate of 508, for two reasons: the count includes the question and the few tokens the model’s chat template adds around every message, and tables and percentages use more tokens per character than prose. Write down the difference as a percentage of the estimate: it is your model’s correction factor for documents of this kind.
 
 **Checking the answer.** Two checks. (1) The figure in the reply: the factsheet’s 1-year line reads *6.46% \| 7.86% \| −1.40%*, so the fund’s return is **6.46%**; 7.86% is the benchmark’s. (2) The token count: run the same script with an empty document; the difference between the two counts is the factsheet’s real token count, without the instructions.
 

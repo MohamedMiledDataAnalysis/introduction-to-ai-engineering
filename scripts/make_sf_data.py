@@ -426,7 +426,7 @@ auto = pd.DataFrame({
     "reportingPeriodActualEndBalanceAmount": end,
     "currentDelinquencyStatus": delinq_days,
     "chargedoffPrincipalAmount": np.round(chargeoff, 2),
-    "zeroBalanceCode": np.where(chargeoff > 0, "3", ""),
+    "zeroBalanceCode": np.where(chargeoff > 0, "4", ""),     # 4 = charged-off (Schedule AL item 3(f)(24)(ii))
 })
 auto = auto[auto.reportingPeriodBeginningLoanBalanceAmount > 0].reset_index(drop=True)  # loans paid off before the period are not reported
 auto.to_csv(OUT_AUTO / "redwater_2025_a_asset_level.csv", index=False)

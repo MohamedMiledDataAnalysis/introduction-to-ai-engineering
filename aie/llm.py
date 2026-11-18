@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import os
 import time
+import warnings
 
 import requests
 
@@ -32,7 +33,8 @@ def _post(url, payload, headers, timeout, retries):
             if r.status_code in (429, 500, 502, 503, 529):        # temporary errors: wait and retry
                 last = LLMError(f"HTTP {r.status_code}: {r.text[:200]}")
                 if attempt < retries:                                  # no wait after the last attempt
-                    time.sleep(min(2 ** attempt, 8))
+                    wait = r.headers.get("Retry-After", "")            # the server may say how long to wait
+                    time.sleep(min(float(wait), 30) if wait.isdigit() else min(2 ** attempt, 8))
                 continue
             if r.status_code != 200:
                 raise LLMError(f"HTTP {r.status_code}: {r.text[:200]}")
@@ -43,11 +45,14 @@ def _post(url, payload, headers, timeout, retries):
                 time.sleep(min(2 ** attempt, 8))
         except requests.exceptions.Timeout:
             last = LLMError(f"no answer from {url} within {timeout} s")
+            if attempt < retries:
+                time.sleep(min(2 ** attempt, 8))
     raise last
 
 
 def chat(messages, model=None, provider=None, system=None, temperature=0.0, seed=42,
-         max_tokens=1024, format=None, tools=None, timeout=300, retries=2):
+         max_tokens=1024, format=None, tools=None, timeout=300, retries=2,
+         think=False, num_ctx=16384):
     """Send a conversation to a model. Returns a dict with text, tool_calls, token counts and timing."""
     provider = provider or DEFAULT_PROVIDER
     model = model or DEFAULT_MODEL
@@ -56,7 +61,9 @@ def chat(messages, model=None, provider=None, system=None, temperature=0.0, seed
     if provider == "ollama":
         msgs = ([{"role": "system", "content": system}] if system else []) + list(messages)
         payload = {"model": model, "messages": msgs, "stream": False,
-                   "options": {"temperature": temperature, "num_predict": max_tokens}}
+                   "think": think,                       # False: answer directly, no hidden reasoning first
+                   "options": {"temperature": temperature, "num_predict": max_tokens,
+                               "num_ctx": num_ctx}}      # context window; Ollama's own default can be 4,096
         if seed is not None:
             payload["options"]["seed"] = seed
         if format is not None:
@@ -69,7 +76,12 @@ def chat(messages, model=None, provider=None, system=None, temperature=0.0, seed
                   "tool_calls": [tc["function"] for tc in msg.get("tool_calls", []) or []],
                   "input_tokens": out.get("prompt_eval_count", 0),
                   "output_tokens": out.get("eval_count", 0)}
+        if result["input_tokens"] >= 0.9 * num_ctx:
+            warnings.warn(f"prompt uses {result['input_tokens']} of {num_ctx} context tokens: "
+                          "Ollama drops the oldest text beyond the window")
     elif provider == "anthropic":
+        if tools is not None or format is not None:
+            raise LLMError("tools and format are implemented for Ollama only in this wrapper")
         key = os.environ.get("ANTHROPIC_API_KEY")
         if not key:
             raise LLMError("set the ANTHROPIC_API_KEY environment variable")

@@ -68,7 +68,7 @@ def facts(f):
 def facts_for_prompt(f):
     change = f["arrears_ratio"] - f["prev_arrears_ratio"]
     return "\n".join([
-        f"- Period: interest payment date {f['cutoff']}",
+        f"- Period: collection period ending {f['cutoff']}",
         f"- Pool balance: £{f['pool'] / 1e6:.2f} million ({f['loans']:,} loans)",
         f"- Arrears ratio: {f['arrears_ratio']:.2f}% ({'up' if change > 0 else 'down'} from "
         f"{f['prev_arrears_ratio']:.2f}% the previous month)",
@@ -94,7 +94,8 @@ def template_commentary(f):
 def render_markdown(f, commentary):
     n = f["notes"]
     lines = [f"# Larkfield Mortgage Funding 2025-1 PLC — Investor report", "",
-             f"Interest payment date: {f['cutoff']}. Fictional document for teaching.", "",
+             f"Collection period ending {f['cutoff']}, paid on the 20th of the following month. "
+             "Fictional document for teaching.", "",
              "## Commentary", "", commentary, "",
              "## Pool", "", "| Item | Value |", "|---|---:|",
              f"| Current balance | £{f['pool']:,.2f} |", f"| Loans outstanding | {f['loans']:,} |",

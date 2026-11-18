@@ -4,7 +4,7 @@
 
 **Exercise 3.1.** Run `ch03_cost.py` (or `ch03_cost.R`). Then change the assumptions: 2,000 questions a month, 6,000 input tokens per question (eight passages instead of three) and 500 output tokens. What is the yearly cost with the large paid model? Which change contributed most?
 
-**Exercise 3.2.** Start the mock with `MOCK_FAIL_FIRST=2` (on Windows PowerShell: `$env:MOCK_FAIL_FIRST=2; python tools/mock_ollama.py`). Run `chapters/ch00/python/check_setup.py` through `chat()` and observe the time taken. Explain the duration from Figure 3.3.
+**Exercise 3.2.** Start the mock with `MOCK_FAIL_FIRST=2` (on Windows PowerShell: `$env:MOCK_FAIL_FIRST=2; python tools/mock_ollama.py`). Send the test message of `chapters/ch00/python/check_setup.py` (*“Reply with exactly these three words: Ollama is ready”*) through `chat()` and observe the time taken. Explain the duration from Figure 3.3.
 
 **Exercise 3.3.** Run `ch03_repeatability.py` against Ollama. How many distinct answers do you get at temperature 0 and at temperature 1? Explain.
 
@@ -107,12 +107,15 @@ for attempt in range(retries + 1):
     if r.status_code in (429, 500, 502, 503, 529):
         last = LLMError(f"HTTP {r.status_code}: {r.text[:200]}")
         if attempt < retries:                                  # no wait after the last attempt
-            time.sleep(min(2 ** attempt, 8))
+            wait = r.headers.get("Retry-After", "")            # the server may say how long to wait
+            time.sleep(min(float(wait), 30) if wait.isdigit() else min(2 ** attempt, 8))
         continue
 ```
 
 - `range(retries + 1)` with `retries=2` allows three attempts: 0, 1, 2.
-- The listed statuses are temporary errors; for them, the loop waits $2^{\text{attempt}}$ seconds, at most 8, and tries again. After the last attempt it does not wait: nothing follows.
+- The listed statuses are temporary errors; for them, the loop waits and tries again. After the last attempt it does not wait: nothing follows.
+- How long it waits: if the server sent a `Retry-After` header (a number of seconds, common with 429), the loop obeys it, up to 30 seconds; otherwise it waits $2^{\text{attempt}}$ seconds, at most 8. The mock sends no such header.
+- The full function treats a connection that fails or times out the same way: wait, then retry. `httr2::req_retry()` in R behaves alike for HTTP errors and failed connections.
 
 **Reading the result.** It prints `Ollama is ready 3.009` (the last digits vary). Attempt 0 receives 503 and waits $2^0 = 1$ second; attempt 1 receives 503 and waits $2^1 = 2$ seconds; attempt 2 succeeds. Waiting: 3 seconds, plus a few milliseconds of work.
 
@@ -249,7 +252,7 @@ Then put the second sentence back and ask again.
 
 **Reading the result.** Without the sentence, small models frequently answer with a rating such as *AAA*: senior notes of UK prime RMBS are often rated AAA, so it is a plausible continuation. With the sentence, the model usually answers that the text does not state a rating.
 
-**Checking the answer.** Search Section 2 for *rat*: there is no rating, no rating agency. Any rating in the reply is invented. Run each version three times at temperature 0 with different seeds (`seed=1, 2, 3`) and count how often a rating appears: you are measuring, on a small scale, what Chapter 5 measures on a test set.
+**Checking the answer.** Search Section 2 for *rat*: there is no rating, no rating agency. Any rating in the reply is invented. Run each version three times at temperature 0.7 with different seeds (`seed=1, 2, 3`) and count how often a rating appears. Temperature 0.7 matters: at temperature 0 the most probable token is always taken, so the seed has no effect and the three runs would be identical: you are measuring, on a small scale, what Chapter 5 measures on a test set.
 
 **Mistakes to avoid.**
 

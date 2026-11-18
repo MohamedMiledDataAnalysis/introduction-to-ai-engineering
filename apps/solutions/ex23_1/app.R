@@ -9,7 +9,7 @@ service_url <- Sys.getenv("AIE_SERVICE_URL", "")          # empty: the R agent r
 service_key <- Sys.getenv("AIE_API_KEY", "dev-key-change-me")
 assistant <- new_assistant("sf")
 tape  <- read.csv("data/sf/rmbs/larkfield_2025_1_loan_tape.csv", stringsAsFactors = FALSE)
-dates <- sort(unique(tape$RREL6))[-1]                       # interest payment dates (no report at closing)
+dates <- sort(unique(tape$RREL6))[-1]                       # collection period ends (no report at closing)
 gbp <- function(x, d = 2) paste0("£", formatC(x, format = "f", digits = d, big.mark = ","))
 
 ask_agent <- function(question, history) {
@@ -36,7 +36,7 @@ ui <- page_navbar(
   title = "Larkfield 2025-1", fillable = FALSE, theme = bs_theme(version = 5, primary = "#1F2A44", secondary = "#C9A227"),
   nav_panel("Dashboard",
     layout_sidebar(
-      sidebar = sidebar(selectInput("date", "Interest payment date", rev(dates)), width = 230),
+      sidebar = sidebar(selectInput("date", "Collection period ending", rev(dates)), width = 230),
       layout_columns(
         value_box("Pool balance", textOutput("kpi_pool")), value_box("Arrears ratio", textOutput("kpi_arrears")),
         value_box("CPR (annualised)", textOutput("kpi_cpr")), value_box("Class A balance", textOutput("kpi_classa")),
@@ -57,7 +57,7 @@ ui <- page_navbar(
         helpText(if (service_url == "") "Mode: R agent inside the app" else paste("Mode: service at", service_url))),
       uiOutput("conversation"))),
   nav_panel("Investor report",
-    layout_sidebar(sidebar = sidebar(selectInput("rdate", "Interest payment date", rev(dates)),
+    layout_sidebar(sidebar = sidebar(selectInput("rdate", "Collection period ending", rev(dates)),
                                      downloadButton("download", "Download report (.md)"), width = 260),
                    card(card_header("Commentary (template; checked)"), textOutput("commentary")),
                    card(card_header("Arrears"), tableOutput("buckets"))))
@@ -133,7 +133,7 @@ server <- function(input, output, session) {
     content = function(file) {
       f <- rfig(); n <- f$notes
       writeLines(c("# Larkfield Mortgage Funding 2025-1 PLC — Investor report", "",
-                   paste("Interest payment date:", f$cutoff), "", "## Commentary", "", template_commentary(f), "",
+                   paste("Collection period ending", f$cutoff, "(paid on the 20th of the following month)"), "", "## Commentary", "", template_commentary(f), "",
                    "## Notes", "", "| Class | Opening | Principal paid | Closing |", "|---|---:|---:|---:|",
                    sprintf("| %s | %s | %s | %s |", n$cls, gbp(n$opening), gbp(n$principal_paid), gbp(n$closing))), file)
     })

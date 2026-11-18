@@ -25,7 +25,8 @@ def score_one(case, answer):
         return ok, "number found" if ok else f"expected {case['expected']}, found {found}"
     if kind == "text":
         options = [k.strip().lower() for k in str(case["keywords"]).split("|")]
-        ok = any(k in answer.lower() for k in options)
+        # whole words only: the keyword "no" must not match inside "notes" or "not"
+        ok = any(re.search(rf"(?<![a-z]){re.escape(k)}(?![a-z])", answer.lower()) for k in options)
         return ok, "keyword found" if ok else f"none of {options}"
     if kind == "ordered":
         pos = 0

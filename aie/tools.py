@@ -125,7 +125,7 @@ REGISTRY = {
                          "cutoff_date": {"type": "string", "pattern": "20[0-9]{2}-[0-9]{2}-[0-9]{2}"}},
                       "required": ["note_class", "cutoff_date"], "additionalProperties": False}),
     "waterfall_summary": (waterfall_summary, "Revenue and principal receipts, new defaults, reserve fund balance "
-                          "and excess spread of Larkfield 2025-1 for one interest payment date.",
+                          "and excess spread of Larkfield 2025-1 for one collection period, named by its end date.",
                           {"type": "object", "properties": {
                               "cutoff_date": {"type": "string", "pattern": "20[0-9]{2}-[0-9]{2}-[0-9]{2}"}},
                            "required": ["cutoff_date"], "additionalProperties": False}),
@@ -285,6 +285,6 @@ REGISTRY["fund_characteristics"] = (
     fund_characteristics,
     "Portfolio characteristics of a Harbourline fund at the latest month-end: number of holdings, cash weight, "
     "weighted ESG score and carbon intensity, top three sectors, and for bond holdings the weighted modified "
-    "duration and the share rated BBB.",
+    "duration and the share rated in the BBB band (BBB+ to BBB-).",
     {"type": "object", "properties": {"fund_code": {"type": "string", "enum": ["HGEF", "HECB", "HBMA"]}},
      "required": ["fund_code"], "additionalProperties": False})

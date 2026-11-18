@@ -121,7 +121,7 @@ numbers_in <- function(text) {
 
 **Step by step.**
 
-*Step 1 — The scorer.* For a `text` case, `score_one()` passes the answer if it contains any of the case’s keywords. Q10’s keyword is `revenue`.
+*Step 1 — The scorer.* For a `text` case, `score_one()` passes the answer if it contains any of the case’s keywords as a whole word. Q10’s keyword is `revenue`.
 
 *Step 2 — The wrong answer.* *“Recoveries are not revenue receipts; they are principal receipts.”* It contradicts Section 5 but contains *revenue*.
 
@@ -211,7 +211,7 @@ Q24,What is the expected rating of the Class D notes?,not_in_document,,,,
 
 **Checking the answer.** Check each case against the document. Q21: Section 8’s table states *Interest-only loans (by balance) 13.06%*. Q22: Section 10 states *The issuer has not entered into an interest rate swap.* Q23: Section 7 repays A, then B, then C, then D. Q24: search the whole excerpt for *rat* — no rating anywhere.
 
-A first draft of Q24 asked *“What is the final maturity date of the Class D notes?”*. Searching the whole document shows why it was rejected: Section 1 gives a final maturity date for the notes (*Interest payment date falling in June 2060*), which applies to every class. An assistant answering *June 2060* would be right and fail the case.
+A first draft of Q24 asked *“What is the final maturity date of the Class D notes?”*. Searching the whole document shows why it was rejected: Section 1 gives a final maturity date for the notes (*Interest payment date falling in June 2063*), which applies to every class. An assistant answering *June 2060* would be right and fail the case.
 
 **Mistakes to avoid.**
 

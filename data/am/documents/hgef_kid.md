@@ -62,4 +62,4 @@ The assets of the fund are held separately by the depositary, Ellery Depositary 
 Write to Harbourline Asset Management S.A., Complaints Officer, 12 rue de la Fonderie, L-1531 Luxembourg (fictional address), or email complaints@harbourline.example.
 
 ## Other relevant information
-The prospectus, annual and semi-annual reports and past performance over the last 5 years are available at www.harbourline.example.
+The prospectus, annual and semi-annual reports and past performance over the last 6 years are available at www.harbourline.example.

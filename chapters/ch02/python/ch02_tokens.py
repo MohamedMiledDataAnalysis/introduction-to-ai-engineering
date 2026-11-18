@@ -8,7 +8,7 @@ one_month = tape[tape["RREL6"] == "2026-09-30"]
 csv_text = one_month.to_csv(index=False)
 
 CHARS_PER_TOKEN = 4      # budgeting rule for English text; measure yours
-CONTEXT_WINDOW = 32_000  # tokens; check the figure for your model
+CONTEXT_WINDOW = 16_384  # tokens: the window chat() asks for (Chapter 3)
 
 for name, s in [("Prospectus excerpt", prospectus),
                 ("Loan tape, one month", csv_text)]:

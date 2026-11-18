@@ -71,9 +71,9 @@ run_tool({"name": "search_fund_documents",
 
 The first returns `HGEF-KID#7` first, the second `HECB-KID#21`: each fund’s cost section, and nothing from the other fund.
 
-**Reading the result.** The expected answer: *“HECB has the lower ongoing costs: 0.40% a year \[HECB-KID#21\], against 0.75% for HGEF \[HGEF-KID#7\].”*
+**Reading the result.** The expected answer: *“HECB has the lower ongoing costs: 0.46% a year, of which 0.40% management and operating costs and 0.06% transaction costs \[HECB-KID#21\], against 0.86% for HGEF, of which 0.75% and 0.11% \[HGEF-KID#7\].”* In a PRIIPs KID, *ongoing costs taken each year* are the sum of two lines: management fees and other administrative or operating costs, and transaction costs. The fund master’s `ocf` (ongoing charges figure) holds only the first, 0.40% and 0.75%.
 
-**Checking the answer.** Both figures are in the retrieved passages (the line *Management fees and other administrative or operating costs \| 0.75% …* in HGEF’s KID, 0.40% in HECB’s), so `passage_facts()` supports them and the status is `verified`. They also match the fund master: `ocf` 0.0075 and 0.0040 in `funds.csv`.
+**Checking the answer.** Every figure is in the retrieved passages (the *Annual cost impact* line gives 0.86% and 0.46%, the two cost lines give 0.75% and 0.11% in HGEF’s KID and 0.40% and 0.06% in HECB’s), so `passage_facts()` supports them and the status is `verified`. The management and operating costs also match the fund master: `ocf` 0.0075 and 0.0040 in `funds.csv`.
 
 **Mistakes to avoid.**
 

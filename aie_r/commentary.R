@@ -17,6 +17,9 @@ hgef_facts <- function(month = "2026-09-30") {
   for (i in seq_len(nrow(attr))) {
     s <- attr$sector[i]; keys <- c(tolower(s), tolower(strsplit(s, " ")[[1]][1]))
     facts[[paste(s, "effect")]] <- f(100 * attr$total[i], "percent", keys, TRUE)
+    for (part in c("allocation", "selection", "interaction"))           # the three parts of the total effect
+      facts[[paste(s, part, "effect")]] <- f(100 * attr[[part]][i], "percent",
+        if (part == "allocation") c(part, "underweight", "overweight") else part, TRUE)
     facts[[paste(s, "active weight")]] <- f(100 * (attr$portfolio_weight[i] - attr$benchmark_weight[i]), "percent",
                                             c(keys, "weight", "overweight", "underweight"), FALSE)
     facts[[paste(s, "fund weight")]] <- f(100 * attr$portfolio_weight[i], "percent", c(keys, "weight", "overweight", "underweight", "against"), FALSE)
@@ -57,8 +60,10 @@ facts_for_prompt <- function(attr, fund, bench) {
   pick <- rbind(head(r, 2), r[rev(tail(seq_len(nrow(r)), 2)), ])
   for (i in seq_len(nrow(pick))) {
     side <- if (pick$portfolio_weight[i] > pick$benchmark_weight[i]) "overweight" else "underweight"
-    lines <- c(lines, sprintf("- %s: total effect %+.1fbp (%s); the fund was %s (%.2f%% against %.2f%%)",
+    lines <- c(lines, sprintf(paste0("- %s: total effect %+.1fbp (%s), of which allocation %+.1fbp, selection %+.1fbp, ",
+                                     "interaction %+.1fbp; the fund was %s (%.2f%% against %.2f%%)"),
                               pick$sector[i], 10000 * pick$total[i], if (pick$total[i] > 0) "contributed" else "detracted",
+                              10000 * pick$allocation[i], 10000 * pick$selection[i], 10000 * pick$interaction[i],
                               side, 100 * pick$portfolio_weight[i], 100 * pick$benchmark_weight[i]))
   }
   paste(lines, collapse = "\n")

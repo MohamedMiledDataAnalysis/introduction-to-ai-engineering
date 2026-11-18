@@ -246,7 +246,7 @@ The fund returned 3.17% net of fees, the benchmark 3.66%, so the fund was 0.48 p
 
 **The plan.** For each task ask two questions from the figure: *Is the input structured data and the answer a calculation?* If yes, code. If not, *can every figure and fact in the output be checked automatically, and does the output commit the firm?* The answers place the task.
 
-**Step by step and reading the result.**
+**Step by step.** Take the tasks in order and place each one.
 
 \(a\) **Plain code.** The interest is the Class B balance × the coupon × the day-count fraction: a formula on structured data. A model would add cost and a chance of error, and nothing else.
 
@@ -259,6 +259,19 @@ The fund returned 3.17% net of fees, the benchmark 3.66%, so the fund was 0.48 p
 \(e\) **Plain code.** Each eligibility criterion is a rule on fields: *original LTV at most 95%* is `RREC16 <= 95`. The criteria were read once from the prospectus; from then on they are code.
 
 \(f\) **Model drafts, a person approves.** A reply to a regulator is a formal statement of the firm; the model can assemble a draft from the SFDR disclosure and the ESG data; a named person signs it.
+
+**Reading the result.**
+
+| Task                                     | Approach               | Deciding reason                                                  |
+|:-----------------------------------------|:-----------------------|:-----------------------------------------------------------------|
+| \(a\) Class B interest                   | plain code             | a formula on structured data                                     |
+| \(b\) investor email on the reserve fund | model with checks      | the answer is in a document; citations and figures are checkable |
+| \(c\) ongoing charges from 400 KIDs      | model with checks      | reading varied layouts; each value checkable in its document     |
+| \(d\) HGEF factsheet commentary          | model, person approves | explanations the portfolio manager must own                      |
+| \(e\) loan eligibility                   | plain code             | each criterion is a rule on fields                               |
+| \(f\) reply to a regulator               | model, person approves | a formal statement of the firm                                   |
+
+Two tasks need no model at all, two use a model under automatic checks, and two need a person’s signature. The deciding question is never *“can a model do it?”* but *“can its output be checked, and who answers for it?”*.
 
 **Checking the answer.** Apply the test in reverse: for each answer, imagine the alternative fails. If (a) used a model and the model wrote a wrong figure, an investor is paid the wrong interest: unacceptable for a task code does perfectly. If (f) were sent with automatic checks only, a statement nobody approved would reach a regulator: unacceptable whatever the checks. The reverse test confirms each choice.
 
@@ -401,6 +414,6 @@ R prints `0`. In every month, the notes outstanding less the losses not yet cove
 **Mistakes to avoid.**
 
 - **Relying on positional alignment when a month is missing.** Drop one month from the notes and the two languages behave differently. Pandas aligns by date and returns `NaN` for the missing month: visible. R subtracts a 15-value vector from a 16-value vector by position, warns *longer object length is not a multiple of shorter object length*, and returns differences between **different months**: wrong numbers, with only a warning. In R, align by name first: `pool[names(notes_out)]`.
-- Forgetting the PDL. Without it the reconciliation fails in every month after the first loss, and you might “fix” a correct deal.
+- Forgetting the PDL. Without it the reconciliation fails in the three months where the PDL carried a balance (December 2025, January 2026 and April 2026), and you might “fix” a correct deal.
 
 **Trade-offs.** Group-by and subtract is three lines and enough when the sources are complete. A join on the date (Chapter 12) is longer but makes missing months explicit, as rows with an empty side; for a check that runs unattended every month, prefer the join.

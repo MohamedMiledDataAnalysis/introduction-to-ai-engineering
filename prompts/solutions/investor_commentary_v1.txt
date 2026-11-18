@@ -1,0 +1,7 @@
+You write the commentary of a UK RMBS investor report, in British English,
+in at most four sentences. Use only the facts below and quote each figure
+exactly as written. Mention new defaults only if they are above zero.
+Do not forecast.
+
+FACTS:
+{facts}

@@ -78,7 +78,15 @@ The monitoring block stays, filtered on `inv.domain`, which is `am`.
 - Reusing the prospectus evaluation of AI-SF-01 because the generator was written for it.
 - Leaving the generator’s default limitations (*“limited to the prospectus excerpt”*), which describe another use case.
 
-**Trade-offs.** *Known limitations* must state: weighted averages and two-key joins were the most frequent errors (Chapter 11); the connection is read-only and limited to listed tables; answers are internal and checked by the specialist before forwarding; the evaluation set has ten cases, hence the wide interval; the AM prompt’s token count grew through October (Chapter 19) and is under investigation. A card that lists its weaknesses is more useful to a validator than one that does not, and it is the honest record if something goes wrong.
+**Trade-offs.** *Known limitations* must state five facts:
+
+- weighted averages and two-key joins were the most frequent errors (Chapter 11);
+- the connection is read-only and limited to listed tables;
+- answers are internal and checked by the specialist before forwarding;
+- the evaluation set has ten cases, hence the wide interval;
+- the AM prompt’s token count grew through October (Chapter 19) and is under investigation.
+
+A card that lists its weaknesses is more useful to a validator than one that does not, and it is the honest record if something goes wrong.
 
 ### Exercise 20.3
 
@@ -111,7 +119,7 @@ The monitoring block stays, filtered on `inv.domain`, which is `am`.
 - Answering *“no personal data”* because loan identifiers are not names. A loan identifier identifies a borrower to anyone with access to the servicer’s system.
 - Answering for the fictional data. The screening is for the real use.
 
-**Trade-offs.** The presence of potential health information and the effect on individuals’ accounts point towards a full DPIA. The data protection officer decides. Redacting names and logging hashes reduces the risk at a small cost: a reviewer debugging an extraction needs access to the original note in the servicer’s system rather than in the log.
+**Trade-offs.** The presence of potential health information and the effect on individuals’ accounts point towards a full DPIA. The controller decides, after seeking the advice of the data protection officer (GDPR Article 35(2)). Redacting names and logging hashes reduces the risk at a small cost: a reviewer debugging an extraction needs access to the original note in the servicer’s system rather than in the log.
 
 ### Exercise 20.4
 

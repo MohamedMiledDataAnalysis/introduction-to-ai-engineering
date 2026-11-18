@@ -30,7 +30,7 @@ draft_investor_commentary <- function(cutoff_date) {
 }
 
 registry$draft_investor_commentary <- list(fn = draft_investor_commentary,
-  description = paste("Draft the commentary of the Larkfield 2025-1 investor report for one interest payment date,",
+  description = paste("Draft the commentary of the Larkfield 2025-1 investor report for one collection period,",
                       "after the reconciliations pass. The draft must be approved by an analyst before publication."),
   parameters = list(type = "object", properties = list(cutoff_date = date_rule),
                     required = list("cutoff_date"), additionalProperties = FALSE))

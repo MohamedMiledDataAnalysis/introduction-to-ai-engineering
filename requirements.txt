@@ -1,3 +1,9 @@
-pandas>=2.2
-numpy>=1.26
-requests>=2.32
+# Python packages for the whole book. Install with:  pip install -r requirements.txt
+pandas>=2.2          # tables (from Chapter 1)
+numpy>=1.26          # numbers (from Chapter 1)
+requests>=2.32       # HTTP calls to the model (from Chapter 0)
+pypdf>=4.0           # reading servicer report PDFs (Chapter 16)
+fastapi>=0.110       # the AI service (Chapter 18)
+pydantic>=2.6        # request validation in the service (Chapter 18)
+uvicorn>=0.29        # the server that runs the service (Chapter 18)
+reportlab>=4.0       # only to regenerate the servicer report PDFs (scripts/)

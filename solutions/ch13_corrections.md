@@ -133,7 +133,7 @@ def hecb_facts_for_prompt():
         f"- Benchmark return: {p['benchmark_return_pct']:.2f}%",
         f"- Relative return: {p['relative_return_pct']:+.2f}%",
         f"- Modified duration of the bonds: {c['bond_modified_duration_years']:.2f} years",
-        f"- Share of the bonds rated BBB: {c['bbb_share_of_bonds_pct']:.2f}%",
+        f"- Share of the bonds rated BBB+ to BBB-: {c['bbb_share_of_bonds_pct']:.2f}%",
         f"- Cash: {c['cash_weight_pct']:.2f}%"])
 ```
 
@@ -148,7 +148,7 @@ def hecb_facts_for_prompt():
 - Benchmark return: -0.48%
 - Relative return: -0.01%
 - Modified duration of the bonds: 5.82 years
-- Share of the bonds rated BBB: 53.42%
+- Share of the bonds rated BBB+ to BBB-: 53.42%
 - Cash: 2.00%
 ```
 
