@@ -119,10 +119,12 @@ Chapter 0 of the book installs everything: Python 3.12 or later, R 4.4 or later,
 
 ```bash
 pip install -r requirements.txt          # the Python packages
-Rscript scripts/install_r_packages.R     # the R packages: installs the missing ones, then checks each one loads
+Rscript scripts/install_r_packages.R     # the R packages: installs those missing or older than the tested
+                                         # versions, then prints each one with its minimum and installed version
 ```
 
-The Shiny applications check their packages when they start and install any that is missing from CRAN
+`requirements.txt` and the R script hold the minimum versions the code was tested with (table 0.2 of the book).
+The Shiny applications check their packages when they start and install from CRAN any that is missing or older
 (an internet connection is needed the first time).
 
 ## Licence

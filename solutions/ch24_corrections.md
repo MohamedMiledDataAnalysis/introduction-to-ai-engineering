@@ -156,23 +156,23 @@ AIE_DRAFT=1 Rscript -e 'shiny::runApp("apps/solutions/ex24_4", port = 8125)'   #
 +# Exercise 24.4 - the AM application with an Approve button, enabled only when every figure is OK
 +# Run from the repository root:  Rscript -e 'shiny::runApp("apps/solutions/ex24_4", port = 8124)'
 +# AIE_DRAFT=1 shows the first draft (no errors); the default, 2, shows the second (two errors)
- # The packages this application uses: any that is missing is installed from CRAN at the first start
-@@ -16,3 +17,3 @@
+ # The packages this application uses, with the oldest version the book was tested with: a package that is
+@@ -19,3 +20,3 @@
  library(shiny); library(bslib); library(DT); library(jsonlite)
 -root <- normalizePath(Sys.getenv("AIE_ROOT", "../.."))
 +root <- normalizePath(Sys.getenv("AIE_ROOT", "../../.."))
  setwd(root)
-@@ -63,3 +64,3 @@
+@@ -66,3 +67,3 @@
      card(card_header("HGEF, September 2026: Brinson attribution (basis points)"), tableOutput("attr")),
 -    card(card_header("Draft commentary and its fact check"), textOutput("draft"), br(), tableOutput("check"))),
 +    card(card_header("Draft commentary and its fact check"), textOutput("draft"), br(), tableOutput("check"), uiOutput("approve_ui"))),
    nav_panel("Assistant",
-@@ -105,3 +106,3 @@
+@@ -108,3 +109,3 @@
    drafts <- drafts[nchar(drafts) > 0]
 -  draft <- drafts[2]                                   # the second draft has two errors for the checker to find
 +  draft <- drafts[as.integer(Sys.getenv("AIE_DRAFT", "2"))]   # draft 2 has two errors; draft 1 has none
    output$draft <- renderText(draft)
-@@ -112,2 +113,23 @@
+@@ -115,2 +116,23 @@
                 Result = vapply(r, function(x) if (is.na(x$problem)) "OK" else x$problem, ""))
 +  })
 +

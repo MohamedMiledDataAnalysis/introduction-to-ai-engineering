@@ -1,15 +1,18 @@
 # Exercise 24.4 - the AM application with an Approve button, enabled only when every figure is OK
 # Run from the repository root:  Rscript -e 'shiny::runApp("apps/solutions/ex24_4", port = 8124)'
 # AIE_DRAFT=1 shows the first draft (no errors); the default, 2, shows the second (two errors)
-# The packages this application uses: any that is missing is installed from CRAN at the first start
-needed <- c("shiny", "bslib", "DT", "httr2", "jsonlite", "digest")
-missing <- needed[!vapply(needed, requireNamespace, TRUE, quietly = TRUE)]
+# The packages this application uses, with the oldest version the book was tested with: a package that is
+# missing or older is installed from CRAN when the application starts
+needed <- c(shiny = "1.8.0", bslib = "0.6.1", DT = "0.31", httr2 = "1.0.0", jsonlite = "1.8.8",
+            digest = "0.6.34")
+too_old <- function(p) !requireNamespace(p, quietly = TRUE) || packageVersion(p) < needed[[p]]
+missing <- names(needed)[vapply(names(needed), too_old, TRUE)]
 if (length(missing)) {
-  message("Installing the missing R packages: ", paste(missing, collapse = ", "))
+  message("Installing or updating the R packages: ", paste(missing, collapse = ", "))
   repos <- getOption("repos")
   if (is.null(repos) || identical(unname(repos["CRAN"]), "@CRAN@")) repos <- "https://cloud.r-project.org"
   install.packages(missing, repos = repos)
-  still <- missing[!vapply(missing, requireNamespace, TRUE, quietly = TRUE)]
+  still <- missing[vapply(missing, too_old, TRUE)]
   if (length(still))
     stop("These R packages could not be installed: ", paste(still, collapse = ", "),
          ". Check your internet connection, then run:  Rscript scripts/install_r_packages.R", call. = FALSE)
