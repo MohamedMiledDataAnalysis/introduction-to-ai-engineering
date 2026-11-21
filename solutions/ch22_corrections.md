@@ -420,13 +420,13 @@ The scripts are identical; only the domain changes the assistant, the tools and 
 
 | Measure         | SF target  | AM target  | SF result                     | AM result |
 |-----------------|------------|------------|-------------------------------|-----------|
-| Correct answers | ≥ 11 of 12 | ≥ 10 of 11 | 8 of 12 scored; 12 of 12 read | 10 of 11  |
+| Correct answers | ≥ 11 of 12 | ≥ 10 of 11 | 8 of 12 scored; 11 of 12 read | 11 of 11  |
 | Right tool      | 10 of 10   | 8 of 8     | 10 of 10                      | 8 of 8    |
 | Stopped         | 0          | 0          | 0                             | 0         |
 
 The results are those of the Python run with `qwen3.5:4b` printed in Chapters 21 and 22. Refusals (A11–A12, B09–B11) are declined by the guards in both.
 
-**Checking the answer.** Classify each failure by the step that failed: fund or date choice, finding a figure in a tool result, quoting, verification, or the scorer. In this run, all four SF failures are the scorer’s (numbers in words, a decline in other words, a keyword missing), and the agent’s one imprecision is a sentence without a figure (A07). The AM failure is the agent’s: a wrong one-year return for HGEF (B01), which verification flagged `needs_review`. The AM tasks are harder for two reasons: the agent must choose among three funds before any tool call, and its answers carry regulatory duties (costs as the KID states them, the past-performance warning) that the SF answers do not. Your results will differ in detail; the classification tells you where the difficulty lies.
+**Checking the answer.** Classify each failure by the step that failed: fund or date choice, finding a figure in a tool result, quoting, verification, or the scorer. In this run, three of the four SF failures are the scorer’s (a number in words, a decline in other words, a keyword missing); the fourth, A08, is the agent’s: it added numbers no tool returned, and verification flagged it `needs_review`. A07 also carries a wrong sentence without a figure. The AM agent passed all eleven cases; its two `needs_review` answers were false flags on *guarantee*. In the R run the AM failure was the agent’s: a wrong one-year return for HGEF (B01), flagged `needs_review`. The AM tasks are harder for two reasons: the agent must choose among three funds before any tool call, and its answers carry regulatory duties (costs as the KID states them, the past-performance warning) that the SF answers do not. Your results will differ in detail; the classification tells you where the difficulty lies.
 
 **Mistakes to avoid.**
 
