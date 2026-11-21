@@ -133,7 +133,8 @@ arrears_buckets <- function(cutoff_date) {
   months <- pmin(m$RREL68 %/% 30, 4)
   labels <- c("1 month", "2 months", "3 months", "4-5 months")
   list(cutoff_date = cutoff_date, buckets = lapply(1:4, function(k)
-    list(bucket = labels[k], loans = sum(months == k), balance_gbp = round(sum(m$RREL30[months == k]), 2))))
+    list(bucket = labels[k], loans = sum(months == k),
+         balance_gbp = round(sum(m$RREL30[months == k]), 2))))
 }
 
 .fund_docs <- function() {
@@ -203,10 +204,12 @@ fund_characteristics <- function(fund_code) {
 }
 
 registry$arrears_buckets <- list(fn = arrears_buckets,
-  description = paste("Number of loans and current balance of the Larkfield 2025-1 loans in arrears at a month-end, by",
-                      "months in arrears: 1, 2, 3, and 4 to 5. Defaulted loans (6 months or more) are not included."),
-  parameters = list(type = "object", properties = list(cutoff_date = date_rule), required = list("cutoff_date"),
-                    additionalProperties = FALSE))
+  description = paste("Number of loans and current balance of the Larkfield",
+    "2025-1 loans in arrears at a month-end, by months in arrears: 1, 2, 3,",
+    "and 4 to 5. Defaulted loans (6 months or more) are not included."),
+  parameters = list(type = "object",
+    properties = list(cutoff_date = date_rule),
+    required = list("cutoff_date"), additionalProperties = FALSE))
 fund_enum <- list(type = "string", enum = list("HGEF", "HECB", "HBMA"))
 registry$search_fund_documents <- list(fn = search_fund_documents,
   description = paste("Search the Key Information Document, the September 2026 factsheet and, for HGEF, the SFDR periodic",

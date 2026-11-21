@@ -22,6 +22,8 @@
 
 **Step by step.**
 
+`chapters/ch14/python/solutions/ex14_1_fifteen_reports.py` (extract)
+
 ``` python
 from pathlib import Path
 import pandas as pd
@@ -86,6 +88,8 @@ FACTS:
 {facts}
 ```
 
+`chapters/ch14/python/solutions/ex14_2_model_commentary.py` (extract)
+
 ``` python
 def draft_commentary(f):
     template, version = load_prompt("investor_commentary_v1")
@@ -121,6 +125,8 @@ def draft_commentary(f):
 **The plan.** (1) Take the loans in arrears in March. (2) Look up each one’s status in September. (3) Count the outcomes. (4) Relate them to the ratio.
 
 **Step by step.**
+
+`chapters/ch14/python/solutions/ex14_3_march_arrears.py` (extract)
 
 ``` python
 t = pd.read_csv(TAPE)
@@ -165,20 +171,26 @@ ARRE     1
 
 **Step by step.**
 
+`chapters/ch14/python/solutions/ex14_4_broken_notes.py` (extract)
+
 ``` python
+import tempfile
+from pathlib import Path
+
 import pandas as pd
 import aie.investor_report as ir
 
 notes = pd.read_csv(ir.NOTES)
 mask = (notes.cutoff == "2026-09-30") & (notes.cls == "B")
 notes.loc[mask, "closing"] -= 100
-notes.to_csv("/tmp/notes_broken.csv", index=False)
+broken = Path(tempfile.gettempdir()) / "notes_broken.csv"
+notes.to_csv(broken, index=False)
 
-ir.NOTES = "/tmp/notes_broken.csv"
+ir.NOTES = str(broken)
 print(ir.reconcile(ir.month_figures("2026-09-30")))
 ```
 
-- The copy goes to a temporary folder: the repository’s data is never modified.
+- The copy goes to the computer’s temporary folder, which `tempfile.gettempdir()` finds on every system: the repository’s data is never modified.
 - `ir.NOTES` is the path the module reads; changing it redirects `month_figures()` to the copy.
 
 **Reading the result.**
@@ -207,6 +219,8 @@ Running `ch14_investor_report.py` with the copy prints `FAIL  notes - PDL = pool
 **The plan.** (1) List the words for each direction. (2) Split the commentary into sentences and keep those about arrears. (3) Compare the words with the sign of the change. (4) Test on a correct and a corrupted commentary.
 
 **Step by step.**
+
+`chapters/ch14/python/solutions/ex14_5_direction_words.py` (extract)
 
 ``` python
 import re

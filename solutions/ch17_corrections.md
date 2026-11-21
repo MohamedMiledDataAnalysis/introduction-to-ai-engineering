@@ -22,6 +22,8 @@
 
 **Step by step.**
 
+`chapters/ch17/python/solutions/ex17_1_pass_rates.py`
+
 ``` python
 import json, sys
 sys.path.insert(0, ".")
@@ -65,6 +67,8 @@ print(fails)
 
 **Step by step.** For R01 B, the consistency check reports *recommendation \[‘buy’\] differs from the note (Hold)*, and the completeness check, not finding *hold*, reports *missing: recommendation*. Two symptoms, one cause. Change the two checks in `aie/summary_check.py`:
 
+`chapters/ch17/python/solutions/ex17_2_one_message.py` (extract)
+
 ``` python
 said = [r for r in RECS if re.search(rf"\b{r}\b", summary, re.I)]
 wrong_rec = bool(said) and said != [key["recommendation"].lower()]
@@ -98,6 +102,8 @@ required = {"recommendation": wrong_rec or
 **The plan.** (1) Compare with the note. (2) Find why the four checks pass. (3) Add a direction check at clause level. (4) Test on correct and wrong sentences, including a flat margin.
 
 **Step by step.** The note says the margin was 14.9%, *down* from 15.5%: *rose* reverses the analyst’s finding. The figure is faithful; the direction is not. The key facts already hold both margins (`operating_margin_pct` 14.9, `previous_margin_pct` 15.5).
+
+`chapters/ch17/python/solutions/ex17_3_margin_direction.py` (extract)
 
 ``` python
 def margin_direction_errors(summary, key):
@@ -164,6 +170,8 @@ Call it at the end of `check_summary()`: `problems += margin_direction_errors(su
 *The prompt.* One note per call (Chapter 15). Each field defined with its unit: *“revenue_growth_pct: revenue growth year on year, in %, as a number: 2.9 for 2.9%”*; *“previous_margin_pct: the operating margin a year earlier”*; *null when the note does not state it*.
 
 *The checks.*
+
+`chapters/ch17/python/solutions/ex17_4_key_facts_checks.py` (extract)
 
 ``` python
 def check_key_facts(obj, note):

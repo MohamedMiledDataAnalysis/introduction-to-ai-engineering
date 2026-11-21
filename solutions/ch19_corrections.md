@@ -22,6 +22,8 @@
 
 **Step by step.**
 
+`chapters/ch19/python/solutions/ex19_1_outage.py`
+
 ``` python
 import sys; sys.path.insert(0, ".")
 from aie.monitor import load_log
@@ -33,6 +35,8 @@ print(err.seconds.min(), err.seconds.max())
 
 - `load_log()` reads the JSON Lines file into a table and adds a `day` column.
 - `err.groupby("domain").size()` counts errors per domain.
+
+`chapters/ch19/r/solutions/ex19_1_outage.R`
 
 ``` r
 library(jsonlite)
@@ -60,6 +64,8 @@ cat(min(err$ts), max(err$ts), "\n"); print(table(err$domain)); print(range(err$s
 
 **Step by step.**
 
+`chapters/ch19/python/solutions/ex19_2_rolling_review_rate.py` (extract)
+
 ``` python
 ok = df[df.status != "error"]
 def rolling_review(domain, window=5):
@@ -74,6 +80,8 @@ print(r[r > 0.10])
 - `ok` excludes errors: the review rate is a share of answers.
 - `flagged` counts answers not `verified` per day; `total` counts answers per day. The log has working days only, so five rows are five working days.
 - `.rolling(5).sum()` adds each day and the four before it; dividing the two sums gives a rate weighted by volume, not an average of daily rates.
+
+`chapters/ch19/r/solutions/ex19_2_rolling_review_rate.R` (extract)
 
 ``` r
 ok <- df[df$status != "error", ]
@@ -108,6 +116,8 @@ r <- rolling_review("sf"); print(r[!is.na(r) & r > 0.10])
 **The plan.** Use the headings of a standard incident note, and fill each with figures from the log.
 
 **Step by step.** The evidence first:
+
+`chapters/ch19/python/solutions/ex19_3_incident_evidence.py` (extract)
 
 ``` python
 sf = df[(df.domain == "sf") & (df.status != "error")]
@@ -145,6 +155,8 @@ The note:
 
 **Step by step.**
 
+`chapters/ch19/python/solutions/ex19_4_token_growth.py` (extract)
+
 ``` python
 import numpy as np
 from aie.monitor import daily_metrics
@@ -178,6 +190,8 @@ In R: `coef(lm(avg_tokens ~ t, data = am))`.
 **The plan.** (1) Sum tokens by domain and by caller, convert to dollars. (2) Scale October’s 18 working days to a year. (3) Rescale AM by the ratio of the 26 October average to the month’s average.
 
 **Step by step.**
+
+`chapters/ch19/python/solutions/ex19_5_cost.py` (extract)
 
 ``` python
 print((df.groupby("domain").tokens.sum() / 1e6 * 3).round(2))

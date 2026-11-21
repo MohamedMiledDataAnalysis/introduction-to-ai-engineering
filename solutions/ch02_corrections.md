@@ -26,6 +26,8 @@
 
 *Step 2 — Apply the power $1/T$.* The function `with_temperature()` in the program does three things:
 
+`chapters/ch02/python/ch02_next_word.py` (extract)
+
 ``` python
 logits = {w: math.log(p) / t for w, p in probs.items()}   # log-probability divided by T
 expd = {w: math.exp(v - m) for w, v in logits.items()}   # back to the original scale
@@ -54,6 +56,8 @@ Dividing a logarithm by $T$ and taking the exponential raises the probability to
 **The plan.** Change one line, run, then search the prospectus for the phrase.
 
 **Step by step.** In Python change `context = "class"` to:
+
+`chapters/ch02/python/solutions/ex2_2_reserve.py` (extract)
 
 ``` python
 context = "reserve"
@@ -87,6 +91,8 @@ One line only: every occurrence of *reserve* in the excerpt is followed by *fund
 **The plan.** Replace the question, run, check the top section’s text, then look at which words the question and the section share.
 
 **Step by step.**
+
+`chapters/ch02/python/solutions/ex2_3_six_payments.py` (extract)
 
 ``` python
 question = "What happens when a borrower misses six payments?"
@@ -127,6 +133,8 @@ Section 4 comes first, and it is the right one: it defines a Defaulted Loan as o
 **The plan.** (1) Read the four files. (2) Estimate tokens with the rule of the chapter: one token per four characters. (3) Add the answer’s 500 tokens and compare with 8,000.
 
 **Step by step.** Add to the token program:
+
+`chapters/ch02/python/solutions/ex2_4_fund_documents.py` (extract)
 
 ``` python
 docs = {name: open(f"data/am/documents/{name}", encoding="utf-8").read()
@@ -172,6 +180,8 @@ $3{,}086 + 500 = 3{,}586$ tokens, less than half of 8,000. The three KIDs fit, w
 **The plan.** Adapt the request of Chapter 0’s check script, run it, read `prompt_eval_count`, and check the answer’s figure against the factsheet.
 
 **Step by step.** In a copy of `chapters/ch00/python/check_setup.py`, keep the `payload` and replace the message’s content by the factsheet followed by the question:
+
+`chapters/ch02/python/solutions/ex2_5_factsheet_question.py` (extract)
 
 ``` python
 factsheet = open("data/am/documents/hgef_factsheet_2026_09.md",

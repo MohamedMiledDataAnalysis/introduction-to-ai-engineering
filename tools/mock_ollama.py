@@ -3,7 +3,9 @@ A stand-in for Ollama's HTTP API, for testing code without a real model.
 
 It answers on http://localhost:11434 like Ollama, with deterministic replies:
 - /api/chat  : replays the replies listed in a script file (MOCK_SCRIPT=path.json),
-               one per request, or else returns a short canned reply.
+               one per request; when a JSON schema is sent as "format", a JSON
+               value of that shape (nulls, first enum values, empty strings, zeros);
+               or else a short canned reply.
 - /api/embed : returns hashed bag-of-words vectors (64 dimensions), so texts that
                share words have similar vectors.
 - MOCK_FAIL_FIRST=n makes the first n chat requests fail with HTTP 503.
@@ -36,6 +38,20 @@ def embed(text, dims=64):
     return [x / n for x in v]
 
 
+def sample(schema):
+    """A value that matches a JSON schema: null where allowed, else the first enum value, "", 0, [] or {}."""
+    types = schema.get("type", "object")
+    types = types if isinstance(types, list) else [types]
+    if "null" in types:
+        return None
+    if "enum" in schema:
+        return schema["enum"][0]
+    t = types[0]
+    if t == "object":
+        return {k: sample(v) for k, v in schema.get("properties", {}).items()}
+    return {"string": "", "number": 0, "integer": 0, "boolean": False, "array": []}.get(t)
+
+
 class Handler(BaseHTTPRequestHandler):
     def _send(self, code, obj):
         data = json.dumps(obj).encode()
@@ -62,6 +78,9 @@ class Handler(BaseHTTPRequestHandler):
             message = {"role": "assistant", "content": step.get("content", "")}
             if "tool_calls" in step:
                 message["tool_calls"] = [{"function": tc} for tc in step["tool_calls"]]
+        elif body.get("format"):                  # structured output asked: a JSON value of the right shape
+            fmt = body["format"]
+            message = {"role": "assistant", "content": json.dumps(sample(fmt) if isinstance(fmt, dict) else {})}
         else:
             last = body["messages"][-1].get("content", "")
             m = re.search(r"exactly these (?:\w+ )?words: (.+)$", last)

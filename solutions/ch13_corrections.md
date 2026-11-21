@@ -22,6 +22,8 @@
 
 **Step by step.**
 
+`chapters/ch13/python/solutions/ex13_1_attribution_identity.py`
+
 ``` python
 import pandas as pd
 attr = pd.read_csv("data/am/hgef_attribution_2026_09.csv")
@@ -37,6 +39,8 @@ print(round(100 * total_active, 4), round(100 * (gross - bench), 4))
 - The attribution file has one row per sector, plus a *Cash* row; the three effect columns are decimals.
 - The NAV return is **net** of the ongoing charge of 0.75% a year. One month of it is $0.0075 / 12 = 0.000625$, or 0.0625%. Adding it back gives the gross return, which is what the holdings earned.
 - `set_index("month_end").loc["2026-09-30", "HGEF"]` reads the benchmark’s return for that month.
+
+`chapters/ch13/r/solutions/ex13_1_attribution_identity.R`
 
 ``` r
 attr <- read.csv("data/am/hgef_attribution_2026_09.csv")
@@ -67,6 +71,8 @@ cat(round(100 * total_active, 4), round(100 * (net + 0.0075 / 12 - bench), 4), "
 
 **Step by step.**
 
+`chapters/ch13/python/solutions/ex13_2_both_detracted.py` (extract)
+
 ``` python
 print(100 * attr.allocation.sum(), 100 * attr.selection.sum(),
       100 * attr.interaction.sum())
@@ -92,6 +98,8 @@ In R: `colSums(attr[, c("allocation", "selection", "interaction")]) * 100`.
 **The plan.** (1) Call `draft_commentary()` five times. (2) Collect the problems of each draft. (3) Classify each problem by reading the figure and its clause.
 
 **Step by step.**
+
+`chapters/ch13/python/solutions/ex13_3_five_drafts.py` (extract)
 
 ``` python
 results = [draft_commentary() for _ in range(5)]
@@ -121,6 +129,8 @@ for text, report, version in results:
 **The plan.** (1) List what the files give for a bond fund. (2) Write the function with the tools and queries already met: `fund_performance()` (Chapter 8) and the guarded SQL of Chapter 11. (3) Identify the missing explanation.
 
 **Step by step.**
+
+`chapters/ch13/python/solutions/ex13_4_hecb_facts.py` (extract)
 
 ``` python
 from aie.sqlguard import run_sql
@@ -155,6 +165,8 @@ print(hecb_facts_for_prompt())
 - `one()` runs a query through `run_sql()` (Chapter 11) and returns its single value. The three queries are those of Chapter 11’s evaluation: the duration is case S04’s, the BBB query is case S08’s, and the cash query reads the `CASH-EUR` line.
 - S08 gives the BBB share of the **fund**; dividing by the bonds’ share, `1 - cash`, gives the share of the **bonds**, the figure a bond fund reports.
 - Each line is rounded and labelled, as in `facts_for_prompt()`: the model quotes, it never computes.
+
+`chapters/ch13/r/solutions/ex13_4_hecb_facts.R`
 
 ``` r
 source("aie_r/sqlguard.R"); source("aie_r/tools.R")
@@ -204,6 +216,8 @@ cat(hecb_facts_for_prompt(), "\n")
 **The plan.** (1) Identify what kind of sentence it is. (2) Decide which checks apply to edited text. (3) Route the commentary.
 
 **Step by step.** The sentence is a forecast. Factsheets are marketing communications: forecasts require a fair basis, balance and often a warning, and the firm’s compliance rules decide whether they are allowed at all. Extend the forbidden-phrase list of Chapter 6 with forecast patterns:
+
+`chapters/ch13/python/solutions/ex13_5_forecast.py` (extract)
 
 ``` python
 FORECAST = [r"\bwe expect\b", r"\bwill (recover|rebound|rise|fall)\b", r"\bis set to\b"]

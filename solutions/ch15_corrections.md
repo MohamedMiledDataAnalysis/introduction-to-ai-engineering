@@ -22,6 +22,8 @@
 
 **Step by step.**
 
+`chapters/ch15/python/solutions/ex15_1_extract_three_kids.py`
+
 ``` python
 import json, sys
 sys.path.insert(0, ".")
@@ -62,6 +64,8 @@ for code in ("HGEF", "HECB", "HBMA"):
 
 **Step by step.**
 
+`chapters/ch15/python/solutions/ex15_2_positional_check.py` (extract)
+
 ``` python
 import re
 
@@ -76,6 +80,8 @@ def moderate_rhp_in_document(document):
 
 Add to `check_extraction()`:
 
+`chapters/ch15/python/solutions/ex15_2_positional_check.py` (extract)
+
 ``` python
 expected = moderate_rhp_in_document(document)
 if expected is not None and obj.get("moderate_scenario_rhp_eur") != expected:
@@ -84,6 +90,8 @@ if expected is not None and obj.get("moderate_scenario_rhp_eur") != expected:
 ```
 
 In R:
+
+`chapters/ch15/r/solutions/ex15_2_positional_check.R` (extract)
 
 ``` r
 moderate_rhp_in_document <- function(document) {
@@ -125,6 +133,8 @@ moderate_rhp_in_document <- function(document) {
 
 *Step 3 — A second line, independent of the layout.*
 
+`chapters/ch15/python/solutions/ex15_3_stress_scenario.py` (extract)
+
 ``` python
 order = ["stress_scenario_rhp_eur", "unfavourable_scenario_rhp_eur",
          "moderate_scenario_rhp_eur", "favourable_scenario_rhp_eur"]
@@ -151,6 +161,8 @@ if values != sorted(values):
 **The plan.** (1) Change the master value in a copy. (2) Check the correct extraction. (3) Diagnose. (4) Route the issue.
 
 **Step by step.**
+
+`chapters/ch15/python/solutions/ex15_4_master_data.py` (extract)
 
 ``` python
 f = funds.copy()
@@ -186,6 +198,8 @@ Check 1 passes (0.40% is in the KID); check 3 fails.
 **The plan.** (1) Write a pattern for each field from the KID’s wording. (2) Run it on the three KIDs and compare with the truth. (3) Imagine other wordings. (4) Compare maintenance.
 
 **Step by step.**
+
+`chapters/ch15/python/solutions/ex15_5_regex_extractor.py` (extract)
 
 ``` python
 import re

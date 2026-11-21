@@ -1,4 +1,6 @@
 # Exercise 1.3 - One-year return of the euro corporate bond fund, checked against the factsheet
+# Run from the root of the repository:  python chapters/ch01/python/solutions/ex1_3_hecb_one_year.py
+
 import pandas as pd
 
 nav = pd.read_csv("data/am/fund_nav_monthly.csv")

@@ -22,6 +22,8 @@
 
 **Step by step.**
 
+`chapters/ch04/python/solutions/ex4_1_rendered_prompt.py`
+
 ``` python
 import json, sys
 sys.path.insert(0, ".")
@@ -70,6 +72,8 @@ In R, `render(p$text)` stops with *missing values for placeholders: note_text*.
 
 *Step 2 — Add to the `replies` dictionary* of `ch04_parse_and_validate.py`:
 
+`chapters/ch04/python/solutions/ex4_2_three_faulty_replies.py` (extract)
+
 ``` python
 replies["F extra field"] = ('{"loan_id": "LMF25-00190", "months_in_arrears": 3, '
     '"arrears_balance": 1960.79, "action": "payment_plan", '
@@ -117,10 +121,14 @@ All three predictions hold, and each message names the rule broken.
 
 *Step 2 — The hashes.*
 
+`chapters/ch04/python/solutions/ex4_3_prompt_hash.py` (extract)
+
 ``` python
 from aie.prompts import load_prompt
 print(load_prompt("extract_servicer_note_v2")[1])
 ```
+
+`chapters/ch04/r/solutions/ex4_3_prompt_hash.R` (extract)
 
 ``` r
 source("aie_r/prompts.R"); cat(load_prompt("extract_servicer_note_v2")$hash)
@@ -175,6 +183,8 @@ source("aie_r/prompts.R"); cat(load_prompt("extract_servicer_note_v2")$hash)
 
 **Checking the answer.** Count the phrases with code, independently of the model:
 
+`chapters/ch04/python/solutions/ex4_4_reason_phrases.py` (extract)
+
 ``` python
 import re
 from collections import Counter
@@ -199,11 +209,15 @@ The model’s counts must match these: any difference is an extraction error to 
 
 **Step by step.** In `ch04_extract_notes.py`, the call is:
 
+`chapters/ch04/python/ch04_extract_notes.py` (extract)
+
 ``` python
-reply = chat([{"role": "user", "content": prompt}], format=schema)
+    reply = chat([{"role": "user",
+                   "content": render(template, note_text=note["text"])}],
+                 format=schema)
 ```
 
-Run it, note the count of invalid replies printed at the end, then change `format=schema` to `format=None` and run again.
+Run it, note the count of invalid replies printed at the end, then change `format=schema` to `format=None` and run again. The changed script is `chapters/ch04/python/solutions/ex4_5_without_schema.py`.
 
 **Reading the result.** With the schema: 0 invalid replies, or very few. Without it, small models add explanations around the JSON (the parser tolerates them), write amounts as text such as `"£1,960.79"`, or rename fields (the validator rejects them): several invalid replies out of 18.
 

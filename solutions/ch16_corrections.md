@@ -22,6 +22,8 @@
 
 **Step by step.**
 
+`chapters/ch16/python/solutions/ex16_1_prepayments_line.py`
+
 ``` python
 import sys; sys.path.insert(0, ".")
 from aie.servicer_pdf import pdf_text
@@ -34,6 +36,8 @@ print(lines[i:i + 2])
 
 - `pdf_text()` extracts the text of every page with `pypdf`.
 - `next(...)` returns the index of the first line containing *Prepayments*; `lines[i:i + 2]` prints that line and the next.
+
+`chapters/ch16/r/solutions/ex16_1_prepayments_line.R`
 
 ``` r
 source("aie_r/servicer_pdf.R")
@@ -73,6 +77,8 @@ Python’s library writes each table cell on its own line; Poppler keeps the row
 
 **Step by step.**
 
+`chapters/ch16/python/solutions/ex16_2_three_reports.py` (extract)
+
 ``` python
 for cutoff in ("2026-07-31", "2026-08-31", "2026-09-30"):
     path = ("data/sf/rmbs/servicer_reports/"
@@ -104,6 +110,8 @@ for cutoff in ("2026-07-31", "2026-08-31", "2026-09-30"):
 **The plan.** (1) Sum the loan-level prepayments of September. (2) Split full redemptions from partial prepayments. (3) Reason about the difference. (4) Draft the query.
 
 **Step by step.**
+
+`chapters/ch16/python/solutions/ex16_3_prepayments.py` (extract)
 
 ``` python
 cf = pd.read_csv("data/sf/rmbs/larkfield_2025_1_loan_cashflows.csv")

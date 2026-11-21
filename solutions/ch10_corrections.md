@@ -22,6 +22,8 @@
 
 **Step by step.**
 
+`chapters/ch10/python/solutions/ex10_1_baseline_failures.py` (extract)
+
 ``` python
 fails = ["Q01", "Q02", "Q03", "Q04", "Q07", "Q08", "Q13", "Q16"]
 for c in cases[cases.id.isin(fails)].to_dict("records"):
@@ -63,6 +65,8 @@ for c in cases[cases.id.isin(fails)].to_dict("records"):
 
 **Step by step.**
 
+`chapters/ch10/python/solutions/ex10_2_threshold.py` (extract)
+
 ``` python
 for t in (0, 2, 4, 6, 8):
     answers = {c["id"]: answer_extractive(c["question"], index, t)["answer"]
@@ -102,6 +106,8 @@ The eight failures common to every threshold (Q01 to Q04, Q07, Q08, Q13, Q16) ar
 **The plan.** (1) Answer the twenty questions with both methods. (2) Score both. (3) Compare with `compare_runs()`. (4) Read every regression and apply the release criteria.
 
 **Step by step.**
+
+`chapters/ch10/python/solutions/ex10_3_model_against_baseline.py` (extract)
 
 ``` python
 base = run_eval(cases, {c["id"]: answer_extractive(c["question"], index)["answer"]

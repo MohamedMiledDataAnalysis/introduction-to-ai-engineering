@@ -22,6 +22,8 @@
 
 **Step by step.** Add to `services/r/plumber.R`:
 
+`services/solutions/ex18_1/plumber.R` (extract)
+
 ``` r
 #* @get /tools/fund_performance
 #* @serializer unboxedJSON
@@ -46,6 +48,8 @@ Restart the service:
 ``` bash
 Rscript -e 'plumber::pr_run(plumber::pr("services/r/plumber.R"), port = 8001)'
 ```
+
+The repository holds the service with this endpoint in `services/solutions/ex18_1/plumber.R`, and a script that starts it and calls the endpoint twice: `chapters/ch18/r/solutions/ex18_1_fund_performance.R`.
 
 **Reading the result.**
 
@@ -84,13 +88,15 @@ uvicorn services.python.app:app --port 8000
 
 Open `http://localhost:8000/docs`. FastAPI builds this page from the code: the `Question` class appears with its two fields, from
 
+`services/python/app.py` (extract)
+
 ``` python
 class Question(BaseModel):
     question: str = Field(min_length=3, max_length=2000)
     user: str = Field(default="anonymous", max_length=100)
 ```
 
-Click *Try it out* on `POST /{domain}/ask`, enter `sf` as `domain`, `dev-key-change-me` as `x-api-key`, and a question.
+Click *Try it out* on `POST /{domain}/ask`, enter `sf` as `domain`, `dev-key-change-me` as `x-api-key`, and a question. The same test without a browser, with FastAPI’s `TestClient`, is `chapters/ch18/python/solutions/ex18_2_short_question.py`.
 
 **Reading the result.** A valid question returns 200 with the answer, the status and the tools used. A two-character question (*“Hi”*) returns **422**:
 
@@ -116,6 +122,8 @@ Click *Try it out* on `POST /{domain}/ask`, enter `sf` as `domain`, `dev-key-cha
 
 **Step by step.**
 
+`services/solutions/ex18_3/app.py` (extract)
+
 ``` python
 import json
 KEYS = json.loads(os.environ.get("AIE_API_KEYS", '{"dev": "dev-key-change-me"}'))
@@ -137,6 +145,8 @@ def ask(domain: str, q: Question, who: str = Depends(caller)):
 - `caller()` is a FastAPI dependency: it runs before the endpoint, refuses unknown keys with 401, and returns the name, which FastAPI passes to the endpoint as `who`.
 - `log_event(..., caller=who)` adds the name to every log line.
 
+The complete service is `services/solutions/ex18_3/app.py`; `chapters/ch18/python/solutions/ex18_3_keys_per_caller.py` tests it with three keys.
+
 **Reading the result.** With `AIE_API_KEYS='{"sf-shiny": "k1", "am-shiny": "k2"}'`: key `k1` is accepted as `sf-shiny`, `k2` as `am-shiny`, and any other key gets `401 invalid API key`.
 
 **Checking the answer.** Send one question with each key and read `logs/requests.jsonl`: each line carries `"caller": "sf-shiny"` or `"caller": "am-shiny"`. Revoke `k2` by removing it from the variable and restarting: the AM application gets 401, the SF application keeps working.
@@ -155,6 +165,8 @@ def ask(domain: str, q: Question, who: str = Depends(caller)):
 **The plan.** (1) Time 20 identical requests. (2) Compute median and maximum. (3) Read the service’s log and the trace to split the time. (4) Use the figures for timeouts.
 
 **Step by step.**
+
+`chapters/ch18/python/solutions/ex18_4_response_times.py`
 
 ``` python
 import statistics, time, requests

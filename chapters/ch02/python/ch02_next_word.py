@@ -22,11 +22,11 @@ for word, c in counts.most_common(4):
 
 # Temperature: divide the log-probabilities by T, then renormalise
 def with_temperature(probs, t):
-    logits = {w: math.log(p) / t for w, p in probs.items()}
+    logits = {w: math.log(p) / t for w, p in probs.items()}   # log-probability divided by T
     m = max(logits.values())
-    expd = {w: math.exp(v - m) for w, v in logits.items()}
+    expd = {w: math.exp(v - m) for w, v in logits.items()}   # back to the original scale
     s = sum(expd.values())
-    return {w: v / s for w, v in expd.items()}
+    return {w: v / s for w, v in expd.items()}                # rescale so the total is 1
 
 probs = {w: c / total for w, c in counts.items()}
 top = [w for w, _ in counts.most_common(4)]

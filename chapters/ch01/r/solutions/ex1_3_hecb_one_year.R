@@ -1,4 +1,6 @@
 # Exercise 1.3 - One-year return of the euro corporate bond fund, checked against the factsheet
+# Run from the root of the repository:  Rscript chapters/ch01/r/solutions/ex1_3_hecb_one_year.R
+
 nav <- read.csv("data/am/fund_nav_monthly.csv")
 bm  <- read.csv("data/am/benchmark_returns_monthly.csv")
 

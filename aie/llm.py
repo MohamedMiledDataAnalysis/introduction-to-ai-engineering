@@ -30,11 +30,13 @@ def _post(url, payload, headers, timeout, retries):
     for attempt in range(retries + 1):
         try:
             r = requests.post(url, json=payload, headers=headers, timeout=timeout)
-            if r.status_code in (429, 500, 502, 503, 529):        # temporary errors: wait and retry
+            if r.status_code in (429, 500, 502, 503, 529):
                 last = LLMError(f"HTTP {r.status_code}: {r.text[:200]}")
-                if attempt < retries:                                  # no wait after the last attempt
-                    wait = r.headers.get("Retry-After", "")            # the server may say how long to wait
-                    time.sleep(min(float(wait), 30) if wait.isdigit() else min(2 ** attempt, 8))
+                if attempt < retries:              # no wait after the last attempt
+                    # the server may say how long to wait
+                    wait = r.headers.get("Retry-After", "")
+                    time.sleep(min(float(wait), 30) if wait.isdigit()
+                               else min(2 ** attempt, 8))
                 continue
             if r.status_code != 200:
                 raise LLMError(f"HTTP {r.status_code}: {r.text[:200]}")

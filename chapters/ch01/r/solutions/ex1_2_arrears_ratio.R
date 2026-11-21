@@ -1,4 +1,6 @@
 # Exercise 1.2 - Arrears ratio by balance at 30 September 2026
+# Run from the root of the repository:  Rscript chapters/ch01/r/solutions/ex1_2_arrears_ratio.R
+
 tape <- read.csv("data/sf/rmbs/larkfield_2025_1_loan_tape.csv")
 sep  <- tape[tape$RREL6 == "2026-09-30", ]
 arrears <- sum(sep$RREL30[sep$RREL69 == "ARRE"])

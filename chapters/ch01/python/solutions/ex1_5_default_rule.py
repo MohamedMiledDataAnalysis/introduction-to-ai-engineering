@@ -1,4 +1,6 @@
 # Exercise 1.5 - Check the prospectus definition of a Defaulted Loan against the tape
+# Run from the root of the repository:  python chapters/ch01/python/solutions/ex1_5_default_rule.py
+
 import pandas as pd
 
 tape = pd.read_csv("data/sf/rmbs/larkfield_2025_1_loan_tape.csv")

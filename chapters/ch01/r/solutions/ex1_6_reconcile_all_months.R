@@ -1,4 +1,6 @@
 # Exercise 1.6 - Reconcile notes, PDL and pool for every month
+# Run from the root of the repository:  Rscript chapters/ch01/r/solutions/ex1_6_reconcile_all_months.R
+
 tape  <- read.csv("data/sf/rmbs/larkfield_2025_1_loan_tape.csv")
 notes <- read.csv("data/sf/rmbs/larkfield_2025_1_notes.csv")
 

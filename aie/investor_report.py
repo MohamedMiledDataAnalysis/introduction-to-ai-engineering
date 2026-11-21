@@ -43,12 +43,12 @@ def reconcile(f):
     rev = w[w["waterfall"] == "Revenue"]
     prin = w[w["waterfall"] == "Principal"]
     pdl_cures = rev[rev["item"].str.contains("PDL")]["paid"].sum()
-    return {
-        "notes - PDL = pool": round(n["closing"].sum() - n["pdl_balance"].sum() - f["pool"], 2) == 0,
+    return {                                      # bool(): True/False, not numpy's np.True_
+        "notes - PDL = pool": bool(round(n["closing"].sum() - n["pdl_balance"].sum() - f["pool"], 2) == 0),
         "revenue paid = revenue available + reserve drawn":
-            round(rev["paid"].sum() - f["revenue"] - rev["reserve_drawn"].sum(), 2) == 0,
+            bool(round(rev["paid"].sum() - f["revenue"] - rev["reserve_drawn"].sum(), 2) == 0),
         "principal paid = principal available + PDL cures":
-            round(prin["paid"].sum() - f["principal"] - pdl_cures, 2) == 0,
+            bool(round(prin["paid"].sum() - f["principal"] - pdl_cures, 2) == 0),
     }
 
 

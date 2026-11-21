@@ -22,6 +22,8 @@
 
 **Step by step.**
 
+`chapters/ch09/python/solutions/ex9_1_three_questions.py` (extract)
+
 ``` python
 for q in ["What is the Class B coupon for the September 2026 period?",
           "Can the reserve fund be used to repay principal?",
@@ -63,6 +65,8 @@ A good answer says the data ends in September 2026 and may offer the September f
 
 **Step by step.**
 
+`chapters/ch09/python/solutions/ex9_2_follow_up.py` (extract)
+
 ``` python
 first_q = "What was the pool balance at 30 September 2026?"
 first = agent.run(first_q)
@@ -74,6 +78,8 @@ show(second)
 
 - `history` is a list of messages in the same format as the conversation: who spoke (`role`) and what was said (`content`).
 - `agent.run(..., history=history)` puts these messages before the new question, so the model reads the earlier exchange.
+
+`chapters/ch09/r/solutions/ex9_2_follow_up.R` (extract)
 
 ``` r
 source("aie_r/agent.R")
@@ -110,6 +116,8 @@ second  <- run_agent("And at the end of August?", system_prompt,
 MOCK_SCRIPT=tools/scripts/ch09_correction.json python tools/mock_ollama.py
 ```
 
+`chapters/ch09/python/solutions/ex9_3_step_limit.py` (extract)
+
 ``` python
 agent3 = Agent(SYSTEM, ["pool_summary", "note_balance", "waterfall_summary",
                         "search_prospectus"], max_steps=3)
@@ -119,6 +127,8 @@ show(agent3.run(question))
 The script replays four model replies: a call to `waterfall_summary`, a call to `search_prospectus`, an answer with excess spread of £629,429.96 (digits swapped), and a corrected answer with £692,429.96.
 
 In `Agent.run()`, each loop iteration is one step, one model call:
+
+`aie/agent.py` (extract)
 
 ``` python
 for step in range(1, self.max_steps + 1):
@@ -151,6 +161,8 @@ for step in range(1, self.max_steps + 1):
 
 *Step 1 — Facts, in code.*
 
+`chapters/ch09/python/solutions/ex9_4_commentary_workflow.py` (extract)
+
 ``` python
 import json
 from aie.tools import note_balance, pool_summary, waterfall_summary
@@ -168,6 +180,8 @@ results = [("waterfall_summary", json.dumps(waterfall_summary(d))),
 
 *Step 2 — The model writes.*
 
+`chapters/ch09/python/solutions/ex9_4_commentary_workflow.py` (extract)
+
 ``` python
 prompt = ("Write a four-sentence investor commentary for Larkfield "
           "Mortgage Funding 2025-1 for the period ending 30 September 2026, "
@@ -177,6 +191,8 @@ draft = chat([{"role": "user", "content": prompt}])["text"]
 ```
 
 *Step 3 — Check.*
+
+`chapters/ch09/python/solutions/ex9_4_commentary_workflow.py` (extract)
 
 ``` python
 facts = facts_from_results(results)
@@ -202,6 +218,8 @@ for fig, hits in check_text(draft, facts):
 **The plan.** (1) Choose the place: before the first model call. (2) Write a pattern of words that identify the other domain. (3) Return a fixed refusal. (4) Test on an in-scope question that shares words.
 
 **Step by step.**
+
+`chapters/ch09/python/solutions/ex9_5_scope_in_the_agent.py` (extract)
 
 ``` python
 AM_TERMS = re.compile(r"\b(harbourline|hgef|hecb|hbma)\b", re.I)

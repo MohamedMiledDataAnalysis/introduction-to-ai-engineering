@@ -22,6 +22,8 @@
 
 **Step by step.**
 
+`chapters/ch07/python/solutions/ex7_1_three_kids.py`
+
 ``` python
 import sys; sys.path.insert(0, ".")
 from aie.retrieval import BM25, chunk_markdown
@@ -39,6 +41,8 @@ for c, s in index.search(
 - `chunk_markdown(text, "HECB")` cuts a document at its headings (and long sections into parts of at most 180 words); each chunk’s identifier is the code, `#`, and the start of its heading.
 - `chunks += ...` adds the three funds’ chunks to one list, so one index covers all three.
 - `index.search(question, 3)` returns the three best chunks with their BM25 scores.
+
+`chapters/ch07/r/solutions/ex7_1_three_kids.R`
 
 ``` r
 source("aie_r/retrieval.R")
@@ -84,6 +88,8 @@ The two chunks that name the fund (*Euro Corporate Bond*) come first, and neithe
 
 *Option (a) — enrich the chunk, at indexing.*
 
+`chapters/ch07/python/solutions/ex7_2_margin_misses.py` (extract)
+
 ``` python
 chunks = chunk_markdown(text, "LMF")
 for c in chunks:
@@ -95,6 +101,8 @@ index = BM25(chunks)
 - The loop finds the chunk of section 2 (the notes table) and appends a keyword line **before** the index is built, so BM25 counts these words.
 
 *Option (b) — rewrite the question, at search time.*
+
+`chapters/ch07/python/solutions/ex7_2_margin_misses.py` (extract)
 
 ``` python
 import re
@@ -184,6 +192,8 @@ QUESTION: {question}
 
 *Step 2 — Fill and call:*
 
+`chapters/ch07/python/solutions/ex7_4_cited_answers.py` (extract)
+
 ``` python
 template, version = load_prompt("answer_with_citations_v1")
 retrieved = [c for c, _ in index.search(q, 3)]
@@ -216,6 +226,8 @@ print(check_citations(reply["text"], retrieved))
 
 **Step by step.** Answer B: *“The Reserve Fund Required Amount is £6,082,667.80.”* The checker:
 
+`aie/retrieval.py` (extract)
+
 ``` python
 cited = CITATION.findall(answer)          # [] : no [ID#n] in the answer
 if not cited:
@@ -243,6 +255,8 @@ With no citation, the cited text is empty, so no figure can be found in it: the 
 - Calling it a false fail because the figure is correct. The rule is that a client-facing answer must be traceable; correct and untraceable fails.
 
 **Trade-offs.** It is not a false fail, but the second message is misleading: it suggests the figure may be wrong. A small improvement is to return early when nothing is cited:
+
+`chapters/ch07/python/solutions/ex7_5_no_citation.py` (extract)
 
 ``` python
 if not cited:

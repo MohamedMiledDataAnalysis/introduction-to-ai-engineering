@@ -52,6 +52,8 @@ Requirements for (a): documented data governance and bias testing, independent v
 
 **Step by step.** The evaluation of AI-AM-01 is the SQL set of Chapter 11, scored by comparing query results, not text. Replace the evaluation block of `model_card()`:
 
+`chapters/ch20/python/solutions/ex20_2_sql_model_card.py` (extract)
+
 ``` python
 from aie.sqlguard import run_sql, same_result
 

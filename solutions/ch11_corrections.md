@@ -68,6 +68,8 @@ WHERE h.fund_code = 'HECB' AND h.month_end = '2026-09-30'
 
 **Step by step.**
 
+`chapters/ch11/python/solutions/ex11_2_read_only.py`
+
 ``` python
 import sqlite3
 con = sqlite3.connect("file:data/am/harbourline.sqlite?mode=ro", uri=True)
@@ -80,6 +82,8 @@ except sqlite3.OperationalError as err:
 - `file:...?mode=ro` is a URI that asks SQLite to open the file read-only; `uri=True` tells Python to interpret the string as a URI.
 - `con.execute()` sends the statement straight to SQLite: no guard, no keyword check.
 - SQLite raises `OperationalError`, caught and printed.
+
+`chapters/ch11/r/solutions/ex11_2_read_only.R`
 
 ``` r
 library(DBI); library(RSQLite)
@@ -113,6 +117,8 @@ refused: attempt to write a readonly database
 **The plan.** (1) List the allowed tables without `transactions`. (2) Run S07 through `run_sql()` with that list. (3) Remove the table from the prompt’s schema too. (4) Describe the database-side equivalent.
 
 **Step by step.**
+
+`chapters/ch11/python/solutions/ex11_3_distributor_tables.py` (extract)
 
 ``` python
 DISTRIBUTOR_TABLES = {"funds", "securities", "holdings", "nav",
@@ -191,6 +197,8 @@ More code, and one more kind of reply to handle in the application; in return, t
 **The plan.** (1) Loop over the cases. (2) Run the model’s query and the reference query. (3) Compare results. (4) Classify each failure.
 
 **Step by step.**
+
+`chapters/ch11/python/solutions/ex11_5_live_sql_eval.py` (extract)
 
 ``` python
 cases = pd.read_csv("evals/am_sql_qa.csv")

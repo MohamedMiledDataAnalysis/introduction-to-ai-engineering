@@ -22,6 +22,8 @@
 
 **Step by step.**
 
+`chapters/ch06/python/solutions/ex6_1_fund_commentary.py`
+
 ``` python
 import sys; sys.path.insert(0, ".")
 import pandas as pd
@@ -87,6 +89,8 @@ Four figures are supported. The relative return of 0.49% is not: the fact is −
 
 *Step 2 — Keywords per fact.* Change the fact table of `ch06_check_commentary.py` to `name: (value, unit, keywords)`:
 
+`chapters/ch06/python/solutions/ex6_2_label_before_figure.py` (extract)
+
 ``` python
 arrears_pct = 100 * sep.loc[sep["RREL69"] == "ARRE", "RREL30"].sum() / pool
 facts = {
@@ -103,6 +107,8 @@ facts = {
 ```
 
 *Step 3 — Look before each figure.*
+
+`chapters/ch06/python/solutions/ex6_2_label_before_figure.py` (extract)
 
 ``` python
 from aie.factcheck import extract_figures, matches
@@ -121,6 +127,8 @@ def check_text_labelled(text, facts, window=60):
 - A fact is kept only if its value matches **and** one of its keywords is in that context.
 
 In R, `extract_figures()` records the same `start` position (1-based):
+
+`chapters/ch06/r/solutions/ex6_2_label_before_figure.R` (extract)
 
 ``` r
 check_text_labelled <- function(text, facts, window = 60) {
@@ -157,6 +165,8 @@ Each R fact is `list(value = ..., unit = ..., keys = c(...))`.
 
 **Step by step.**
 
+`chapters/ch06/python/solutions/ex6_3_direction_words.py` (extract)
+
 ``` python
 POSITIVE = ["outperformed", "outperforming", "ahead of", "beat", "above"]
 NEGATIVE = ["lagged", "lagging", "behind", "underperformed", "below"]
@@ -179,6 +189,8 @@ def direction_errors(text, facts, window=40):
 - `check_text()` gives each figure with the facts it matches; only facts named *relative…* carry a direction.
 - `sign = facts[name][0]` is the fact’s value with its sign; `matches()` compared absolute values, so the sign is still available here.
 - The two `if` lines compare the sign with the words in the context.
+
+`chapters/ch06/r/solutions/ex6_3_direction_words.R` (extract)
 
 ``` r
 positive <- c("outperformed", "outperforming", "ahead of", "beat", "above")
@@ -216,6 +228,8 @@ direction_errors <- function(text, facts, window = 40) {
 
 **Step by step.**
 
+`chapters/ch06/python/solutions/ex6_4_instruction_like.py` (extract)
+
 ``` python
 import re
 INSTRUCTION_LIKE = [r"\bignore (the|all|any|previous)\b", r"\bsystem( note)?\s*:",
@@ -230,6 +244,8 @@ def instruction_like(text):
 - Each pattern describes language aimed at a program: *ignore the…*, *SYSTEM NOTE:*, *you must*, *set action…*, *assistant*.
 - `\b` marks word boundaries; `(the )?` makes *the* optional.
 - `re.finditer(..., re.I)` finds every match, ignoring case; the function returns the matched phrases, so a reviewer sees why the note was flagged.
+
+`chapters/ch06/r/solutions/ex6_4_instruction_like.R` (extract)
 
 ``` r
 instruction_like_patterns <- c("\\bignore (the|all|any|previous)\\b", "\\bsystem( note)?\\s*:",
@@ -257,11 +273,15 @@ instruction_like <- function(text) unlist(lapply(instruction_like_patterns, func
 
 **Step by step.** Add to `FORBIDDEN` in `aie/factcheck.py`:
 
+`chapters/ch06/python/solutions/ex6_5_forbidden_phrases.py` (extract)
+
 ``` python
 r"\bcapital[- ]protected\b", r"\bcan('|no)?t lose\b",
 ```
 
 and to `forbidden_patterns` in `aie_r/factcheck.R`:
+
+`chapters/ch06/r/solutions/ex6_5_forbidden_phrases.R` (extract)
 
 ``` r
 "\\bcapital[- ]protected\\b", "\\bcan('|no)?t lose\\b",

@@ -47,6 +47,8 @@ ollama list
 
 **Step by step.** In `chapters/ch00/python/check_setup.py`, replace the content of the message:
 
+`chapters/ch00/python/solutions/ex0_2_sonia.py` (extract)
+
 ``` python
 payload = {
     "model": MODEL,
@@ -87,6 +89,8 @@ python chapters/ch00/python/check_setup.py
 
 **Step by step.**
 
+`chapters/ch00/r/solutions/ex0_3_fund_names.R`
+
 ``` r
 funds <- read.csv("data/am/funds.csv")
 print(funds$name)
@@ -124,11 +128,15 @@ The numbers in brackets are R’s positions in the vector, not part of the names
 
 **Step by step.**
 
+`chapters/ch00/python/solutions/ex0_4_missing_model.py` (extract)
+
 ``` python
 MODEL = "does-not-exist"
 ```
 
 Run the script. The relevant part of the script is:
+
+`chapters/ch00/python/solutions/ex0_4_missing_model.py` (extract)
 
 ``` python
 try:
@@ -136,7 +144,8 @@ try:
     response.raise_for_status()
     print("Model reply:", response.json()["message"]["content"].strip())
 except requests.exceptions.ConnectionError:
-    print("Ollama is not running. Start the Ollama application, then run this script again.")
+    print("Ollama is not running. Start the Ollama application, "
+          "then run this script again.")
 except requests.exceptions.HTTPError as err:
     print("Ollama answered with an error:", err)
     print(f"Check that you downloaded the model with: ollama pull {MODEL}")

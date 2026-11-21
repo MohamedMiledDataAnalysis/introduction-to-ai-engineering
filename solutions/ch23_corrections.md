@@ -26,6 +26,8 @@
 
 *Step 2 — The UI.* In the Dashboard’s `layout_columns(...)`, add a fifth box:
 
+`apps/solutions/ex23_1/app.R` (extract)
+
 ``` r
 value_box("Reserve fund", textOutput("kpi_reserve"))
 ```
@@ -33,6 +35,8 @@ value_box("Reserve fund", textOutput("kpi_reserve"))
 - `value_box()` (from `bslib`) draws a tile with a title and a value; `textOutput("kpi_reserve")` reserves the place the server will fill.
 
 *Step 3 — The server.*
+
+`apps/solutions/ex23_1/app.R` (extract)
 
 ``` r
 output$kpi_reserve <- renderText(gbp(figures()$reserve / 1e6, 2) |> paste0("m"))
@@ -44,6 +48,8 @@ output$kpi_reserve <- renderText(gbp(figures()$reserve / 1e6, 2) |> paste0("m"))
 **Reading the result.** The tile shows **£6.08m**: the Reserve Fund Required Amount of £6,082,667.80 (1.50% of the pool at the initial cut-off date, 30 June 2025, Chapter 3), which does not amortise and has never been drawn.
 
 **Checking the answer.** Add to `tests/test_sf_app.R`, inside `testServer()`:
+
+`tests/solutions/test_ex23_1.R` (extract)
 
 ``` r
 stopifnot(output$kpi_reserve == "£6.08m")
@@ -188,14 +194,19 @@ AIE_SERVICE_URL=http://127.0.0.1:9 Rscript -e 'shiny::runApp("apps/sf_app", port
 
 When the user asks, `ask_agent()` builds the request and `httr2::req_perform()` fails with *connection refused*; `tryCatch` returns `NULL`; the function returns the fall-back result:
 
+`apps/solutions/ex23_3/app.R` (extract)
+
 ``` r
-list(answer = "The assistant is unavailable; the figures on the dashboard remain available.",
-     status = "error", trace = list(), unsupported = character(0))
+  if (is.null(resp) || httr2::resp_status(resp) != 200)
+    return(list(answer = "The assistant is unavailable; the figures on the dashboard remain available.",
+                status = "error", trace = list(), unsupported = character(0)))
 ```
 
 **Reading the result.** The Assistant tab shows that sentence with a red *error* badge. The Dashboard, Data quality and Investor report tabs work normally: they never call the service.
 
 **Checking the answer.**
+
+`chapters/ch23/r/solutions/ex23_3_minimum.R`
 
 ``` r
 library(shiny)
@@ -320,6 +331,8 @@ The sidebar shows *Mode: service at http://127.0.0.1:9*: the mode line recommend
 **The plan.** (1) Find where the answer’s status is known: the `observeEvent(input$ask, ...)` observer. (2) Append one row per such answer. (3) Test it with a scripted model that produces an unsupported figure.
 
 **Step by step.** In the observer, after `r` is known:
+
+`apps/solutions/ex23_4/app.R` (extract)
 
 ``` r
 if (identical(r$status, "needs_review")) {

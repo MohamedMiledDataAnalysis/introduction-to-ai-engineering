@@ -24,6 +24,8 @@
 
 *Step 1 — The function.*
 
+`aie/tools.py` (extract)
+
 ``` python
 def arrears_buckets(cutoff_date):
     t = _tape()
@@ -45,6 +47,8 @@ def arrears_buckets(cutoff_date):
 
 *Step 2 — Register it.*
 
+`aie/tools.py` (extract)
+
 ``` python
 REGISTRY["arrears_buckets"] = (
     arrears_buckets,
@@ -61,6 +65,8 @@ REGISTRY["arrears_buckets"] = (
 - The `pattern` refuses dates such as `30/09/2026` before the function runs.
 
 *Step 3 — R.*
+
+`aie_r/tools.R` (extract)
 
 ``` r
 arrears_buckets <- function(cutoff_date) {
@@ -85,7 +91,7 @@ registry$arrears_buckets <- list(fn = arrears_buckets,
 - `%/%` is integer division; `pmin(x, 4)` caps each value at 4, like `clip`.
 - `lapply(1:4, ...)` builds one list per bucket; `sum(months == k)` counts the loans in bucket `k`.
 
-The repository’s `aie/tools.py` and `aie_r/tools.R` already contain this tool, because the final project uses it; compare your version with them.
+The repository’s `aie/tools.py` and `aie_r/tools.R` already contain this tool, because the final project uses it; compare your version with them. `chapters/ch08/python/solutions/ex8_1_arrears_buckets.py` (and `.R`) calls it through `run_tool()` with a valid and an invalid date.
 
 **Reading the result.**
 
@@ -117,11 +123,15 @@ The repository’s `aie/tools.py` and `aie_r/tools.R` already contain this tool,
 
 **Step by step.**
 
+`chapters/ch08/python/solutions/ex8_2_allowed_tools.py` (extract)
+
 ``` python
 print(run_tool({"name": "pool_summary",
                 "arguments": {"cutoff_date": "2026-09-30"}},
                allowed=["fund_performance", "top_holdings"]))
 ```
+
+`chapters/ch08/r/solutions/ex8_2_allowed_tools.R` (extract)
 
 ``` r
 cat(run_tool(list(name = "pool_summary", arguments = list(cutoff_date = "2026-09-30")),
@@ -129,6 +139,8 @@ cat(run_tool(list(name = "pool_summary", arguments = list(cutoff_date = "2026-09
 ```
 
 The first lines of `run_tool()`:
+
+`aie/tools.py` (extract)
 
 ``` python
 if name not in REGISTRY or (allowed is not None and name not in allowed):
@@ -161,6 +173,8 @@ The tool exists in the registry, but the call is refused.
 **The plan.** (1) Walk each JSON result and collect every number, named by its path. (2) Infer the unit from the key’s suffix. (3) Check the answer. (4) Alter one figure and check again.
 
 **Step by step.**
+
+`chapters/ch08/python/solutions/ex8_3_check_against_tools.py` (extract)
 
 ``` python
 import json

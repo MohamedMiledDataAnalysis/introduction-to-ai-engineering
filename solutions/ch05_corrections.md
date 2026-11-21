@@ -24,6 +24,8 @@
 
 **Step by step.** In `ch05_score_runs.py`, after the loop:
 
+`chapters/ch05/python/solutions/ex5_1_failures_run_a.py` (extract)
+
 ``` python
 print(results["a"][~results["a"].passed][["id", "reason"]]
       .to_string(index=False))
@@ -34,6 +36,8 @@ print(results["a"][~results["a"].passed][["id", "reason"]]
 - `[["id", "reason"]]` keeps two columns; `to_string(index=False)` prints without row numbers.
 
 In R:
+
+`chapters/ch05/r/solutions/ex5_1_failures_run_a.R` (extract)
 
 ``` r
 print(results$a[!results$a$passed, c("id", "reason")], row.names = FALSE)
@@ -70,6 +74,8 @@ Now read the answers in `evals/candidates/prospectus_qa_run_a.csv`. Q08: *“A l
 
 **Step by step.**
 
+`chapters/ch05/python/solutions/ex5_2_numbers_in_words.py` (extract)
+
 ``` python
 WORDS = {"one": 1, "two": 2, "three": 3, "four": 4, "five": 5, "six": 6,
          "seven": 7, "eight": 8, "nine": 9, "ten": 10, "eleven": 11,
@@ -85,6 +91,8 @@ def numbers_in(text):
 - `WORDS` maps each word to its value.
 - `rf"\b{word}\b"` is a pattern with word boundaries: it replaces *six* but not the *six* inside *sixty*. `flags=re.I` ignores case, so *Six* is replaced too.
 - The last line is the original extraction: `NUMBER` finds numbers with commas and decimals; commas are removed before `float()`.
+
+`chapters/ch05/r/solutions/ex5_2_numbers_in_words.R` (extract)
 
 ``` r
 number_words <- c(one = 1, two = 2, three = 3, four = 4, five = 5, six = 6,
@@ -129,6 +137,8 @@ numbers_in <- function(text) {
 
 *Step 4 — A `choice` scorer.* Add to `score_one()`:
 
+`chapters/ch05/python/solutions/ex5_3_choice_scorer.py` (extract)
+
 ``` python
 if kind == "choice":
     options = [o.strip().lower() for o in str(case["keywords"]).split("|")]
@@ -164,6 +174,8 @@ Change Q10’s row to `answer_type` `choice`, `expected` `revenue`, `keywords` `
 
 *Step 1 — The intervals.*
 
+`chapters/ch05/python/solutions/ex5_4_significance.py` (extract)
+
 ``` python
 from aie.evals import wilson_interval
 print(wilson_interval(19, 20))
@@ -176,6 +188,8 @@ print(wilson_interval(16, 20))
 
 *Step 3 — The paired test.* If A and B were equally good, each of the five changed cases would be equally likely to go either way, like a coin. The exact test (McNemar’s test) asks how surprising a split of 4 to 1 or more extreme is under that assumption:
 
+`chapters/ch05/python/solutions/ex5_4_significance.py` (extract)
+
 ``` python
 from math import comb
 a_only, b_only = 4, 1                      # cases only A passes, only B passes
@@ -183,6 +197,8 @@ n = a_only + b_only
 p = 2 * sum(comb(n, k) for k in range(min(a_only, b_only) + 1)) / 2 ** n
 print(n, round(min(p, 1.0), 3))
 ```
+
+`chapters/ch05/r/solutions/ex5_4_significance.R`
 
 ``` r
 binom.test(1, 5)$p.value    # 1 case for B out of 5 changed cases
@@ -211,6 +227,8 @@ binom.test(1, 5)$p.value    # 1 case for B out of 5 changed cases
 **Step by step.**
 
 *Step 1 — Coverage.*
+
+`chapters/ch05/python/solutions/ex5_5_coverage.py` (extract)
 
 ``` python
 cases = pd.read_csv("evals/sf_prospectus_qa.csv")

@@ -204,14 +204,18 @@ def arrears_buckets(cutoff_date):
     labels = {1: "1 month", 2: "2 months", 3: "3 months", 4: "4-5 months"}
     return {"cutoff_date": cutoff_date,
             "buckets": [{"bucket": lab, "loans": int((m["months"] == k).sum()),
-                         "balance_gbp": round(m.loc[m["months"] == k, "RREL30"].sum(), 2)} for k, lab in labels.items()]}
+                         "balance_gbp": round(m.loc[m["months"] == k, "RREL30"].sum(), 2)}
+                        for k, lab in labels.items()]}
 
 
 REGISTRY["arrears_buckets"] = (
     arrears_buckets,
-    "Number of loans and current balance of the Larkfield 2025-1 loans in arrears at a month-end, by months in "
-    "arrears: 1, 2, 3, and 4 to 5. Defaulted loans (6 months or more) are not included.",
-    {"type": "object", "properties": {"cutoff_date": {"type": "string", "pattern": "20[0-9]{2}-[0-9]{2}-[0-9]{2}"}},
+    "Number of loans and current balance of the Larkfield 2025-1 loans in "
+    "arrears at a month-end, by months in arrears: 1, 2, 3, and 4 to 5. "
+    "Defaulted loans (6 months or more) are not included.",
+    {"type": "object",
+     "properties": {"cutoff_date": {"type": "string",
+                    "pattern": "20[0-9]{2}-[0-9]{2}-[0-9]{2}"}},
      "required": ["cutoff_date"], "additionalProperties": False})
 
 

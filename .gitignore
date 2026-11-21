@@ -10,3 +10,6 @@ logs/
 
 # your own work: never overwritten by git pull
 my_work/
+# your prompt of Exercise 4.3 (the reference copy is in prompts/solutions/)
+prompts/extract_servicer_note_v2.txt
+prompts/investor_commentary_v1.txt

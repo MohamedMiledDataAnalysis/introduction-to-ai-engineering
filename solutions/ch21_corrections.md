@@ -61,6 +61,8 @@ A11 and A12 are declined by the guards on every run, whatever the model. The oth
 
 **Step by step.**
 
+`chapters/ch21/python/solutions/ex21_2_minimum.py` (extract)
+
 ``` python
 from aie.tools import arrears_buckets
 b = arrears_buckets("2026-09-30")["buckets"]
@@ -277,6 +279,8 @@ Python and R give the same figures and the same three decisions.
 
 **Step by step.** The SF guard in `aie/assistants.py` refuses a question if it contains an AM word **and** no SF word:
 
+`aie/assistants.py` (extract)
+
 ``` python
 if self.domain == "sf" and AM_WORDS.search(question) and not SF_WORDS.search(question):
     return OUT_OF_SCOPE_SF
@@ -286,6 +290,8 @@ if self.domain == "sf" and AM_WORDS.search(question) and not SF_WORDS.search(que
 
 The two tests, added to `tests/test_assistants.py`:
 
+`tests/solutions/test_assistants_ex21_3.py` (extract)
+
 ``` python
 checks.append(("SF refuses an AM comparison",
     sf.guard_question("Compare the HGEF factsheet with the HECB KID.") == OUT_OF_SCOPE_SF))
@@ -294,6 +300,8 @@ checks.append(("SF accepts 'fund' in a Larkfield question",
 ```
 
 and to the `checks` vector of `tests/test_assistants.R`:
+
+`tests/solutions/test_assistants_ex21_3.R` (extract)
 
 ``` r
   "SF refuses an AM comparison" =
@@ -511,6 +519,8 @@ Test 'SF accepts fund in a Larkfield question': FAIL
 **The plan.** (1) Apply Chapter 9’s rule: fixed steps make a workflow. (2) Expose the workflow as a tool. (3) Decide the status of the answer. (4) Test the tool.
 
 **Step by step.** The commentary is a monthly task with fixed steps; an agent would choose its own tools and might skip a figure. So the agent should not *compose* it; it should *call* the workflow. Register the Chapter 14 workflow as a draft tool:
+
+`chapters/ch21/python/solutions/ex21_4_minimum.py` (extract)
 
 ``` python
 import pandas as pd

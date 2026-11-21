@@ -26,6 +26,8 @@
 
 *Step 2 — The rule.*
 
+`chapters/ch12/python/solutions/ex12_1_ltv_rule.py` (extract)
+
 ``` python
 RULES["ltv_inconsistent"] = (
     "Original LTV (RREC16) disagrees with original balance / original "
@@ -35,6 +37,8 @@ RULES["ltv_inconsistent"] = (
 
 - A rule is a description (used in the servicer email) and a function of the tape `t` and the cut-off date `d` returning `True` for each breaching row.
 - `.abs() > 0.5` flags a gap in either direction.
+
+`chapters/ch12/r/solutions/ex12_1_ltv_rule.R` (extract)
 
 ``` r
 dq_rules$ltv_inconsistent <- list(
@@ -71,6 +75,8 @@ LMF25-01941   136900.0  277000.0   98.50
 
 **Step by step.**
 
+`chapters/ch12/python/solutions/ex12_2_balance_rose.py` (extract)
+
 ``` python
 prev = pd.read_csv("data/sf/rmbs/larkfield_2025_1_loan_tape.csv")
 prev = prev[prev["RREL6"] == "2026-08-31"][["RREL2", "RREL30"]]
@@ -85,6 +91,8 @@ print(rose[["RREL2", "RREL30", "RREL30_prev", "RREL69"]])
 - `+ 1` is a £1 tolerance for rounding.
 
 In R:
+
+`chapters/ch12/r/solutions/ex12_2_balance_rose.R` (extract)
 
 ``` r
 prev <- read.csv("data/sf/rmbs/larkfield_2025_1_loan_tape.csv")
@@ -113,6 +121,8 @@ print(m[m$RREL35 == "FRXX" & !is.na(m$RREL30_prev) & m$RREL30 > m$RREL30_prev + 
 **The plan.** (1) Run the rules. (2) Draft with the model. (3) Check the draft. (4) Use it if it passes, the template otherwise. (5) Force a failure to see the fallback.
 
 **Step by step.**
+
+`chapters/ch12/python/solutions/ex12_3_draft_or_template.py` (extract)
 
 ``` python
 found = run_rules(tape, "2026-09-30")

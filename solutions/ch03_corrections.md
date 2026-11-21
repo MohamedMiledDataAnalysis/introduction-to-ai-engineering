@@ -32,6 +32,8 @@
 
 *Step 3 — The program.* Change the three constants at the top of `ch03_cost.py`:
 
+`chapters/ch03/python/solutions/ex3_1_cost_scenario.py` (extract)
+
 ``` python
 QUESTIONS_PER_MONTH = 2_000
 INPUT_TOKENS = 6_000
@@ -88,6 +90,8 @@ The variable tells the mock to answer HTTP 503 (*service unavailable*) to the fi
 
 *Step 2 — Call through `chat()`* in another terminal, from the repository root:
 
+`chapters/ch03/python/solutions/ex3_2_retries.py`
+
 ``` python
 import sys; sys.path.insert(0, ".")
 from aie.llm import chat
@@ -101,17 +105,20 @@ print(r["text"], r["seconds"])
 
 *Step 3 — The retry loop* in `aie/llm.py`:
 
+`aie/llm.py` (extract)
+
 ``` python
 for attempt in range(retries + 1):
-    r = requests.post(url, json=payload, headers=headers, timeout=timeout)
-    if r.status_code in (429, 500, 502, 503, 529):
-        last = LLMError(f"HTTP {r.status_code}: {r.text[:200]}")
-        if attempt < retries:              # no wait after the last attempt
-            # the server may say how long to wait
-            wait = r.headers.get("Retry-After", "")
-            time.sleep(min(float(wait), 30) if wait.isdigit()
-                       else min(2 ** attempt, 8))
-        continue
+    try:
+        r = requests.post(url, json=payload, headers=headers, timeout=timeout)
+        if r.status_code in (429, 500, 502, 503, 529):
+            last = LLMError(f"HTTP {r.status_code}: {r.text[:200]}")
+            if attempt < retries:              # no wait after the last attempt
+                # the server may say how long to wait
+                wait = r.headers.get("Retry-After", "")
+                time.sleep(min(float(wait), 30) if wait.isdigit()
+                           else min(2 ** attempt, 8))
+            continue
 ```
 
 - `range(retries + 1)` with `retries=2` allows three attempts: 0, 1, 2.
@@ -178,6 +185,8 @@ At temperature 0 with seed 42, the five answers are identical. At temperature 1 
 
 **Step by step.**
 
+`chapters/ch03/python/solutions/ex3_4_ask_section.py`
+
 ``` python
 import re, sys
 sys.path.insert(0, ".")
@@ -207,6 +216,8 @@ print(ask_section("3. Reserve fund",
 - The `if` refuses an unknown title and lists the valid ones.
 - `system=` gives the grounding rule; the user message labels the text and the question so that the model cannot confuse them.
 - `.strip()` removes spaces and line breaks around the reply.
+
+`chapters/ch03/r/solutions/ex3_4_ask_section.R`
 
 ``` r
 source("aie_r/llm.R")
@@ -254,6 +265,8 @@ cat(ask_section("3. Reserve fund",
 **The plan.** Ask about the Class A rating with Section 2 (which contains no rating) twice: once with the sentence removed from the system instructions, once with it.
 
 **Step by step.** With `ask_section()` of Exercise 3.4, first change the system text to `"Answer only from the text provided."`, then ask:
+
+`chapters/ch03/python/solutions/ex3_5_no_answer.py` (extract)
 
 ``` python
 print(ask_section("2. The notes", "What is the rating of the Class A notes?"))

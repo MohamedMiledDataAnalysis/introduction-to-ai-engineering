@@ -49,6 +49,8 @@ All three funds are behind their benchmarks over three years. Over one year HGEF
 
 **Step by step.** In `apps/am_app/app.R` change
 
+`apps/am_app/app.R` (extract)
+
 ``` r
 draft <- drafts[2]
 ```
@@ -93,6 +95,8 @@ to `draft <- drafts[1]`. The file `evals/drafts/hgef_commentary_2026_09.txt` hol
 
 **Step by step.** In the UI, add `uiOutput("approve_ui")` to the card of the draft and its check. In the server:
 
+`apps/solutions/ex24_4/app.R` (extract)
+
 ``` r
 check_ok <- reactive({
   r <- check_commentary(draft, hf$facts)
@@ -112,6 +116,8 @@ output$approve_ui <- renderUI({
 **Reading the result.** With Draft 2 (two errors), the button is disabled; with Draft 1, it is enabled.
 
 **Checking the answer.** In `testServer()`, read `check_ok()` and look for `disabled` in the rendered HTML:
+
+`chapters/ch24/r/solutions/ex24_4_minimum.R` (extract)
 
 ``` r
 testServer(app, cat(check_ok(), grepl("disabled", as.character(output$approve_ui$html)), "\n"))

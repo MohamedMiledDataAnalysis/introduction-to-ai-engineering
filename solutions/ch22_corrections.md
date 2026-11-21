@@ -22,6 +22,8 @@
 
 **Step by step.**
 
+`chapters/ch22/python/solutions/ex22_1_characteristics.py`
+
 ``` python
 import sys; sys.path.insert(0, ".")
 from aie.tools import fund_characteristics
@@ -62,11 +64,13 @@ HECB holds only corporate bonds: its “sectors” are the sectors of the bond *
 
 **Step by step.** Costs are in each fund’s KID (and in its factsheet’s key facts). `search_fund_documents` takes one `fund_code`, required by its schema, so the agent needs **two** calls:
 
+`chapters/ch22/python/solutions/ex22_2_ongoing_costs.py` (extract)
+
 ``` python
-run_tool({"name": "search_fund_documents",
-          "arguments": {"query": "ongoing costs", "fund_code": "HGEF"}})
-run_tool({"name": "search_fund_documents",
-          "arguments": {"query": "ongoing costs", "fund_code": "HECB"}})
+print(run_tool({"name": "search_fund_documents",
+                "arguments": {"query": "ongoing costs", "fund_code": "HGEF"}}))
+print(run_tool({"name": "search_fund_documents",
+                "arguments": {"query": "ongoing costs", "fund_code": "HECB"}}))
 ```
 
 The first returns `HGEF-KID#7` first, the second `HECB-KID#21`: each fund’s cost section, and nothing from the other fund.
@@ -90,6 +94,8 @@ The first returns `HGEF-KID#7` first, the second `HECB-KID#21`: each fund’s co
 
 **Step by step.**
 
+`chapters/ch22/python/solutions/ex22_3_minimum.py` (extract)
+
 ``` python
 import re
 from aie.factcheck import extract_figures
@@ -109,6 +115,8 @@ def missing_warning(answer):
 
 In `Assistant.ask()`, after the forbidden-phrase check:
 
+`chapters/ch22/python/solutions/ex22_3_minimum.py` (extract)
+
 ``` python
 if self.domain == "am" and missing_warning(result["answer"]):
     result["status"] = "needs_review"
@@ -116,6 +124,8 @@ if self.domain == "am" and missing_warning(result["answer"]):
 ```
 
 In R:
+
+`chapters/ch22/r/solutions/ex22_3_missing_warning.R` (extract)
 
 ``` r
 missing_warning <- function(answer) {
@@ -380,10 +390,13 @@ Python and R give the same decisions.
 
 **Step by step.**
 
+`chapters/ch22/python/solutions/ex22_4_article_8.py` (extract)
+
 ``` python
-run_tool({"name": "search_fund_documents",
-          "arguments": {"query": "Is HGEF an Article 8 fund? sustainability characteristics met",
-                        "fund_code": "HGEF", "k": 3}})
+print(run_tool({"name": "search_fund_documents",
+                "arguments": {"query": "Is HGEF an Article 8 fund? "
+                                       "sustainability characteristics met",
+                              "fund_code": "HGEF", "k": 3}}))
 ```
 
 The three passages returned are `HGEF-SFDR#44` (the two characteristics and the indicators table), `HGEF-SFDR#51` (the disclosure’s key facts: *Periodic disclosure for the financial products referred to in Article 8 …*, reference period 1 October 2025 to 30 September 2026) and `HGEF-SFDR#46` (the proportion of investments aligned with the characteristics). The factsheet’s key facts, `HGEF-factsheet#48`, also state *SFDR classification: Article 8*; it comes second, after `HGEF-SFDR#51`, for the shorter query *“Is HGEF an Article 8 fund?”*.

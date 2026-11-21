@@ -60,8 +60,10 @@ The folder `solutions/` holds the corrections of every exercise of the book, cha
 (start with `solutions/README.md`). They are generated from the book's own source, so each correction
 is the same text, code and figures as the printed one. Each has seven parts: what the question asks,
 the plan, step by step (with the code explained line by line), reading the result, checking the answer,
-mistakes to avoid, and trade-offs. Where a correction prints a script under its path, that script is
-in `chapters/` and runs from the repository root.
+mistakes to avoid, and trade-offs. Every block of code in a correction is printed under the path
+of the file that holds it, usually `chapters/chNN/python/solutions/` or `chapters/chNN/r/solutions/`;
+*(extract)* after the path means the file adds what the block needs to run on its own. Every
+correction script runs from the repository root.
 
 Every correction is the same in the book and here, with one addition. For the exercises of the final
 project that develop code (21.2, 21.3, 21.4, 22.3, 23.1, 23.3, 23.4 and 24.4), the book prints the minimum
@@ -94,7 +96,8 @@ python tests/test_assistants.py
 Rscript tests/test_assistants.R
 Rscript tests/test_sf_app.R
 Rscript tests/test_am_app.R
-python tests/test_solutions_files.py   # scripts in solutions/ = files in chapters/
+python tests/test_solutions_files.py   # code in solutions/ = files in the repository
+python tests/run_solutions.py          # every correction script runs (quit Ollama first: the mock takes its port)
 Rscript tests/test_solutions_files.R
 
 # the applications (Ollama running for the Assistant tab)
