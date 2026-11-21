@@ -48,6 +48,8 @@ def validate(obj, schema):
         if isinstance(value, bool) and bool not in py:
             errors.append(f"'{field}' has type boolean, expected {allowed}")
             continue
+        if isinstance(value, float) and value.is_integer() and "integer" in allowed:
+            value = int(value)                          # JSON has one number type: 12.0 is an integer
         if not isinstance(value, py):
             errors.append(f"'{field}' has type {type(value).__name__}, expected {allowed}")
             continue

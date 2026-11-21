@@ -22,7 +22,7 @@
 
 **Step by step.**
 
-*(a) Ranking mortgage applicants.* An error affects a person’s access to credit, and the ranking feeds a decision. On the grid: high impact. Under the EU AI Act, AI used to evaluate the creditworthiness of natural persons is listed as high-risk (Annex III); as at November 2026, those obligations apply from 2 December 2027, after the AI Omnibus. In the UK: Consumer Duty, fair treatment and anti-discrimination law, and, for banks in scope, SS1/23 for a model used in credit decisions. Tier: **high**.
+*(a) Ranking mortgage applicants.* An error affects a person’s access to credit, and the ranking feeds a decision. On the grid: high impact. Under the EU AI Act, AI used to evaluate the creditworthiness of natural persons is listed as high-risk (Annex III); as at November 2026, those obligations apply from 2 December 2027, after the AI Omnibus. A bank deploying it must also assess its impact on fundamental rights before use (Article 27). In the UK: Consumer Duty, fair treatment and anti-discrimination law, the UK GDPR rules on decisions based solely on automated processing (Article 22, as amended by the Data (Use and Access) Act 2025), and, for banks in scope, SS1/23 for a model used in credit decisions. Tier: **high**.
 
 *(b) Public website chatbot.* It answers retail investors directly, with no person reading each answer. On the grid: client-facing, no review. The EU AI Act’s transparency obligations apply: people must be told they are interacting with an AI system. Its answers are financial promotions and can read as advice; in the UK, Consumer Duty and the financial promotion rules apply. Tier: **high** under Figure 20.2, although it is not a high-risk system under the Act’s annexes.
 
@@ -69,6 +69,14 @@ failed = [c for c, p in zip(cases.id, passed) if not p]
 
 The monitoring block stays, filtered on `inv.domain`, which is `am`.
 
+The *Known limitations* section cannot be computed; it is written from the evidence, and must state five facts:
+
+- weighted averages and two-key joins were the most frequent errors (Chapter 11);
+- the connection is read-only and limited to listed tables;
+- answers are internal and checked by the specialist before forwarding;
+- the evaluation set has ten cases, hence the wide interval;
+- the AM prompt’s token count grew through October (Chapter 19) and is under investigation.
+
 **Reading the result.** Evaluation: 5/10 passed (95% interval 24% to 76%), failed cases S01, S03, S04, S09, S10. Monitoring for the AM domain in October: 290 requests over 18 days, error rate 4.5% (the outage of 7 October), median daily review rate 5.1%, worst day 14.3%, median response time 3.5 seconds.
 
 **Checking the answer.** The evaluation figures must match Chapter 11’s output, *5/10 candidate queries return the reference result*, and the failed cases must be the five corrected in Exercise 11.1. Note what the monitoring covers: the October log records the AM agent’s requests as a whole, not only database questions; the card must say so, or it overstates the evidence.
@@ -78,15 +86,7 @@ The monitoring block stays, filtered on `inv.domain`, which is `am`.
 - Reusing the prospectus evaluation of AI-SF-01 because the generator was written for it.
 - Leaving the generator’s default limitations (*“limited to the prospectus excerpt”*), which describe another use case.
 
-**Trade-offs.** *Known limitations* must state five facts:
-
-- weighted averages and two-key joins were the most frequent errors (Chapter 11);
-- the connection is read-only and limited to listed tables;
-- answers are internal and checked by the specialist before forwarding;
-- the evaluation set has ten cases, hence the wide interval;
-- the AM prompt’s token count grew through October (Chapter 19) and is under investigation.
-
-A card that lists its weaknesses is more useful to a validator than one that does not, and it is the honest record if something goes wrong.
+**Trade-offs.** A card that lists its weaknesses is more useful to a validator than one that does not, and it is the honest record if something goes wrong.
 
 ### Exercise 20.3
 

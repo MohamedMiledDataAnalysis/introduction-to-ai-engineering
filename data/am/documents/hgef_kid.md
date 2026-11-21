@@ -40,7 +40,7 @@ The assets of the fund are held separately by the depositary, Ellery Depositary 
 
 | | If you exit after 1 year | If you exit after 5 years |
 |---|---:|---:|
-| Total costs | EUR 86 | EUR 452 |
+| Total costs | EUR 86 | EUR 494 |
 | Annual cost impact | 0.86% | 0.86% each year |
 
 **Composition of costs**

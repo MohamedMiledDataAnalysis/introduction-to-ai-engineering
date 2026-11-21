@@ -2,7 +2,7 @@
 
 ## Exercises
 
-**Exercise 10.1.** For each of the seven baseline failures, say which level of Figure 10.2 failed (retrieval, or reading within a retrieved chunk), and whether a model can be expected to fix it.
+**Exercise 10.1.** For each of the eight baseline failures, say which level of Figure 10.2 failed (retrieval, or reading within a retrieved chunk), and whether a model can be expected to fix it.
 
 **Exercise 10.2.** The baseline declines when the best BM25 score is below `min_score = 4.0`. Run it with thresholds 0, 2, 4, 6 and 8. Report the pass rate and explain the shape of the result.
 
@@ -16,14 +16,14 @@
 
 ### Exercise 10.1
 
-**What the question asks.** For each of the baseline’s seven failures, decide whether the failure is in retrieval (the wrong chunk) or in reading (the right chunk, the wrong sentence), and whether a model can be expected to fix it.
+**What the question asks.** For each of the baseline’s eight failures, decide whether the failure is in retrieval (the wrong chunk) or in reading (the right chunk, the wrong sentence), and whether a model can be expected to fix it.
 
 **The plan.** (1) For each failure, print the chunk the baseline used and its score. (2) Compare the chunk with the case’s `source_section`. (3) If the chunk is right, look at the sentence chosen. (4) Classify.
 
 **Step by step.**
 
 ``` python
-fails = ["Q01", "Q02", "Q03", "Q04", "Q08", "Q13", "Q16"]
+fails = ["Q01", "Q02", "Q03", "Q04", "Q07", "Q08", "Q13", "Q16"]
 for c in cases[cases.id.isin(fails)].to_dict("records"):
     best, score = index.search(c["question"], 1)[0]
     out = answer_extractive(c["question"], index)
@@ -35,24 +35,25 @@ for c in cases[cases.id.isin(fails)].to_dict("records"):
 
 **Reading the result.**
 
-| Case | Chunk used (score) | Level                                         | Can a model fix it?                                           |
-|------|--------------------|-----------------------------------------------|---------------------------------------------------------------|
-| Q01  | `LMF#2` (4.99)     | reading: the reserve fund sentence was chosen | yes: relating *margin* to the interest rate column is reading |
-| Q02  | `LMF#2` (3.91)     | refusal threshold: 3.91 is below 4.0          | yes: the model receives the chunk whatever its score          |
-| Q03  | `LMF#2` (7.23)     | reading: the table’s header row was chosen    | yes: picking a table row is reading                           |
-| Q04  | `LMF#2` (9.60)     | reading: header row again                     | yes                                                           |
-| Q08  | `LMF#4` (12.19)    | scorer: *six* written as a word               | the answer is correct; fix the scorer (Exercise 5.2)          |
-| Q13  | `LMF#3` (10.25)    | retrieval at $k=1$: item (l) is in `LMF#6.2`  | yes, with $k=3$, which brings `LMF#6.2` second                |
-| Q16  | `LMF#8.2` (5.76)   | reading: the title line was chosen            | yes                                                           |
+| Case | Chunk used (score) | Level                                                                                           | Can a model fix it?                                           |
+|------|--------------------|-------------------------------------------------------------------------------------------------|---------------------------------------------------------------|
+| Q01  | `LMF#2` (5.02)     | reading: the reserve fund sentence was chosen                                                   | yes: relating *margin* to the interest rate column is reading |
+| Q02  | `LMF#2` (3.93)     | refusal threshold: 3.93 is below 4.0                                                            | yes: the model receives the chunk whatever its score          |
+| Q03  | `LMF#2` (7.26)     | reading: the table’s header row was chosen                                                      | yes: picking a table row is reading                           |
+| Q04  | `LMF#2` (9.66)     | reading: header row again                                                                       | yes                                                           |
+| Q07  | `LMF#3` (7.57)     | reading: the right chunk, but the answer is a conclusion it implies, not a sentence it contains | yes: drawing the conclusion is reading                        |
+| Q08  | `LMF#4` (12.25)    | scorer: *six* written as a word                                                                 | the answer is correct; fix the scorer (Exercise 5.2)          |
+| Q13  | `LMF#3` (10.29)    | retrieval at $k=1$: item (l) is in `LMF#6.2`                                                    | yes, with $k=3$, which brings `LMF#6.2` second                |
+| Q16  | `LMF#8.2` (5.80)   | reading: the title line was chosen                                                              | yes                                                           |
 
-**Checking the answer.** For Q13, run `index.search(question, 3)`: `LMF#3` (10.25), `LMF#6.2` (5.12), `LMF#6.1` (4.26). The right chunk is second, so the model with $k = 3$ receives it. For the reading cases, open `LMF#2` and find the expected values (1.10, 0.55, £16,220,447.45, 7.00) in the notes table: the information was in the chunk the baseline used.
+**Checking the answer.** For Q13, run `index.search(question, 3)`: `LMF#3` (10.29), `LMF#6.2` (5.16), `LMF#6.1` (4.27). The right chunk is second, so the model with $k = 3$ receives it. For the reading cases, open `LMF#2` and find the expected values (1.10, 0.55, £16,220,447.45, 7.00) in the notes table: the information was in the chunk the baseline used.
 
 **Mistakes to avoid.**
 
-- Blaming retrieval for every failure. Five of seven failures had the right chunk.
-- Counting Q08 as a failure of the assistant. The scorer is wrong; with the fix of Exercise 5.2 the baseline scores 14/20.
+- Blaming retrieval for every failure. Six of eight failures had the right chunk.
+- Counting Q08 as a failure of the assistant. The scorer is wrong; with the fix of Exercise 5.2 the baseline scores 13/20.
 
-**Trade-offs.** One failure is retrieval at $k = 1$, one the refusal threshold, four reading within the right chunk, one the scorer. A model given three chunks addresses the first six; the scorer needs its own fix. The classification tells you where to spend effort: here on reading, which is what a language model is for, not on retrieval.
+**Trade-offs.** One failure is retrieval at $k = 1$, one the refusal threshold, five reading within the right chunk, one the scorer. A model given three chunks addresses the first seven; the scorer needs its own fix. The classification tells you where to spend effort: here on reading, which is what a language model is for, not on retrieval.
 
 ### Exercise 10.2
 
@@ -75,19 +76,21 @@ for t in (0, 2, 4, 6, 8):
 
 **Reading the result.**
 
-| Threshold | Passed | What changes                                                   |
-|-----------|-------:|----------------------------------------------------------------|
-| 0         |     10 | never declines: Q18, Q19, Q20 fail                             |
-| 2         |     10 | same: their scores are 2.03 to 3.79                            |
-| 4         |     13 | declines Q18 to Q20 correctly; also declines Q02 (3.91)        |
-| 6         |     11 | also declines Q12 (4.32) and Q14 (5.14), which it could answer |
-| 8         |     11 | same failures as 6                                             |
+| Threshold | Passed | What changes                                                                                                               |
+|-----------|-------:|----------------------------------------------------------------------------------------------------------------------------|
+| 0         |      9 | never declines: Q18, Q19, Q20 fail                                                                                         |
+| 2         |     10 | declines Q19 (1.49); Q18 (2.97) and Q20 (3.81) still fail                                                                  |
+| 4         |     12 | declines Q18 to Q20 correctly; also declines Q02 (3.93), which the baseline answered wrongly anyway                        |
+| 6         |     10 | also declines Q12 (4.36) and Q14 (4.97), which it answered correctly; Q01 (5.02) is declined too, but it was already wrong |
+| 8         |     10 | same failures as 6                                                                                                         |
 
-**Checking the answer.** Print the top BM25 score of every question. The three unanswerable questions score 2.97 (Q18), 2.03 (Q19) and 3.79 (Q20); the lowest answerable scores are 3.91 (Q02), 4.32 (Q12) and 4.99 (Q01). Any threshold between 3.79 and 3.91 would decline exactly the right three, and 4.0 is the nearest round number above that gap.
+The eight failures common to every threshold (Q01 to Q04, Q07, Q08, Q13, Q16) are the baseline’s reading errors of Exercise 10.1: no threshold fixes them.
+
+**Checking the answer.** Print the top BM25 score of every question. The three unanswerable questions score 2.97 (Q18), 1.49 (Q19) and 3.81 (Q20); the lowest answerable scores are 3.93 (Q02), 4.36 (Q12) and 4.97 (Q14). A threshold between 3.81 and 3.93 declines exactly the three unanswerable questions. 4.0, the default, also declines Q02; Q02 fails at every threshold, so the pass count is the same, 12.
 
 **Mistakes to avoid.**
 
-- Choosing the threshold that maximises the pass rate and calling it tuned. On 20 cases, a gap of 0.12 between 3.79 and 3.91 is luck.
+- Choosing the threshold that maximises the pass rate and calling it tuned. On 20 cases, a gap of 0.12 between 3.81 and 3.93 is luck.
 - Expecting monotonic behaviour. Raising the threshold first helps (it declines the unanswerable questions), then hurts (it declines answerable ones): the curve rises, then falls.
 
 **Trade-offs.** Too low a threshold answers questions the document cannot answer; too high refuses questions it can. A threshold tuned on 20 cases is fragile: one new question can fall on the wrong side. Prefer the model’s own refusal, measured by the not-in-document cases, and keep the threshold as a safety net for the fallback mode without a model.

@@ -72,14 +72,13 @@ and screenshots (`solutions/img/`). Run them from the repository root:
 python chapters/ch21/python/solutions/ex21_2_arrears_share.py      # and the .R twin in chapters/ch21/r/solutions/
 python tests/solutions/test_assistants_ex21_3.py
 python chapters/ch21/python/solutions/ex21_3_probe_boundary.py
-MOCK_SCRIPT=tools/scripts/ex21_4_commentary.json python tools/mock_ollama.py &  # Exercise 21.4 needs the scripted model
+MOCK_SCRIPT=tools/scripts/ex21_4_commentary.json python tools/mock_ollama.py &  # Exercise 21.4: quit Ollama first
 python chapters/ch21/python/solutions/ex21_4_commentary_tool.py
 kill %1                                                            # stop the mock before starting it on another script
 python chapters/ch22/python/solutions/ex22_3_missing_warning.py
 LANG=C.UTF-8 Rscript tests/solutions/test_ex23_1.R
 LANG=C.UTF-8 Rscript tests/solutions/test_ex23_3.R
-MOCK_SCRIPT=tools/scripts/ch23_review.json python tools/mock_ollama.py &   # Exercise 23.4 needs the scripted model
-LANG=C.UTF-8 Rscript tests/solutions/test_ex23_4.R
+LANG=C.UTF-8 Rscript tests/solutions/test_ex23_4.R                  # starts its own mock
 Rscript tests/solutions/test_ex24_4.R
 ```
 
@@ -88,7 +87,7 @@ Rscript tests/solutions/test_ex24_4.R
 From the repository root:
 
 ```bash
-# tests: no model needed
+# tests: no model needed; they start the mock on a free port, so Ollama may keep running
 python tests/test_assistants.py
 Rscript tests/test_assistants.R
 Rscript tests/test_sf_app.R
@@ -107,8 +106,12 @@ AIE_SERVICE_URL=http://127.0.0.1:8000 Rscript -e 'shiny::runApp("apps/sf_app", p
 
 ## Run the model chapters on GitHub
 
-The workflow `.github/workflows/real-model.yml` runs every script that calls the model (Chapters 3, 4, 5, 7, 8, 9, 10 and 11, and the agent evaluations of Chapters 21 and 22) against `qwen3.5:4b` on a GitHub machine with 4 processors, 16 GB of memory and no graphics card. Open the **Actions** tab, choose **Run the real model**, then **Run workflow**. It takes about an hour; the outputs are printed in the log and saved as the result `real-model-outputs`. The outputs printed in the book come from these runs. Fork the repository to run it under your own account.
+The workflow `.github/workflows/real-model.yml` runs the scripts of Chapters 3 to 11 that call the model (Chapters 3, 4, 5, 7, 8, 9, 10 and 11) and the agent evaluations of Chapters 21 and 22 against `qwen3.5:4b`, with `nomic-embed-text` for the embeddings, on a GitHub machine with 4 processors, 16 GB of memory and no graphics card. Open the **Actions** tab, choose **Run the real model**, then **Run workflow**. It takes about an hour; the outputs are printed in the log and saved as the result `real-model-outputs`. The outputs printed in the book come from these runs. Fork the repository to run it under your own account.
 
 ## Requirements
 
 Chapter 0 of the book installs everything: Python 3.12 or later, R 4.4 or later, Git, and Ollama for running language models on your own computer at no cost.
+
+## Licence
+
+The code and data of this repository are released under the MIT licence (`LICENSE`). The text of the book is not covered by it.

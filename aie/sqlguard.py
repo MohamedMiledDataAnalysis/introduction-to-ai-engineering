@@ -24,25 +24,37 @@ def tables_in(sql):
     return found
 
 
+def normalise_sql(sql):
+    """What SQLite reads, without comments, quoted names and the contents of text values."""
+    s = re.sub(r"/\*.*?\*/", " ", sql, flags=re.S)                    # /* comment */
+    s = re.sub(r"--[^\n]*", " ", s)                                   # -- comment
+    s = re.sub(r"'(?:[^']|'')*'", "''", s)                             # 'text' -> '' (keywords inside text are not SQL)
+    s = re.sub(r'"([^"]*)"|`([^`]*)`|\[([^]]*)\]', lambda m: m.group(1) or m.group(2) or m.group(3) or "", s)
+    return re.sub(r"(?i)\bmain\.", "", s)                              # main.funds -> funds
+
+
 def check_sql(sql, allowed_tables):
     problems = []
     s = sql.strip().rstrip(";").strip()
-    if ";" in s:
+    n = normalise_sql(s)
+    if ";" in n:
         problems.append("more than one statement")
-    if not re.match(r"(?is)^\s*(select|with)\b", s):
+    if not re.match(r"(?is)^\s*(select|with)\b", n):
         problems.append("not a SELECT query")
-    if FORBIDDEN.search(s):
-        problems.append(f"forbidden keyword: {FORBIDDEN.search(s).group(0)}")
-    ctes = {c.lower() for c in re.findall(r"(?i)(?:\bwith|,)\s*([a-z_][a-z0-9_]*)\s+as\s*\(", s)}  # WITH t AS (...)
-    for t in tables_in(s):
+    if FORBIDDEN.search(n):
+        problems.append(f"forbidden keyword: {FORBIDDEN.search(n).group(0)}")
+    ctes = {c.lower() for c in re.findall(r"(?i)(?:\bwith|,)\s*([a-z_][a-z0-9_]*)\s+as\s*\(", n)}  # WITH t AS (...)
+    for t in tables_in(n):
         if t.lower() not in allowed_tables and t.lower() not in ctes:
             problems.append(f"table not allowed: {t}")
     return problems, s
 
 
+DEFAULT_TABLES = {"funds", "securities", "holdings", "nav", "benchmark_returns", "issuer_esg", "transactions"}
+
+
 def run_sql(sql, db="data/am/harbourline.sqlite", allowed_tables=None, max_rows=200):
-    allowed = allowed_tables or {"funds", "securities", "holdings", "nav", "benchmark_returns",
-                                 "issuer_esg", "transactions"}
+    allowed = DEFAULT_TABLES if allowed_tables is None else {t.lower() for t in allowed_tables}  # empty set: no tables
     problems, s = check_sql(sql, allowed)
     if problems:
         return {"error": "; ".join(problems)}

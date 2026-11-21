@@ -1,7 +1,7 @@
 """Ask the Harbourline database a question in English: the model writes SQL, code guards and runs it."""
 import json
 
-from aie.factcheck import check_text
+from aie.factcheck import check_signed
 from aie.llm import chat
 from aie.prompts import load_prompt, render
 from aie.sqlguard import run_sql
@@ -41,5 +41,5 @@ def explain_result(question, out):
                 facts[f"r{i}c{j}"] = (v * 100, "percent")      # a decimal shown as a percentage
                 facts[f"r{i}c{j}n"] = (v, "number")
                 facts[f"r{i}c{j}m"] = (v, "money")
-    unsupported = [f.raw for f, hits in check_text(text, facts) if not hits]
+    unsupported = [f.raw for f, hits in check_signed(text, facts) if not hits]
     return text.strip(), unsupported

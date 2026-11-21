@@ -119,13 +119,16 @@ REGISTRY = {
                          "cutoff_date": {"type": "string", "pattern": "20[0-9]{2}-[0-9]{2}-[0-9]{2}"}},
                       "required": ["cutoff_date"], "additionalProperties": False}),
     "note_balance": (note_balance, "Opening and closing balance, principal and interest paid, and coupon of one "
-                     "class of Larkfield 2025-1 notes at a month-end.",
+                     "class of Larkfield 2025-1 notes for one collection period, named by its end "
+                     "date; the closing balance is after that period's payment, made on the 20th of "
+                     "the next month.",
                      {"type": "object", "properties": {
                          "note_class": {"type": "string", "enum": ["A", "B", "C", "D"]},
                          "cutoff_date": {"type": "string", "pattern": "20[0-9]{2}-[0-9]{2}-[0-9]{2}"}},
                       "required": ["note_class", "cutoff_date"], "additionalProperties": False}),
     "waterfall_summary": (waterfall_summary, "Revenue and principal receipts, new defaults, reserve fund balance "
-                          "and excess spread of Larkfield 2025-1 for one collection period, named by its end date.",
+                          "and excess spread of Larkfield 2025-1 for one collection period, named by its end date; "
+                          "they are paid out on the 20th of the next month.",
                           {"type": "object", "properties": {
                               "cutoff_date": {"type": "string", "pattern": "20[0-9]{2}-[0-9]{2}-[0-9]{2}"}},
                            "required": ["cutoff_date"], "additionalProperties": False}),
@@ -154,7 +157,10 @@ def run_tool(call, allowed=None):
     """Execute one tool call {'name':..., 'arguments':{...}}. Errors are returned as text for the model to read."""
     name, args = call.get("name"), call.get("arguments") or {}
     if isinstance(args, str):
-        args = json.loads(args)
+        try:
+            args = json.loads(args)
+        except json.JSONDecodeError:
+            return json.dumps({"error": "arguments are not valid JSON"})
     if name not in REGISTRY or (allowed is not None and name not in allowed):
         return json.dumps({"error": f"unknown tool {name}"})
     fn, _, schema = REGISTRY[name]
@@ -163,7 +169,7 @@ def run_tool(call, allowed=None):
         return json.dumps({"error": "invalid arguments: " + "; ".join(problems)})
     try:
         return json.dumps(fn(**args))
-    except ValueError as err:
+    except (ValueError, KeyError, TypeError) as err:
         return json.dumps({"error": str(err)})
 
 

@@ -70,7 +70,7 @@ The two chunks that name the fund (*Euro Corporate Bond*) come first, and neithe
 **Mistakes to avoid.**
 
 - Concluding that BM25 “chose” HGEF. It could not tell the three cost sections apart.
-- Trusting the grounding check to catch the error. The model would answer 0.75% (HGEF’s figure) instead of 0.40%, cite `HGEF#What are the costs?`, and the figure *is* in the cited passage: the check passes. A correct figure from the wrong fund is the most dangerous kind of error.
+- Trusting the grounding check to catch the error. The model would answer with HGEF’s costs (0.75% management and operating costs) instead of HECB’s (0.40%), cite `HGEF#What are the costs?`, and the figure *is* in the cited passage: the check passes. A correct figure from the wrong fund is the most dangerous kind of error.
 
 **Trade-offs.** Two fixes, used together in Chapters 15 and 22. **Metadata filtering**: when the question names a fund, keep only that fund’s chunks before ranking; reliable, but it requires recognising the fund in the question. **Context in every chunk**: add a header line (*Harbourline Euro Corporate Bond Fund — KID*) to each chunk, so that the fund name is in the cost section too; simple, but it lengthens every chunk. Filtering by metadata is the stronger of the two, because it does not rely on the ranking separating near-identical documents.
 

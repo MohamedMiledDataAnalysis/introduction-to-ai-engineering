@@ -2,7 +2,7 @@
 
 > FICTIONAL DOCUMENT FOR TEACHING. Harbourline Asset Management does not exist.
 
-**For professional investors only.** A factsheet for retail investors must also show the performance of each of the last five complete 12-month periods.
+**For professional investors only.** A factsheet for retail investors must also show past performance over complete 12-month periods: for a UCITS, the last ten years or since launch.
 
 | Item | Detail |
 |---|---|

@@ -66,8 +66,8 @@ Field codes and names are those of Annex II (Underlying exposures information โ€
 | File | Content |
 |---|---|
 | `larkfield_2025_1_loan_cashflows.csv` | Per loan per month: interest, scheduled principal, prepayment, recovery and new default amounts collected |
-| `larkfield_2025_1_notes.csv` | Per class per month: opening balance, interest due and paid, principal paid, closing balance, PDL balance, coupon |
-| `larkfield_2025_1_waterfall.csv` | Each line of the revenue and principal priority of payments for each interest payment date, plus summary lines |
+| `larkfield_2025_1_notes.csv` | Per class per month: opening balance, interest due and paid, principal paid, closing balance, PDL balance, coupon. Interest is accrued by collection period (actual days รท 365), so the first payment, on 20 August 2025, pays 31 days (July 2025) rather than the 51 days from closing that a real deal would accrue: a simplification kept for teaching |
+| `larkfield_2025_1_waterfall.csv` | Each line of the revenue and principal priority of payments for each interest payment date, plus summary lines. The line *Available principal receipts* is the principal collected in the period, before the PDL credits that items (e), (g), (i) and (k) add to it; the credits are shown as their own lines |
 | `larkfield_2025_1_deal_terms.json` | Parties, note classes, margins, fees, reserve fund, fictional SONIA and Base Rate paths |
 | `larkfield_2025_1_prospectus_excerpt.md` | Prospectus excerpt: structure, priority of payments, pool statistics, eligibility criteria, risk factors |
 

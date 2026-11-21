@@ -106,9 +106,11 @@ for attempt in range(retries + 1):
     r = requests.post(url, json=payload, headers=headers, timeout=timeout)
     if r.status_code in (429, 500, 502, 503, 529):
         last = LLMError(f"HTTP {r.status_code}: {r.text[:200]}")
-        if attempt < retries:                                  # no wait after the last attempt
-            wait = r.headers.get("Retry-After", "")            # the server may say how long to wait
-            time.sleep(min(float(wait), 30) if wait.isdigit() else min(2 ** attempt, 8))
+        if attempt < retries:              # no wait after the last attempt
+            # the server may say how long to wait
+            wait = r.headers.get("Retry-After", "")
+            time.sleep(min(float(wait), 30) if wait.isdigit()
+                       else min(2 ** attempt, 8))
         continue
 ```
 
@@ -235,7 +237,7 @@ cat(ask_section("3. Reserve fund",
 
 **Reading the result.** A good answer: *The Reserve Fund Required Amount is £6,082,667.80, equal to 1.50% of the aggregate current balance of the portfolio at the pool cut-off date; it does not amortise.*
 
-**Checking the answer.** Open Section 3 of the excerpt: it states £6,082,667.80, 1.50% of the portfolio at the cut-off date, and that the amount does not amortise. Every figure in the reply must appear there. Then test the error path: `ask_section("3. Reserve", ...)` raises the error listing the valid titles, without calling the model.
+**Checking the answer.** Open Section 3 of the excerpt: it states £6,082,667.80, 1.50% of the portfolio at the pool cut-off date (30 June 2025), and that the amount does not amortise. Every figure in the reply must appear there. Then test the error path: `ask_section("3. Reserve", ...)` raises the error listing the valid titles, without calling the model.
 
 **Mistakes to avoid.**
 
@@ -259,7 +261,7 @@ print(ask_section("2. The notes", "What is the rating of the Class A notes?"))
 
 Then put the second sentence back and ask again.
 
-**Reading the result.** Without the sentence, small models frequently answer with a rating such as *AAA*: senior notes of UK prime RMBS are often rated AAA, so it is a plausible continuation. With the sentence, the model usually answers that the text does not state a rating.
+**Reading the result.** Without the sentence, a small model can answer with a rating such as *AAA*: senior notes of UK prime RMBS are commonly rated AAA, so the rating is a plausible continuation that the text does not support. With the sentence, the model should answer that the text does not state a rating. Run each version five times and count: the sentence is worth keeping if it turns invented ratings into refusals.
 
 **Checking the answer.** Search Section 2 for *rat*: there is no rating, no rating agency. Any rating in the reply is invented. Run each version three times at temperature 0.7 with different seeds (`seed=1, 2, 3`) and count how often a rating appears. Temperature 0.7 matters: at temperature 0 the most probable token is always taken, so the seed has no effect and the three runs would be identical: you are measuring, on a small scale, what Chapter 5 measures on a test set.
 

@@ -70,6 +70,29 @@ def check_text(text, facts):
     return report
 
 
+NEGATIVE_CUE = re.compile(r"\b(fell|fall|falls|falling|down|lost|loss|losses|lower|below|behind|lag\w*|trail\w*|"
+                          r"underperform\w*|detract\w*|declin\w*|negative|minus|drop\w*|short\w*|deficit|reduc\w*)\b",
+                          re.I)
+
+
+def sign_agrees(text, fig, fact_value, window=40):
+    """matches() compares absolute values, so that "fell by 1.43%" matches -1.43. This restores the sign:
+    a figure written with a minus needs a negative fact; a negative fact needs a minus or a word such as
+    "fell", "behind" or "detracted" just before the figure."""
+    i = fig.start
+    minus = text[max(0, i - 2):i].replace(" ", "")[-1:] in ("-", "\u2212")
+    if minus:
+        return fact_value < 0
+    if fact_value < 0:
+        return bool(NEGATIVE_CUE.search(text[max(0, i - window):i]))
+    return True
+
+
+def check_signed(text, facts):
+    """check_text() with the sign restored: the agent and explain_result() use this one."""
+    return [(fig, [n for n in hits if sign_agrees(text, fig, facts[n][0])]) for fig, hits in check_text(text, facts)]
+
+
 FORBIDDEN = [r"\bguarantee[ds]?\b", r"\brisk[- ]free\b", r"\bwill (outperform|rise|increase)\b",
              r"\bcertain(ly)? to\b", r"\bno risk\b", r"\byou should (buy|sell|invest)\b"]
 

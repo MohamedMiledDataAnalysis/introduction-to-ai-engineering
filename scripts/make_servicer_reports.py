@@ -56,5 +56,6 @@ for cutoff, label in [("2026-07-31", "July 2026"), ("2026-08-31", "August 2026")
     story += [Spacer(1, 10), Paragraph("4. Defaults", styles["Heading2"]),
               Paragraph(f"New defaults in the period: {int((c.new_default > 0).sum())} loans, {money(newdef)}." if newdef
                         else "There were no new defaults in the period.", styles["Normal"])]
-    SimpleDocTemplate(str(OUT / f"servicer_report_{cutoff[:7].replace('-', '_')}.pdf"), pagesize=A4).build(story)
+    SimpleDocTemplate(str(OUT / f"servicer_report_{cutoff[:7].replace('-', '_')}.pdf"), pagesize=A4,
+                      invariant=1).build(story)   # no creation date or random id: rerunning gives identical bytes
     print("written", cutoff)

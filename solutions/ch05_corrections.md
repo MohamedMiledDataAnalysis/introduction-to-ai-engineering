@@ -158,9 +158,11 @@ Change Q10’s row to `answer_type` `choice`, `expected` `revenue`, `keywords` `
 
 **What the question asks.** The 95% Wilson interval for run A after the fix (19/20), and whether run A is significantly better than run B (16/20).
 
-**The plan.** (1) Compute both intervals with `wilson_interval()`. (2) Compare them. (3) Compare the runs case by case.
+**The plan.** (1) Compute both intervals with `wilson_interval()`. (2) Compare them. (3) Compare the runs case by case, with a test that uses the pairing.
 
 **Step by step.**
+
+*Step 1 — The intervals.*
 
 ``` python
 from aie.evals import wilson_interval
@@ -170,7 +172,26 @@ print(wilson_interval(16, 20))
 
 `wilson_interval(k, n)` returns the lower and upper bounds of the interval for a proportion of $k$ successes out of $n$, at 95% by default. In R, `wilson_interval(19, 20)` from `aie_r/evals.R`.
 
-**Reading the result.** Run A: (0.764, 0.991). Run B: (0.584, 0.919). The intervals overlap between 76.4% and 91.9%. On pass rates alone, we cannot say that A’s true pass rate on new questions is higher than B’s.
+*Step 2 — The cases that changed.* The script of the chapter lists them: B fails four cases that A passes (Q05, Q10, Q14, Q16) and passes one that A fails (Q18). After the fix of Exercise 5.2 both pass Q08. The fifteen other cases give the same result in both runs and say nothing about which run is better.
+
+*Step 3 — The paired test.* If A and B were equally good, each of the five changed cases would be equally likely to go either way, like a coin. The exact test (McNemar’s test) asks how surprising a split of 4 to 1 or more extreme is under that assumption:
+
+``` python
+from math import comb
+a_only, b_only = 4, 1                      # cases only A passes, only B passes
+n = a_only + b_only
+p = 2 * sum(comb(n, k) for k in range(min(a_only, b_only) + 1)) / 2 ** n
+print(n, round(min(p, 1.0), 3))
+```
+
+``` r
+binom.test(1, 5)$p.value    # 1 case for B out of 5 changed cases
+```
+
+- `comb(n, k)` counts the ways to choose $k$ cases out of $n$; the sum is the probability of 1 or 0 wins for B out of 5 under a fair coin, and the factor 2 counts the opposite tail.
+- `binom.test()` in R computes the same exact probability.
+
+**Reading the result.** Run A: (0.764, 0.991). Run B: (0.584, 0.919). The intervals overlap between 76.4% and 91.9%. The paired test prints `5 0.375`: a split of 4 to 1 or more extreme happens 37.5% of the time when the two runs are equally good. **No: on 20 cases, run A is not significantly better than run B**, by the intervals or by the paired test. What the paired comparison does give is the list of regressions to read: B misstates the waterfall in Q14, which is a reason to reject B whatever the statistics.
 
 **Checking the answer.** Check A’s interval by hand with the Wilson formula: $\hat p = 0.95$, $n = 20$, $z = 1.96$; centre $= (\hat p + z^2/2n)/(1 + z^2/n) = (0.95 + 0.096)/1.192 = 0.877$; half-width $= z\sqrt{\hat p(1-\hat p)/n + z^2/4n^2}/(1 + z^2/n) = 1.96 \times 0.0691 / 1.192 = 0.114$; interval $(0.764, 0.991)$. It matches.
 
@@ -179,7 +200,7 @@ print(wilson_interval(16, 20))
 - Reading 95% versus 80% as *A is 15 points better*. With 20 cases, one answer is worth 5 points; the uncertainty is larger than the gap.
 - Comparing two independent intervals when the runs answered the **same** cases. That throws away the pairing.
 
-**Trade-offs.** The case-by-case comparison is decisive here: B fails four cases that A passes (Q05, Q10, Q14, Q16), including a misstatement of the waterfall, and fixes Q18 (and Q08 before the scorer fix). When two versions answer the same cases, the paired comparison carries far more information than two rates. The interval answers a different question: what pass rate to expect on new questions. A larger set narrows it; 100 cases at 95% would give about (0.89, 0.98).
+**Trade-offs.** Two decisions use the same cases differently. *Is A better on average?* needs more cases: with five changed cases no split can be significant at 5%: even 5 to 0 gives p = 0.0625. A set of 20 can rarely separate two good versions. *Can B be released?* needs only the regressions: one misstatement of the waterfall on a case that matters is enough to stop B. A larger set narrows the intervals too; 100 cases at 95% would give (0.888, 0.978).
 
 ### Exercise 5.5
 
@@ -211,7 +232,7 @@ Q24,What is the expected rating of the Class D notes?,not_in_document,,,,
 
 **Checking the answer.** Check each case against the document. Q21: Section 8’s table states *Interest-only loans (by balance) 13.06%*. Q22: Section 10 states *The issuer has not entered into an interest rate swap.* Q23: Section 7 repays A, then B, then C, then D. Q24: search the whole excerpt for *rat* — no rating anywhere.
 
-A first draft of Q24 asked *“What is the final maturity date of the Class D notes?”*. Searching the whole document shows why it was rejected: Section 1 gives a final maturity date for the notes (*Interest payment date falling in June 2063*), which applies to every class. An assistant answering *June 2060* would be right and fail the case.
+A first draft of Q24 asked *“What is the final maturity date of the Class D notes?”*. Searching the whole document shows why it was rejected: Section 1 gives a final maturity date for the notes (*Interest payment date falling in June 2063*), which applies to every class. An assistant answering *June 2063* would be right and fail the case.
 
 **Mistakes to avoid.**
 

@@ -1,11 +1,10 @@
 # Chapter 9 - Watch the agent work, recover from an unsupported figure, and stop a loop
 import os
-import subprocess
 import sys
-import time
 
 sys.path.insert(0, ".")
 from aie.agent import Agent
+from tools.mock import start_mock
 
 SYSTEM = ("You are an assistant for Larkfield Mortgage Funding 2025-1. Use the tools for every figure and "
           "search the prospectus for rules and definitions. Cite passage identifiers such as [LMF#3]. "
@@ -23,12 +22,8 @@ def show(result):
 question = "How much excess spread was released in September 2026, and to whom does it go?"
 if os.environ.get("USE_MOCK_SCRIPTS"):          # replay scripted model behaviour for testing
     for script in ("tools/scripts/ch09_correction.json", "tools/scripts/ch09_loop.json"):
-        server = subprocess.Popen([sys.executable, "tools/mock_ollama.py"], env={**os.environ, "MOCK_SCRIPT": script},
-                                  stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        time.sleep(1)
-        print(f"Scenario {os.path.basename(script)}")
-        show(agent.run(question))
-        server.terminate()
-        server.wait()
+        with start_mock(script):                   # the mock on a free port, ready before the first call
+            print(f"Scenario {os.path.basename(script)}")
+            show(agent.run(question))
 else:
     show(agent.run(question))

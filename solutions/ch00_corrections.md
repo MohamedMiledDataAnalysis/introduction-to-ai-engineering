@@ -68,7 +68,7 @@ Then run, three times:
 python chapters/ch00/python/check_setup.py
 ```
 
-**Reading the result.** The three replies expand SONIA as *Sterling Overnight Index Average*, the risk-free reference rate for sterling overnight lending, administered by the Bank of England. The sentences around the expansion differ: one reply adds that SONIA replaced LIBOR, another mentions the Bank of England, a third is one line long.
+**Reading the result.** The three replies expand SONIA as *Sterling Overnight Index Average*, the risk-free reference rate for sterling overnight lending, administered by the Bank of England. The sentences around the expansion differ: one reply adds that SONIA replaced LIBOR (the London Interbank Offered Rate, the former reference rate), another mentions the Bank of England, a third is one line long.
 
 **Checking the answer.** Separate the two things you compare. **The fact** (the four words of the expansion) is identical in all three replies: write it down and compare letter by letter. **The wording** differs. Check the fact against an authoritative source: the Bank of England’s page on SONIA gives the same expansion.
 

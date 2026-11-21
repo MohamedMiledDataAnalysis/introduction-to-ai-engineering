@@ -41,7 +41,7 @@ output$kpi_reserve <- renderText(gbp(figures()$reserve / 1e6, 2) |> paste0("m"))
 - `figures()` is the reactive expression already used by the other tiles, so no new computation runs when the date changes.
 - `gbp(x, 2)` formats pounds with two decimals and thousands separators; dividing by one million and adding *m* matches the other tiles.
 
-**Reading the result.** The tile shows **£6.08m**: the Reserve Fund Required Amount of £6,082,667.80 (1.50% of the pool at the cut-off date, Chapter 3), which does not amortise and has never been drawn.
+**Reading the result.** The tile shows **£6.08m**: the Reserve Fund Required Amount of £6,082,667.80 (1.50% of the pool at the initial cut-off date, 30 June 2025, Chapter 3), which does not amortise and has never been drawn.
 
 **Checking the answer.** Add to `tests/test_sf_app.R`, inside `testServer()`:
 
@@ -335,7 +335,7 @@ if (identical(r$status, "needs_review")) {
 - `col.names = !file.exists(f)` writes the header only the first time; `append = file.exists(f)` adds to an existing file.
 - `write.table()` quotes text fields, so answers containing commas stay in one column.
 
-**Reading the result.** The script `tools/scripts/ch23_review.json` replays a model that calls `arrears_buckets` and then writes £1,098,476.03 instead of £1,088,476.03, twice: the answer and the one correction of Chapter 9. With the mock started on that script and the question *How many loans were two months in arrears at 30 September 2026?* in `testServer()`:
+**Reading the result.** The script `tools/scripts/ch23_review.json` replays a model that calls `arrears_buckets` and then writes £1,098,476.03 instead of £1,088,476.03, twice: the answer and the one correction of Chapter 9. With the mock replaying that script (the repository’s test starts it on a free port) and the question *What was the balance of the loans two months in arrears at 30 September 2026?* in `testServer()`:
 
 **What you should see**
 
@@ -397,10 +397,9 @@ Rscript -e 'shiny::runApp("apps/solutions/ex23_4", port = 8114)'
 - The new block sits after `log(...)` and before `updateTextAreaInput(...)`: at that point `r` is known and `input$question` still holds the question. Placed after `updateTextAreaInput()`, the code still reads the question, because the input changes only when the observer has finished; placing it before makes that explicit.
 - `dir.create("logs", showWarnings = FALSE)` creates the folder on a fresh clone, where `logs/` does not exist because it is in `.gitignore`.
 
-**The test, in full.** Start the mock model on the script of this exercise, then run the test from the repository root:
+**The test, in full.** The test starts the mock model on the script of this exercise itself, on a free port; run it from the repository root:
 
 ``` bash
-MOCK_SCRIPT=tools/scripts/ch23_review.json python tools/mock_ollama.py &
 LANG=C.UTF-8 Rscript tests/solutions/test_ex23_4.R
 ```
 
@@ -408,15 +407,16 @@ LANG=C.UTF-8 Rscript tests/solutions/test_ex23_4.R
 
 ``` r
 # Exercise 23.4 - the review queue
-# Needs the mock model replaying the scripted answer with a wrong figure. From the repository root:
-#   MOCK_SCRIPT=tools/scripts/ch23_review.json python tools/mock_ollama.py &
-#   LANG=C.UTF-8 Rscript tests/solutions/test_ex23_4.R
+# The mock model replays a scripted answer with a wrong figure; the test starts it on a free port.
+# From the repository root:  LANG=C.UTF-8 Rscript tests/solutions/test_ex23_4.R
 library(shiny)
 Sys.setenv(AIE_ROOT = getwd())
 unlink("logs/review_queue.csv")                                          # start from an empty queue
 app <- suppressPackageStartupMessages(source("apps/solutions/ex23_4/app.R")$value)
+source("tools/mock.R")
+mock <- start_mock("tools/scripts/ch23_review.json")                    # after the app has set its model address
 testServer(app, {
-  session$setInputs(question = "How many loans were two months in arrears at 30 September 2026?", ask = 1)
+  session$setInputs(question = "What was the balance of the loans two months in arrears at 30 September 2026?", ask = 1)
   r <- log()[[1]]$r
   cat(r$status, "|", paste(r$unsupported, collapse = ", "), "\n")
   stopifnot(r$status == "needs_review")
@@ -426,6 +426,7 @@ testServer(app, {
 q <- read.csv("logs/review_queue.csv")
 print(q[, c("question", "unsupported")], row.names = FALSE)
 stopifnot(nrow(q) == 1, q$unsupported == "£1,098,476.03")                # only needs_review answers enter the queue
+stop_mock(mock)
 cat("Exercise 23.4 test passed\n")
 ```
 
@@ -434,8 +435,10 @@ cat("Exercise 23.4 test passed\n")
 ``` text
 needs_review | £1,098,476.03 
 Advice question: declined 
-                                                        question   unsupported
- How many loans were two months in arrears at 30 September 2026? £1,098,476.03
+                                                                      question
+ What was the balance of the loans two months in arrears at 30 September 2026?
+   unsupported
+ £1,098,476.03
 Exercise 23.4 test passed
 ```
 

@@ -17,5 +17,5 @@ Q15,What is the weighted average original loan-to-value of the portfolio?,number
 Q16,What share of the portfolio by balance is in London?,number,15.30,0.001,,8
 Q17,What is the maximum original loan-to-value allowed by the eligibility criteria?,number,95,0,,9
 Q18,What is the rating of the Class A notes?,not_in_document,,,,
-Q19,Who is the swap counterparty of the transaction?,not_in_document,,,,
+Q19,On which stock exchange are the notes listed?,not_in_document,,,,
 Q20,What is the step-up date of the Class A margin?,not_in_document,,,,

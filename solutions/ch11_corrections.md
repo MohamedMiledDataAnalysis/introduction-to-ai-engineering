@@ -41,7 +41,15 @@ WHERE h.fund_code = 'HECB' AND h.month_end = '2026-09-30'
 - `h.weight * s.modified_duration` weights each bond’s duration by its share of the fund.
 - Dividing by `SUM(h.weight)` rescales to the bonds only, so that the cash weight does not dilute the result.
 
-**Reading the result.** All five corrected queries return the reference rows. The candidate errors are of four kinds: a missing filter (S01), a wrong population (S03), a wrong formula (S04, S10) and an unsafe statement (S09).
+*The preventing sentences.* For each failure, one sentence for the schema description or the prompt rules:
+
+- S01: none needed; the rules already say *“use the latest month-end”*. The candidate ignored an existing rule.
+- S03: *“‘Holdings’ means securities: exclude isin ‘CASH-EUR’ unless the question asks about cash.”*
+- S04: *“Averages of security characteristics (duration, ESG score, spread) are weighted by holding weight.”*
+- S09: none; the guard refuses it. Log it: a model producing a write statement is a signal to investigate the prompt and the inputs.
+- S10: in the description of `benchmark_returns`: *“Join with nav on both month_end and fund_code.”*
+
+**Reading the result.** All five corrected queries return the reference rows. The candidate errors are of four kinds: a missing filter (S01), a wrong population (S03), a wrong formula (S04, S10) and an unsafe statement (S09). Three of them call for a new sentence; S01 and S09 do not.
 
 **Checking the answer.** Run each corrected query and compare with the reference using `same_result(run_sql(reference), run_sql(corrected), ordered)`: five `True`. Then check the meaning of S10’s wrong count: 49 is larger than the 36 months of data, which alone shows that the join duplicated rows (each HGEF month matched three benchmark rows, one per fund).
 
@@ -50,14 +58,7 @@ WHERE h.fund_code = 'HECB' AND h.month_end = '2026-09-30'
 - Fixing S09 by removing `DELETE` from the guard’s forbidden list. The guard did its job.
 - Writing a sentence for every failure. S01 was already covered: the rules say *“use the latest month-end”*. The candidate ignored an existing rule; that is an evaluation failure to keep in the set, not a prompt gap.
 
-**Trade-offs.** The preventing sentences:
-
-- S03: *“‘Holdings’ means securities: exclude isin ‘CASH-EUR’ unless the question asks about cash.”*
-- S04: *“Averages of security characteristics (duration, ESG score, spread) are weighted by holding weight.”*
-- S09: none; the guard refuses it. Log it: a model producing a write statement is a signal to investigate the prompt and the inputs.
-- S10: in the description of `benchmark_returns`: *“Join with nav on both month_end and fund_code.”*
-
-Each sentence makes the prompt longer and every call slightly dearer. Add sentences only for errors the evaluation shows, and re-run the evaluation after each addition: a new rule can break a case that passed.
+**Trade-offs.** Each sentence makes the prompt longer and every call slightly dearer. Add sentences only for errors the evaluation shows, and re-run the evaluation after each addition: a new rule can break a case that passed.
 
 ### Exercise 11.2
 
@@ -175,7 +176,13 @@ The case tests that the model turns *March 2026* into the string `'2026-03-31'`.
 - Writing the March case with `month_end LIKE '2026-03%'`. It works on this database, but the reference should use the exact convention the model is asked to follow.
 - Adding the ambiguous case without a way to score it. A case the scorer cannot judge is noise.
 
-**Trade-offs.** The ambiguous case needs three changes: a column `expected_behaviour` with the value `clarify`; a prompt rule, *“If the question does not identify the fund, return {"clarify": "<question to the user>"} instead of SQL”*; and the JSON schema `SQL_SCHEMA` in `aie/text_to_sql.py` widened to accept either key, with `ask_database()` returning the clarification instead of running a query. More code, and one more kind of reply to handle in the application; in return, the assistant stops guessing a fund.
+**Trade-offs.** The ambiguous case needs three changes:
+
+- a column `expected_behaviour` with the value `clarify`;
+- a prompt rule, *“If the question does not identify the fund, return {"clarify": "<question to the user>"} instead of SQL”*;
+- the JSON schema `SQL_SCHEMA` in `aie/text_to_sql.py` widened to accept either key, with `ask_database()` returning the clarification instead of running a query.
+
+More code, and one more kind of reply to handle in the application; in return, the assistant stops guessing a fund.
 
 ### Exercise 11.5
 

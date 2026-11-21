@@ -2,7 +2,7 @@
 
 ## Exercises
 
-**Exercise 22.1.** Call `fund_characteristics` for the three funds. Why does only HECB have no equity sectors in its top three, and why does HBMA have a bond duration?
+**Exercise 22.1.** Call `fund_characteristics` for the three funds. Why are HECB’s top sectors those of the companies issuing its bonds, and why does HBMA report a bond duration?
 
 **Exercise 22.2.** Ask the agent: *“Which has the lower ongoing costs, HGEF or HECB?”* Which tool calls do you expect, and what must the answer contain to be verified?
 
@@ -16,7 +16,7 @@
 
 ### Exercise 22.1
 
-**What the question asks.** Call `fund_characteristics` for the three funds, and explain why HECB’s top sectors contain no equity sectors and why HBMA reports a bond duration.
+**What the question asks.** Call `fund_characteristics` for the three funds, and explain why HECB’s top sectors are those of the companies issuing its bonds and why HBMA reports a bond duration.
 
 **The plan.** (1) Call the tool for each fund. (2) Compare the fields returned. (3) Relate them to what each fund holds. (4) Find the field whose meaning is easy to misstate.
 
@@ -132,8 +132,8 @@ missing_warning <- function(answer) {
 |---------------------------------------------------------------------------|----------------------|
 | *HGEF returned 6.46% over one year to 30 September 2026.*                 | `True`: needs review |
 | *HGEF returned 6.46% … Past performance does not predict future returns.* | `False`              |
-| *HECB’s ongoing costs are 0.40%.*                                         | `False`              |
-| *Ongoing costs of 0.40% reduce the return each year.*                     | `True`: a false fail |
+| *HECB’s ongoing charges are 0.40%.*                                       | `False`              |
+| *Ongoing charges of 0.40% reduce the return each year.*                   | `True`: a false fail |
 
 Python and R give the same four results.
 
@@ -433,4 +433,4 @@ The results are those of the Python run with `qwen3.5:4b` printed in Chapters 21
 - Comparing pass rates on 11 and 12 cases as if they were precise: both intervals are wide (Chapter 5).
 - Concluding that the AM model is “worse”. The same model faces harder tasks.
 
-**Trade-offs.** The AM agent usually has the harder tasks: document questions need a fund choice and a table lookup, whereas most SF questions map to one tool with one date. Equal targets for both agents can mean more prompt work on the AM side, or a larger model for it alone. In the service of Chapter 18 that is a small change: give each domain’s `Agent` its own model name instead of the single `AIE_MODEL`. Decide with the evaluation, and record the choice in each model card.
+**Trade-offs.** The AM agent has the harder tasks: document questions need a fund choice and a table lookup, whereas most SF questions map to one tool with one date. Equal targets for both agents can mean more prompt work on the AM side, or a larger model for it alone. In the service of Chapter 18 that is a small change: give each domain’s `Agent` its own model name instead of the single `AIE_MODEL`. Decide with the evaluation, and record the choice in each model card.

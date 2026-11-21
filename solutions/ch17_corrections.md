@@ -46,7 +46,7 @@ print(fails)
 - `check_summary()` returns problem messages; each requirement writes a recognisable message (*not in the note*, *recommendation …*, *missing: …*, *… words, limit 60*), so the message tells the requirement.
 - `Counter` counts failures by requirement.
 
-**Reading the result.** For each requirement, pass rate = (6 − failures of that kind) / 6. With small models, completeness is usually the weakest, through the main risk or the direction of the margin being dropped, and length the second weakest: models tend to restate the note. A summary can fail several requirements, so the four rates do not add up to the share of accepted summaries.
+**Reading the result.** For each requirement, pass rate = (6 − failures of that kind) / 6. Read the completeness failures first (a dropped main risk, or the direction of the margin missing), then the length failures (a summary that restates the note): they are the two requirements a small model meets least easily. A summary can fail several requirements, so the four rates do not add up to the share of accepted summaries.
 
 **Checking the answer.** Run `ch17_check_summaries.py` on the prepared summaries: R01 A is accepted, R01 B fails consistency (*buy* for a *Hold*), R01 C fails faithfulness (a 30.0% that is not in the note) and completeness (main risk), R02 D fails length (67 words). Your classifier must put each of these in the right requirement.
 

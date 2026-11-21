@@ -118,7 +118,7 @@ moderate_rhp_in_document <- function(document) {
 *Step 1 — Extend.*
 
 - Schema (`prompts/kid_schema.json`): add `"stress_scenario_rhp_eur": {"type": "number", "minimum": 0}` and list it in `required`.
-- Prompt (`extract_kid_v2.txt`): *“stress_scenario_rhp_eur”: what you might get back in the stress scenario at the end of the recommended holding period, in EUR.*
+- Prompt (`prompts/extract_kid_v2.txt`; a reference copy is in `prompts/solutions/extract_kid_v2.txt`): *“stress_scenario_rhp_eur”: what you might get back in the stress scenario at the end of the recommended holding period, in EUR.*
 - `DOC_FORMAT` in `aie/kid_extract.py`: `"stress_scenario_rhp_eur": "EUR {:,.0f}"`.
 
 *Step 2 — Which check catches a favourable value (for HBMA, 14,210 instead of 5,030)?* The presence check does not: *EUR 14,210* is in the document. The schema does not: it is a positive number. The fund master has no scenarios. Only a positional check on the *Stress* row, written like Exercise 15.2’s with `Stress` instead of `Moderate`, catches it.

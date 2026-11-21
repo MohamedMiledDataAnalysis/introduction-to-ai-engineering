@@ -59,7 +59,7 @@ for d in dates:
 
 September 2026 has none.
 
-**Checking the answer.** The nine amounts sum to £2,706,364.36, the cumulative defaulted balance of the deal to date. Every default was debited to the PDL. In six of the nine months, excess spread cured the debit in full the same month. In December 2025, January 2026 and April 2026 it fell short: the Class D sub-ledger carried £103,135.69, £125,998.10 and £21,141.27 at those month-ends, and nothing was paid to the residual certificate holders. The excess spread of February 2026 cleared the first balance, that of May 2026 the second, and the PDL has been zero since. Exercise 1.6 confirms it from the other side: notes minus PDL equals the pool in all 16 months.
+**Checking the answer.** The nine amounts sum to £2,706,364.36, the cumulative defaulted balance of the deal to date. Every default was debited to the PDL. In six of the nine months, excess spread cured the debit in full the same month. In December 2025, January 2026 and April 2026 it fell short: the Class D sub-ledger carried £103,135.69, £125,998.10 and £21,141.27 at those month-ends, and nothing was paid to the residual certificate holders. The debit stayed on the ledger from December to January and was cleared by the excess spread of February 2026; the £21,141.27 of April was cleared in May. The PDL has been zero since. Exercise 1.6 confirms it from the other side: notes minus PDL equals the pool in all 16 months.
 
 **Mistakes to avoid.**
 

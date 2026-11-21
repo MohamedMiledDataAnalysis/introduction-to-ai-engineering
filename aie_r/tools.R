@@ -71,10 +71,13 @@ date_rule <- list(type = "string", pattern = "20[0-9]{2}-[0-9]{2}-[0-9]{2}")
 registry <- list(
   pool_summary = list(fn = pool_summary, description = "Pool balance, loans outstanding, arrears balance and ratio of the Larkfield 2025-1 mortgage pool at a month-end cut-off date.",
     parameters = list(type = "object", properties = list(cutoff_date = date_rule), required = list("cutoff_date"), additionalProperties = FALSE)),
-  note_balance = list(fn = note_balance, description = "Opening and closing balance, principal and interest paid, and coupon of one class of Larkfield 2025-1 notes at a month-end.",
+  note_balance = list(fn = note_balance, description = paste("Opening and closing balance, principal and interest paid, and coupon of one class of Larkfield 2025-1",
+                                                       "notes for one collection period, named by its end date; the closing balance is after that period's",
+                                                       "payment, made on the 20th of the next month."),
     parameters = list(type = "object", properties = list(note_class = list(type = "string", enum = list("A", "B", "C", "D")), cutoff_date = date_rule),
                       required = list("note_class", "cutoff_date"), additionalProperties = FALSE)),
-  waterfall_summary = list(fn = waterfall_summary, description = "Revenue and principal receipts, new defaults, reserve fund balance and excess spread of Larkfield 2025-1 for one collection period, named by its end date.",
+  waterfall_summary = list(fn = waterfall_summary, description = paste("Revenue and principal receipts, new defaults, reserve fund balance and excess spread of Larkfield",
+                                                                 "2025-1 for one collection period, named by its end date; they are paid out on the 20th of the next month."),
     parameters = list(type = "object", properties = list(cutoff_date = date_rule), required = list("cutoff_date"), additionalProperties = FALSE)),
   fund_performance = list(fn = fund_performance, description = "Net return of a Harbourline fund and of its benchmark over the last 1, 3, 12 or 36 months to the latest month-end.",
     parameters = list(type = "object", properties = list(fund_code = list(type = "string", enum = list("HGEF", "HECB", "HBMA")),
@@ -93,7 +96,10 @@ tool_specs <- function(names = NULL) {
 run_tool <- function(call, allowed = NULL) {
   name <- call$name; args <- call$arguments
   if (is.null(args)) args <- list()
-  if (is.character(args)) args <- fromJSON(args, simplifyVector = FALSE)
+  if (is.character(args)) {
+    args <- tryCatch(fromJSON(args, simplifyVector = FALSE), error = function(e) NULL)
+    if (is.null(args)) return(toJSON(list(error = "arguments are not valid JSON"), auto_unbox = TRUE))
+  }
   if (is.null(name) || !name %in% names(registry) || (!is.null(allowed) && !name %in% allowed))
     return(toJSON(list(error = paste("unknown tool", name)), auto_unbox = TRUE))
   problems <- validate(args, registry[[name]]$parameters)

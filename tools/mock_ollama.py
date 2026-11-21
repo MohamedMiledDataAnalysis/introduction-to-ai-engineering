@@ -7,8 +7,12 @@ It answers on http://localhost:11434 like Ollama, with deterministic replies:
 - /api/embed : returns hashed bag-of-words vectors (64 dimensions), so texts that
                share words have similar vectors.
 - MOCK_FAIL_FIRST=n makes the first n chat requests fail with HTTP 503.
+- MOCK_PORT=n listens on another port (default 11434, Ollama's own port, so that
+  your code reaches the mock without any change). MOCK_PORT=0 takes a free port
+  and writes it to the file named by MOCK_PORT_FILE: the tests use this, so they
+  run even while Ollama is running.
 
-Run:  python tools/mock_ollama.py
+Run:  python tools/mock_ollama.py      (quit Ollama first: both cannot use port 11434)
 It is a test double: it does not understand language. Chapter 3 explains its use.
 """
 import hashlib
@@ -74,5 +78,15 @@ class Handler(BaseHTTPRequestHandler):
 
 
 if __name__ == "__main__":
-    print("Mock Ollama listening on http://localhost:11434 (Ctrl+C to stop)")
-    HTTPServer(("127.0.0.1", 11434), Handler).serve_forever()
+    port = int(os.environ.get("MOCK_PORT", "11434"))
+    try:
+        server = HTTPServer(("127.0.0.1", port), Handler)
+    except OSError:
+        raise SystemExit(f"Port {port} is already in use, probably by Ollama. Quit Ollama first "
+                         "(or set MOCK_PORT to another port and OLLAMA_URL to match).")
+    port = server.server_address[1]
+    if os.environ.get("MOCK_PORT_FILE"):
+        with open(os.environ["MOCK_PORT_FILE"], "w") as f:
+            f.write(str(port))
+    print(f"Mock Ollama listening on http://localhost:{port} (Ctrl+C to stop)", flush=True)
+    server.serve_forever()

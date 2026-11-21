@@ -300,8 +300,8 @@ for code, f in FUNDS.items():
     sect = hl.groupby("sector").weight.sum().sort_values(ascending=False)
     lines = [f"# {f['name']} — Monthly factsheet, 30 September 2026", "",
              "> FICTIONAL DOCUMENT FOR TEACHING. Harbourline Asset Management does not exist.", "",
-             "**For professional investors only.** A factsheet for retail investors must also show the "
-             "performance of each of the last five complete 12-month periods.", "",
+             "**For professional investors only.** A factsheet for retail investors must also show past "
+             "performance over complete 12-month periods: for a UCITS, the last ten years or since launch.", "",
              "| Item | Detail |", "|---|---|",
              f"| Share class | {f['share_class']} |", f"| ISIN | {f['isin']} |",
              f"| Launch date | {f['launch']} |", f"| Fund size | EUR {f['aum_eur_m']:,.0f} m |",
@@ -383,7 +383,7 @@ The assets of the fund are held separately by the depositary, Ellery Depositary 
 
 | | If you exit after 1 year | If you exit after {rhp} years |
 |---|---:|---:|
-| Total costs | EUR {tot_cost_1y:,.0f} | EUR {tot_cost_1y * rhp * 1.05:,.0f} |
+| Total costs | EUR {tot_cost_1y:,.0f} | EUR {sum(tot_cost_1y * (1 + ann(k['moderate'][1])) ** t for t in range(rhp)):,.0f} |
 | Annual cost impact | {k['ongoing'] + k['transaction']:.2%} | {k['ongoing'] + k['transaction']:.2%} each year |
 
 **Composition of costs**

@@ -51,7 +51,7 @@ jobs:
       - if: inputs.languages != 'python'
         run: |
           sudo apt-get install -y libpoppler-cpp-dev
-          Rscript -e 'install.packages(c("httr2","jsonlite","digest","DBI","RSQLite","pdftools","sys"))'
+          Rscript -e 'install.packages(c("httr2","jsonlite","digest","DBI","RSQLite","callr","pdftools","sys"))'
 
       - name: Run the model chapters
         run: |

@@ -14,7 +14,7 @@
 
 \(b\) Answering an investor’s email asking how the Larkfield reserve fund can be used.
 
-\(c\) Extracting the ongoing charges figure from each of 400 Key Information Documents into a table.
+\(c\) Extracting the ongoing costs from each of 400 Key Information Documents into a table.
 
 \(d\) Writing the manager’s commentary for the HGEF factsheet.
 
@@ -266,7 +266,7 @@ The fund returned 3.17% net of fees, the benchmark 3.66%, so the fund was 0.48 p
 |:-----------------------------------------|:-----------------------|:-----------------------------------------------------------------|
 | \(a\) Class B interest                   | plain code             | a formula on structured data                                     |
 | \(b\) investor email on the reserve fund | model with checks      | the answer is in a document; citations and figures are checkable |
-| \(c\) ongoing charges from 400 KIDs      | model with checks      | reading varied layouts; each value checkable in its document     |
+| \(c\) ongoing costs from 400 KIDs        | model with checks      | reading varied layouts; each value checkable in its document     |
 | \(d\) HGEF factsheet commentary          | model, person approves | explanations the portfolio manager must own                      |
 | \(e\) loan eligibility                   | plain code             | each criterion is a rule on fields                               |
 | \(f\) reply to a regulator               | model, person approves | a formal statement of the firm                                   |

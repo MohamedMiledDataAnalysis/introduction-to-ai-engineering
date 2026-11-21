@@ -6,6 +6,7 @@ import sys
 import time
 
 sys.path.insert(0, ".")
+from tools.mock import start_mock
 from aie.assistants import NO_ADVICE, OUT_OF_SCOPE_AM, OUT_OF_SCOPE_SF, Assistant
 
 sf, am = Assistant("sf"), Assistant("am")
@@ -19,15 +20,9 @@ checks.append(("AM refuses reworded advice",
 checks.append(("SF refuses advice", sf.ask("Should I buy the Class B notes?")["answer"] == NO_ADVICE["sf"]))
 checks.append(("SF keeps 'reserve fund' in scope", sf.guard_question("Can the Larkfield reserve fund repay principal?") is None))
 
-mock = subprocess.Popen([sys.executable, "tools/mock_ollama.py"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
-                        env={**os.environ, "MOCK_SCRIPT": "tools/scripts/ch21_scenarios.json"})
-time.sleep(1)
-try:
+with start_mock("tools/scripts/ch21_scenarios.json"):          # its own free port: runs even while Ollama runs
     r = sf.ask("How many loans were two months in arrears at 30 September 2026?")
     checks.append(("SF scripted run is verified", r["status"] == "verified" and r["trace"][0][0] == "arrears_buckets"))
-finally:
-    mock.terminate()
-    mock.wait()
 
 for name, ok in checks:
     print(f"{'PASS' if ok else 'FAIL'}  {name}")

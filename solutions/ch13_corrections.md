@@ -118,30 +118,66 @@ for text, report, version in results:
 
 **What the question asks.** Write the list of facts for an HECB commentary from the repository’s files, and say what would be needed from the performance team.
 
-**The plan.** (1) List what the files give for a bond fund. (2) Write the function using the existing tools. (3) Identify the missing explanation.
+**The plan.** (1) List what the files give for a bond fund. (2) Write the function with the tools and queries already met: `fund_performance()` (Chapter 8) and the guarded SQL of Chapter 11. (3) Identify the missing explanation.
 
 **Step by step.**
 
 ``` python
-from aie.tools import fund_performance, fund_characteristics
+from aie.sqlguard import run_sql
+from aie.tools import fund_performance
+
+HECB = "h.fund_code = 'HECB' AND h.month_end = '2026-09-30'"
+
+def one(sql):
+    return run_sql(sql)["rows"][0][0]           # the single value of a one-cell result
 
 def hecb_facts_for_prompt():
     p = fund_performance("HECB", 1)
-    c = fund_characteristics("HECB")
+    duration = one(f"""SELECT SUM(h.weight * s.modified_duration) / SUM(h.weight)
+                       FROM holdings h JOIN securities s ON h.isin = s.isin
+                       WHERE {HECB}""")
+    bbb = one(f"""SELECT SUM(h.weight) FROM holdings h JOIN securities s
+                  ON h.isin = s.isin WHERE {HECB}
+                  AND s.rating IN ('BBB+', 'BBB', 'BBB-')""")
+    cash = one(f"SELECT SUM(h.weight) FROM holdings h WHERE {HECB} AND h.isin = 'CASH-EUR'")
     return "\n".join([
         f"- Fund return: {p['fund_return_pct']:.2f}%",
         f"- Benchmark return: {p['benchmark_return_pct']:.2f}%",
         f"- Relative return: {p['relative_return_pct']:+.2f}%",
-        f"- Modified duration of the bonds: {c['bond_modified_duration_years']:.2f} years",
-        f"- Share of the bonds rated BBB+ to BBB-: {c['bbb_share_of_bonds_pct']:.2f}%",
-        f"- Cash: {c['cash_weight_pct']:.2f}%"])
+        f"- Modified duration of the bonds: {duration:.2f} years",
+        f"- Share of the bonds rated BBB+ to BBB-: {100 * bbb / (1 - cash):.2f}%",
+        f"- Cash: {100 * cash:.2f}%"])
+
+print(hecb_facts_for_prompt())
 ```
 
 - `fund_performance("HECB", 1)` returns the one-month fund, benchmark and relative returns, already in percent.
-- `fund_characteristics("HECB")` computes the portfolio’s characteristics from the holdings and the security master (the queries of Chapter 11).
+- `one()` runs a query through `run_sql()` (Chapter 11) and returns its single value. The three queries are those of Chapter 11’s evaluation: the duration is case S04’s, the BBB query is case S08’s, and the cash query reads the `CASH-EUR` line.
+- S08 gives the BBB share of the **fund**; dividing by the bonds’ share, `1 - cash`, gives the share of the **bonds**, the figure a bond fund reports.
 - Each line is rounded and labelled, as in `facts_for_prompt()`: the model quotes, it never computes.
 
-**Reading the result.**
+``` r
+source("aie_r/sqlguard.R"); source("aie_r/tools.R")
+hecb <- "h.fund_code = 'HECB' AND h.month_end = '2026-09-30'"
+one <- function(sql) run_sql(sql)$rows[[1]][1]      # the single value of a one-cell result
+hecb_facts_for_prompt <- function() {
+  p <- fund_performance("HECB", 1)
+  duration <- one(paste("SELECT SUM(h.weight * s.modified_duration) / SUM(h.weight)",
+                        "FROM holdings h JOIN securities s ON h.isin = s.isin WHERE", hecb))
+  bbb <- one(paste("SELECT SUM(h.weight) FROM holdings h JOIN securities s ON h.isin = s.isin",
+                   "WHERE", hecb, "AND s.rating IN ('BBB+', 'BBB', 'BBB-')"))
+  cash <- one(paste("SELECT SUM(h.weight) FROM holdings h WHERE", hecb, "AND h.isin = 'CASH-EUR'"))
+  paste(c(sprintf("- Fund return: %.2f%%", p$fund_return_pct),
+          sprintf("- Benchmark return: %.2f%%", p$benchmark_return_pct),
+          sprintf("- Relative return: %+.2f%%", p$relative_return_pct),
+          sprintf("- Modified duration of the bonds: %.2f years", duration),
+          sprintf("- Share of the bonds rated BBB+ to BBB-: %.2f%%", 100 * bbb / (1 - cash)),
+          sprintf("- Cash: %.2f%%", 100 * cash)), collapse = "\n")
+}
+cat(hecb_facts_for_prompt(), "\n")
+```
+
+**Reading the result.** Both languages print:
 
 ``` text
 - Fund return: -0.49%
@@ -152,11 +188,11 @@ def hecb_facts_for_prompt():
 - Cash: 2.00%
 ```
 
-**Checking the answer.** Each figure matches an earlier result: the duration is S04’s 5.82 years (Chapter 11), the BBB share 53.42% is evaluation case B08 of Chapter 22, and the relative return −0.0099% rounds to −0.01%.
+**Checking the answer.** Each figure matches an earlier result: the duration is S04’s 5.82 years and the BBB share of the fund is S08’s 0.523558 (Chapter 11); 0.523558 / 0.98 = 53.42%. The relative return −0.0099% rounds to −0.01%.
 
 **Mistakes to avoid.**
 
-- Writing *“HECB’s duration”* for the bond duration. HECB holds only bonds plus 2% cash, so the difference is small here; for HBMA it is large (Exercise 22.1).
+- Quoting S08’s 52.36% as the share of the bonds. It is the share of the fund, cash included in the denominator.
 - Asking the model to explain the relative return from these facts. Nothing in them explains it.
 
 **Trade-offs.** A bond fund’s relative return is explained by duration, curve, credit spread and issuer selection effects: a fixed income attribution that the performance team produces with a dedicated model. Without it, the commentary can describe the return and the portfolio’s characteristics, not the causes. The honest prompt says so, and the commentary sticks to what the facts support; a shorter commentary is better than an invented explanation.

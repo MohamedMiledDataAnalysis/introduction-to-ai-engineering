@@ -139,7 +139,7 @@ for step in range(1, self.max_steps + 1):
 - Raising `max_steps` to 20 “to be safe”. A looping agent then makes 20 model calls before stopping, and each call costs tokens and seconds.
 - Forgetting the correction round when counting: a question that needs two tool steps and an answer needs **four** steps if the first answer fails verification.
 
-**Trade-offs.** Count the steps your evaluation questions need (here 2 tool steps + 1 answer + 1 correction = 4) and set the limit a little above the largest typical count, here 6. Too low, and good runs are cut off; too high, and loops cost more before they stop. The token budget (`max_tokens`) is a second limit that catches long runs the step count allows.
+**Trade-offs.** Count the steps your evaluation questions need (here 2 tool steps + 1 answer + 1 correction = 4) and set the limit two steps above the largest count, here 6. Too low, and good runs are cut off; too high, and loops cost more before they stop. The token budget (`max_tokens`) is a second limit that catches long runs the step count allows.
 
 ### Exercise 9.4
 

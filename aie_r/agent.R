@@ -38,7 +38,7 @@ verify_answer <- function(answer, results) {
   facts <- c(facts_from_results(results), passage_facts(results))
   clean <- gsub("\\[[A-Z][A-Za-z-]*#[0-9.]+\\]", "", answer)
   unsupported <- character(0)
-  for (r in check_text(clean, facts)) if (!length(r$hits)) unsupported <- c(unsupported, r$figure$raw)
+  for (r in check_signed(clean, facts)) if (!length(r$hits)) unsupported <- c(unsupported, r$figure$raw)
   unsupported
 }
 
@@ -68,7 +68,8 @@ run_agent <- function(question, system, tool_names, max_steps = 6, max_tokens = 
     messages[[length(messages) + 1]] <- list(role = "assistant", content = reply$text,
       tool_calls = lapply(reply$tool_calls, function(c) list(`function` = c)))
     for (call in reply$tool_calls) {
-      key <- paste(call$name, toJSON(call$arguments, auto_unbox = TRUE))
+      args <- call$arguments; if (length(args) && !is.null(names(args))) args <- args[order(names(args))]
+      key <- paste(call$name, toJSON(args, auto_unbox = TRUE))      # sorted, as Python's sort_keys=True
       if (key %in% seen) {
         result <- toJSON(list(error = "you already made this exact call; use its result above"), auto_unbox = TRUE)
       } else {

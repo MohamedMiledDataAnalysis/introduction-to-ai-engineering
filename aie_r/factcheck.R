@@ -48,6 +48,28 @@ check_text <- function(text, facts) {
   })
 }
 
+negative_cue <- paste0("(?i)\\b(fell|fall|falls|falling|down|lost|loss|losses|lower|below|behind|lag\\w*|trail\\w*|",
+                       "underperform\\w*|detract\\w*|declin\\w*|negative|minus|drop\\w*|short\\w*|deficit|reduc\\w*)\\b")
+
+# figure_matches() compares absolute values, so that "fell by 1.43%" matches -1.43. This restores the sign:
+# a figure written with a minus needs a negative fact; a negative fact needs a minus or a word such as
+# "fell", "behind" or "detracted" just before the figure.
+sign_agrees <- function(text, fig, fact_value, window = 40) {
+  i <- fig$start
+  before2 <- gsub(" ", "", substr(text, max(1, i - 2), i - 1))
+  if (nchar(before2) && substr(before2, nchar(before2), nchar(before2)) %in% c("-", "\u2212")) return(fact_value < 0)
+  if (fact_value < 0) return(grepl(negative_cue, substr(text, max(1, i - window), i - 1), perl = TRUE))
+  TRUE
+}
+
+# check_text() with the sign restored: the agent and explain_result() use this one
+check_signed <- function(text, facts) {
+  lapply(check_text(text, facts), function(r) {
+    r$hits <- Filter(function(n) sign_agrees(text, r$figure, facts[[n]]$value), r$hits)
+    r
+  })
+}
+
 forbidden_patterns <- c("\\bguarantee[ds]?\\b", "\\brisk[- ]free\\b", "\\bwill (outperform|rise|increase)\\b",
                         "\\bcertain(ly)? to\\b", "\\bno risk\\b", "\\byou should (buy|sell|invest)\\b")
 forbidden_phrases <- function(text) {

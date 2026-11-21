@@ -95,7 +95,7 @@ for cutoff in ("2026-07-31", "2026-08-31", "2026-09-30"):
 - Counting September’s prepayments as an extraction error. The model read the report correctly; the report is wrong.
 - Comparing extraction with loan data only. Without the first check, a model error and a servicer error look the same.
 
-**Trade-offs.** With the one-cell-per-line text, small models occasionally attach an amount to the next label (scheduled principal read as prepayments). The first check does not catch a swap, because both values are in the report. The second does: the two swapped fields disagree with the loan data in the same month, by amounts that mirror each other. A pair of discrepancies of opposite sign is the signature of a swap. Adding the label to each value in the prompt’s output format (`"label": ..., "amount": ...`) reduces swaps at the cost of a longer schema.
+**Trade-offs.** With the one-cell-per-line text, small models can attach an amount to the next label (scheduled principal read as prepayments). The first check does not catch a swap, because both values are in the report. The second does: the two swapped fields disagree with the loan data in the same month, by amounts that mirror each other. A pair of discrepancies of opposite sign is the signature of a swap. Adding the label to each value in the prompt’s output format (`"label": ..., "amount": ...`) reduces swaps at the cost of a longer schema.
 
 ### Exercise 16.3
 
@@ -126,7 +126,7 @@ print(len(full), round(full.prepayment.sum(), 2), round(sep.prepayment.sum() - f
 **Mistakes to avoid.**
 
 - Asking the servicer to “fix the report” without both figures. The servicer needs the figure you computed and how.
-- Assuming the loan data is right. It usually is, because it is loan by loan, but the query should ask which figure is correct.
+- Assuming the loan data is right. It is more often right than a summary, because it is kept loan by loan, but the query should ask which figure is correct.
 
 **Trade-offs.** A round difference of exactly £12,000.00 is not what rounding produces; it is typical of a partial prepayment recorded but not received (a bounced payment), a redemption statement issued but not paid, or a payment booked to the wrong deal. The query: *“Your servicer report for September 2026 states prepayments and redemptions of £4,358,814.19. The loan-level data for the same period gives £4,346,814.19 (20 full redemptions of £3,933,571.59 and 30 partial prepayments of £413,242.60). Could you identify the £12,000.00 difference and confirm which figure is correct by 5 October 2026, so that the waterfall can be finalised?”* Facts, both figures, the difference, a deadline, no accusation. The model can draft it, with the check of Chapter 12 extended to require both figures and the difference exactly.
 

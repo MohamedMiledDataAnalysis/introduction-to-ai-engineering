@@ -5,7 +5,7 @@ with every step recorded and the final answer verified before it is returned.
 import json
 import re
 
-from aie.factcheck import check_text
+from aie.factcheck import check_signed
 from aie.llm import chat
 from aie.tools import run_tool, tool_specs
 
@@ -90,7 +90,7 @@ class Agent:
     def _verify(self, answer, results):
         facts = {**facts_from_results(results), **passage_facts(results)}
         clean = re.sub(r"\[[A-Z][A-Za-z\-]*#[\d.]+\]", "", answer)
-        return [f"{fig.raw}" for fig, hits in check_text(clean, facts) if not hits]
+        return [f"{fig.raw}" for fig, hits in check_signed(clean, facts) if not hits]
 
     @staticmethod
     def _end(answer, trace, steps, tokens, status, problems=()):

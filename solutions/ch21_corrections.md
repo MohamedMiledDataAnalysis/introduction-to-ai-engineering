@@ -4,7 +4,7 @@
 
 **Exercise 21.1.** Run the evaluation with Ollama, in Python and R. Fill the release-criteria table with your results and decide whether the agent can be released.
 
-**Exercise 21.2.** Add a case to the evaluation set that needs two tools: *“What share of the pool’s arrears balance was three months or more in arrears at 30 September 2026?”* What is the expected answer, and which tools should be called?
+**Exercise 21.2.** Add a case to the evaluation set: *“What share of the pool’s arrears balance was three months or more in arrears at 30 September 2026?”* What is the expected answer, and which tool or tools should the agent call?
 
 **Exercise 21.3.** Write two more guard tests: one question that must be refused and one that must not, chosen to sit close to the boundary of the scope guard.
 
@@ -44,14 +44,14 @@ For each of the twelve cases, the script asks the `Assistant("sf")`, records the
 
 A11 and A12 are declined by the guards on every run, whatever the model. The other ten depend on your model.
 
-**Checking the answer.** For each failure, check the answer and the trace by hand, as in Exercise 9.1: call the expected tool yourself and compare. A05 (excess spread in August 2026) must be £412,990.44 from `waterfall_summary("2026-08-31")`; if the agent answered with September’s £692,429.96, the trace shows `cutoff_date` 2026-09-30, a date error, not a tool error.
+**Checking the answer.** For each failure, check the answer and the trace by hand, as in Exercise 9.1: call the expected tool yourself and compare. A05 (excess spread of the collection period ending 31 August 2026, paid on 20 September) must be £412,990.44 from `waterfall_summary("2026-08-31")`; if the agent answered with September’s £692,429.96, the trace shows `cutoff_date` 2026-09-30, a date error, not a tool error.
 
 **Mistakes to avoid.**
 
 - Releasing on 11 of 12 when the failure is A07 or A09, which state a rule of the structure. Read *which* case failed, as Chapter 10’s criteria did for Q10 and Q14.
 - Fixing several things at once after one run.
 
-**Trade-offs.** Typical gaps with a small model: A05 and A06 (August 2026) answered with September’s figures because the model did not change the date; A10 (October 2026) answered with a September figure instead of saying the data ends. Fix one at a time: for dates, an example in the system prompt (*“for ‘August 2026’ use cutoff_date 2026-08-31”*); re-run. The Python and R agents share prompts, tools and data; in the run printed in Step 2 they made the same calls and agreed on eleven cases of twelve, and the one difference (A10) disappeared in a second run. Investigate any case that passes in one language and fails in the other on every run: then the difference is in how the two languages build the messages.
+**Trade-offs.** Typical gaps with a small model: A05 and A06 (the period ending 31 August 2026) answered with September’s figures because the model did not change the date; A10 (October 2026) answered with a September figure instead of saying the data ends. Fix one at a time: for dates, an example in the system prompt (*“for ‘August 2026’ use cutoff_date 2026-08-31”*); re-run. The Python and R agents share prompts, tools and data; in the run printed in Step 2 they made the same calls and agreed on eleven cases of twelve, and the one difference (A10) disappeared in a second run. Investigate any case that passes in one language and fails in the other on every run: then the difference is in how the two languages build the messages.
 
 ### Exercise 21.2
 

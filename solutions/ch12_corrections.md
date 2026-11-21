@@ -104,7 +104,7 @@ print(m[m$RREL35 == "FRXX" & !is.na(m$RREL30_prev) & m$RREL30 > m$RREL30_prev + 
 - An inner join: loans new to the tape would disappear silently. With the left join they have no previous balance, and the comparison is false for them, which is correct.
 - Applying the rule to interest-only loans: their balance stays flat, but a capitalised arrangement fee could raise it legitimately.
 
-**Trade-offs.** The month-on-month rule catches increases that stay below 110% of the original balance, which `balance_above_original` cannot see: a repayment balance rising by £5,000 is impossible without a further advance, and further advances are not allowed in this pool. Its cost is a dependency on the previous tape. Some servicing systems capitalise arrears, which raises the balance legitimately: check the servicer’s practice and add a documented exception if needed.
+**Trade-offs.** The month-on-month rule catches increases that stay below 110% of the original balance, which `balance_above_original` cannot see: a repayment balance rising by £5,000 is impossible unless the borrower took a further advance, which the servicer reports separately and the rule can then accept. Its cost is a dependency on the previous tape. Some servicing systems capitalise arrears, which raises the balance legitimately: check the servicer’s practice and add a documented exception if needed.
 
 ### Exercise 12.3
 
@@ -153,19 +153,19 @@ Both errors of a mis-copied identifier are reported. And the template itself alw
 
 **Step by step.** A rule is blocking if the error changes the amounts the waterfall pays; material if it changes a figure in the investor report but not the cash; minor otherwise.
 
-| Severity | Rules                                                                                                                                                     |
-|----------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Blocking | `negative_balance`, `balance_above_original`, `wrong_cutoff_date`, `duplicate_loan`                                                                       |
-| Material | `default_without_180_days`, `arrears_without_balance`, `performing_with_days_in_arrears`, `rate_out_of_range`, `ltv_implausible`, `original_ltv_above_95` |
-| Minor    | `maturity_before_origination`, `missing_region`                                                                                                           |
+| Severity | Rules                                                                                                                         |
+|----------|-------------------------------------------------------------------------------------------------------------------------------|
+| Blocking | `negative_balance`, `balance_above_original`, `wrong_cutoff_date`, `duplicate_loan`, `default_without_180_days`               |
+| Material | `arrears_without_balance`, `performing_with_days_in_arrears`, `rate_out_of_range`, `ltv_implausible`, `original_ltv_above_95` |
+| Minor    | `maturity_before_origination`, `missing_region`                                                                               |
 
 **Reading the result.** Three justifications:
 
 - `duplicate_loan` is blocking: a duplicated loan is counted twice in the pool balance, so notes, PDL and pool no longer reconcile (Exercise 1.6) and the waterfall cannot be trusted.
-- `default_without_180_days` is material: the default status drives the PDL debit, and the prospectus defines default precisely; but the cash collected is unaffected, so the waterfall can run once the status is confirmed.
+- `default_without_180_days` is blocking, although the cash collected is unaffected: a loan marked defaulted is debited to the principal deficiency ledger at the next payment date (prospectus §4), which changes what item (k) pays and what is left for the residual holders at item (m). In December 2025, for example, item (k) took £357,251.91 of revenue and the residual holders received nothing. The status must be confirmed before the waterfall runs.
 - `missing_region` is minor for this month’s payments (no cash flow depends on it), but it matters for the stratification tables and regulatory reporting, so it is still queried.
 
-**Checking the answer.** Test the blocking rules against the definition by computing the received tape’s pool balance at 30 September 2026: it is £806,704.49 below the £322,717,766.58 that the notes and the PDL require. The gap is exactly the sum of the four blocking errors: the sign flip of `LMF25-01521` (−£829,538.46), the inflated balance of `LMF25-00766` (+£110,569.04), the duplicated row of `LMF25-01629` (+£143,783.89), and the row of `LMF25-00778` dated 31 August, which drops out of the September pool (−£231,518.96). Correcting the region or the maturity date changes nothing in it. The classification follows from an observable effect, not from opinion.
+**Checking the answer.** Test the blocking rules against the definition by computing the received tape’s pool balance at 30 September 2026: it is £806,704.49 below the £322,717,766.58 that the notes and the PDL require. The gap is exactly the sum of the four blocking errors that change a balance: the sign flip of `LMF25-01521` (−£829,538.46), the inflated balance of `LMF25-00766` (+£110,569.04), the duplicated row of `LMF25-01629` (+£143,783.89), and the row of `LMF25-00778` dated 31 August, which drops out of the September pool (−£231,518.96). Correcting the region or the maturity date changes nothing in it. The classification follows from an observable effect, not from opinion.
 
 **Mistakes to avoid.**
 

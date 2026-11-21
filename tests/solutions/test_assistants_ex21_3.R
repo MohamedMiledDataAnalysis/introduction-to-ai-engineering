@@ -16,10 +16,10 @@ checks <- c(
     identical(guard_question(sf, "Compare the HGEF factsheet with the HECB KID."), out_of_scope_sf),
   "SF accepts 'fund' in a Larkfield question" =
     is.null(guard_question(sf, "Which fund does the Larkfield reserve fund protect?")))
-Sys.setenv(MOCK_SCRIPT = "tools/scripts/ch21_scenarios.json")
-pid <- sys::exec_background("python3", "tools/mock_ollama.py", std_out = FALSE, std_err = FALSE); Sys.sleep(1)
+source("tools/mock.R")
+mock <- start_mock("tools/scripts/ch21_scenarios.json")          # its own free port: runs even while Ollama runs
 r <- ask_assistant(sf, "How many loans were two months in arrears at 30 September 2026?")
-tools::pskill(pid)
+stop_mock(mock)
 checks["SF scripted run is verified"] <- r$status == "verified" && r$trace[[1]]$name == "arrears_buckets"
 for (n in names(checks)) cat(if (checks[[n]]) "PASS " else "FAIL ", n, "\n")
 cat(sprintf("%d/%d checks passed\n", sum(checks), length(checks)))

@@ -35,7 +35,7 @@ function(fund_code, months, res) {
 }
 ```
 
-- The comments starting with `#*` are plumber’s annotations: the method and path, and the serializer that writes single values without brackets.
+- The comments starting with `#*` are plumber’s annotations: the method and path, and the serializer (the function that turns the result into JSON) that writes single values without brackets.
 - `fund_code` and `months` are read from the query string by name.
 - `setwd(root)` with `on.exit()` runs the request from the repository root, where the data is, and restores the folder afterwards.
 - `as.integer(months)`: query parameters always arrive as text, and the tool’s schema requires an integer.
@@ -181,7 +181,7 @@ print(f"median {statistics.median(times):.2f} s, max {max(times):.2f} s")
 - Reporting the mean: one slow cold start inflates it.
 - Setting the caller’s timeout from the median: users then see errors on every cold start.
 
-**Trade-offs.** Almost all the time is model calls: with a local model each step takes one to several seconds, and a question needs two or three steps. A larger model answers better and slower; a smaller one faster and less accurately. Report the median for users’ experience and the maximum for timeouts, and make the evaluation of Chapter 5 and these timings the two inputs of the choice.
+**Trade-offs.** The model calls take almost all the time: in the real runs of Chapter 3, one call of `qwen3.5:4b` took 6 to 13 seconds on a computer without a graphics card, and a question needs two or three of them. A larger model answers better and slower; a smaller one faster and less accurately. Report the median for users’ experience and the maximum for timeouts, and make the evaluation of Chapter 5 and these timings the two inputs of the choice.
 
 ### Exercise 18.5
 

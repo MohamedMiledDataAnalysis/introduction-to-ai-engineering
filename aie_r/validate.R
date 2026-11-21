@@ -40,7 +40,7 @@ validate <- function(obj, schema) {
     ok <- (is.character(v) && "string" %in% allowed) ||
           (is.logical(v) && "boolean" %in% allowed) ||
           (is.numeric(v) && "number" %in% allowed) ||
-          (is.integer(v) && "integer" %in% allowed)
+          (is.numeric(v) && "integer" %in% allowed && all(v == round(v)))   # 12 and 12.0 are integers in JSON
     if (!ok) {
       errors <- c(errors, sprintf("'%s' has type %s, expected %s", f, class(v)[1], paste(allowed, collapse = "/")))
       next

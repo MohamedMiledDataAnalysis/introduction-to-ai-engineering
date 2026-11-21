@@ -358,7 +358,7 @@ assert max(abs(x) for x in check) < 1.0, check
 
 deal_terms = dict(
     deal=DEAL, originator=ORIGINATOR, servicer=ORIGINATOR, cash_manager="Northgate Trust Services Limited",
-    trustee="Northgate Trustees Limited", closing_date="2025-06-30", first_ipd="2025-07-31",
+    trustee="Northgate Trustees Limited", closing_date="2025-06-30", first_ipd="2025-08-20",
     payment_frequency="Monthly", pool_cutoff_balance=round(pool0, 2),
     notes={k: dict(initial_balance=initial_notes[k], index="Compounded Daily SONIA", margin_pct=NOTES[k][1])
            for k in NOTES},

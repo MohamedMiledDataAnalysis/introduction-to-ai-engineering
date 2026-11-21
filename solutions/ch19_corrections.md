@@ -162,14 +162,14 @@ In R: `coef(lm(avg_tokens ~ t, data = am))`.
 
 **Reading the result.** The slope is 44.5 tokens per calendar day, from 1,794 tokens on 1 October. On 26 October the average is 2,982 tokens.
 
-**Checking the answer.** The projection: $(8{,}000 - 2{,}982) / 44.5 = 112.8$ days after 26 October, which is 16 February 2027. Check the line against the data: $1{,}794 + 44.5 \times 25 = 2{,}907$ for 26 October, close to the observed 2,982; the line fits the trend.
+**Checking the answer.** The projection uses the fitted line throughout: $(8{,}000 - 1{,}794) / 44.5 = 139.4$ days after 1 October, which is 17 February 2027. Check the line against the data: it gives $1{,}794 + 44.5 \times 25 = 2{,}907$ for 26 October, against 2,982 observed, a residual of 75 tokens, small beside the 1,188 tokens of growth since 1 October; the line fits the trend.
 
 **Mistakes to avoid.**
 
 - Treating the projection as a forecast. It says what happens if nothing changes; its purpose is to make someone change something.
 - Fitting on the request index instead of dates: days with more requests would stretch the axis.
 
-**Trade-offs.** Long before February, latency and cost would have doubled again, and with an 8,000-token window (Chapter 2) answers would start to fail. Find the cause: compare a request of 1 October with one of 26 October in the access-controlled text store, and see what was added. Typical culprits are a conversation history that is never trimmed (Chapter 9) or a retrieval step whose $k$ grew. A straight line in the token count is the signature of something appended at every turn.
+**Trade-offs.** Long before February, latency and cost would have doubled again, and the prompt alone would fill half of the 16,384-token window that `chat()` requests (Chapter 3), leaving less room for the passages, the tool results and the answer. Find the cause: compare a request of 1 October with one of 26 October in the access-controlled text store, and see what was added. Typical culprits are a conversation history that is never trimmed (Chapter 9) or a retrieval step whose $k$ grew. A straight line in the token count is the signature of something appended at every turn.
 
 ### Exercise 19.5
 
@@ -188,13 +188,13 @@ print(df.groupby("domain").tokens.mean().round(0))
 - Tokens divided by one million, times the price per million, gives dollars.
 - `tokens.mean()` gives the month’s average per request, used in step 3.
 
-**Reading the result.** October: SF \$3.24, AM \$1.98, total \$5.22. In the simulated log each domain has one caller (`sf-shiny`, `am-shiny`), so the caller split is the same. A year at October’s volumes: October has 18 working days and a year about 252, so $5.22 \times 252 / 18 = \$73.11$. With AM held at 2,982 tokens per request instead of its month average of 2,274, AM costs $1.98 \times 2{,}982 / 2{,}274 = \$2.59$ a month, and the year becomes $(3.24 + 2.59) \times 14 = \$81.74$.
+**Reading the result.** October: SF \$3.24, AM \$1.98, total \$5.22. In the simulated log each domain has one caller (`sf-shiny`, `am-shiny`), so the caller split is the same. A year at October’s volumes: the log covers 18 working days (1 to 26 October) and a year has 252, so the year is 14 times the log: $5.2224 \times 14 = \$73.11$. With AM held at 2,982 tokens per request instead of its month average of 2,274, AM costs $1.9783 \times 2{,}982 / 2{,}274 = \$2.5941$ for the 18 days, and the year becomes $(3.2441 + 2.5941) \times 14 = \$81.74$. Work with the unrounded costs (print them without `.round(2)`): rounding each line first gives \$73.08 and \$81.62.
 
 **Checking the answer.** Check the conversion on one figure: AM’s tokens summed to about 659,000 in October; $659{,}000 / 10^6 \times 3 = \$1.98$. And the year factor: $252 / 18 = 14$ months of October-sized activity.
 
 **Mistakes to avoid.**
 
-- Multiplying October by 12. October has 18 working days in this log; a calendar month averages 21.
+- Multiplying the log by 12. It covers 18 working days; October 2026 has 22, and a calendar month averages 21.
 - Holding the growth constant instead of the level. Held at the 26 October level, the cost is \$81.74; if the growth of Exercise 19.4 continued, it would be much higher.
 
 **Trade-offs.** The numbers are small because the volumes are small; the method is what matters. At a firm with a thousand times the volume, the same drift is a budget line. Cost by caller needs the per-caller keys of Exercise 18.3: a small change in the service that makes every later cost question answerable.

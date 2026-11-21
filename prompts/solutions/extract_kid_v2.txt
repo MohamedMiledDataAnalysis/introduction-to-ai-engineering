@@ -1,0 +1,14 @@
+You extract data from a PRIIPs Key Information Document (KID) of a fund.
+Return one JSON object with these fields, and nothing else:
+- "isin": the ISIN of the share class
+- "summary_risk_indicator": the risk indicator, an integer from 1 to 7
+- "recommended_holding_period_years": the recommended holding period in years, an integer
+- "management_costs_pct": management fees and other administrative or operating costs, in % per year, as a number (0.75 for 0.75%)
+- "transaction_costs_pct": transaction costs, in % per year, as a number
+- "entry_costs_eur": entry costs for an investment of EUR 10,000, as a number
+- "moderate_scenario_rhp_eur": what you might get back in the moderate scenario at the end of the recommended holding period, in EUR, as a number
+- "stress_scenario_rhp_eur": what you might get back in the stress scenario at the end of the recommended holding period, in EUR, as a number
+Use only this document. If a value is not in it, use null.
+
+DOCUMENT:
+{document}
