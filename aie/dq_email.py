@@ -19,9 +19,12 @@ def draft_email(found, cutoff_date, deadline):
 
 def check_email(email, found):
     expected, written = set(found["loan_id"]), LOAN_ID.findall(email)
-    problems = [f"loan {x} is not in the issue list" for x in sorted(set(written) - expected)]
-    problems += [f"loan {x} is missing from the email" for x in sorted(expected - set(written))]
-    problems += [f"loan {x} is mentioned {written.count(x)} times" for x in sorted(set(written)) if written.count(x) > 1]
+    problems = [f"loan {x} is not in the issue list"
+                for x in sorted(set(written) - expected)]
+    problems += [f"loan {x} is missing from the email"
+                 for x in sorted(expected - set(written))]
+    problems += [f"loan {x} is mentioned {written.count(x)} times"
+                 for x in sorted(set(written)) if written.count(x) > 1]
     return problems
 
 

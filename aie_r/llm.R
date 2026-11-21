@@ -14,7 +14,7 @@ ollama_url   <- Sys.getenv("OLLAMA_URL", "http://localhost:11434")
 llm_error <- function(...) {
   # a classed error, so that callers can tell "the model is unavailable" from a bug in their own code
   stop(structure(class = c("llm_error", "error", "condition"), list(message = paste0(...), call = NULL)))
-}
+  }
 
 llm_post <- function(url, payload, headers = list(), timeout = 300, retries = 2) {
   req <- request(url) |>
@@ -32,25 +32,31 @@ llm_post <- function(url, payload, headers = list(), timeout = 300, retries = 2)
   resp_body_json(resp, simplifyVector = FALSE)
 }
 
-chat <- function(messages, model = aie_model, provider = aie_provider, system = NULL,
-                 temperature = 0, seed = 42, max_tokens = 1024, format = NULL, tools = NULL,
-                 timeout = 300, retries = 2, think = FALSE, num_ctx = 16384) {
+chat <- function(messages, model = aie_model, provider = aie_provider,
+                 system = NULL, temperature = 0, seed = 42,
+                 max_tokens = 1024, format = NULL, tools = NULL,
+                 timeout = 300, retries = 2, think = FALSE,
+                 num_ctx = 16384) {
   start <- Sys.time()
   if (provider == "ollama") {
-    msgs <- if (is.null(system)) messages else c(list(list(role = "system", content = system)), messages)
+    msgs <- if (is.null(system)) messages else
+      c(list(list(role = "system", content = system)), messages)
     payload <- list(model = model, messages = msgs, stream = FALSE,
-                    think = think,                     # FALSE: answer directly, no hidden reasoning first
-                    options = list(temperature = temperature, seed = seed, num_predict = max_tokens,
-                                   num_ctx = num_ctx)) # context window; Ollama's own default can be 4,096
+                    think = think,
+                    options = list(temperature = temperature, seed = seed,
+                                   num_predict = max_tokens,
+                                   num_ctx = num_ctx))
     if (!is.null(format)) payload$format <- format
     if (!is.null(tools)) payload$tools <- tools
-    out <- llm_post(paste0(ollama_url, "/api/chat"), payload, timeout = timeout, retries = retries)
+    out <- llm_post(paste0(ollama_url, "/api/chat"), payload,
+                    timeout = timeout, retries = retries)
     msg <- out$message
-    calls <- lapply(msg$tool_calls, function(tc) tc$`function`)
-    result <- list(text = if (is.null(msg$content)) "" else msg$content,
-                   tool_calls = calls,
-                   input_tokens = if (is.null(out$prompt_eval_count)) 0 else out$prompt_eval_count,
-                   output_tokens = if (is.null(out$eval_count)) 0 else out$eval_count)
+    result <- list(
+      text = if (is.null(msg$content)) "" else msg$content,
+      tool_calls = lapply(msg$tool_calls, function(tc) tc$`function`),
+      input_tokens = if (is.null(out$prompt_eval_count)) 0
+                     else out$prompt_eval_count,
+      output_tokens = if (is.null(out$eval_count)) 0 else out$eval_count)
     if (result$input_tokens >= 0.9 * num_ctx)
       warning(sprintf("prompt uses %d of %d context tokens: Ollama drops the oldest text beyond the window",
                       result$input_tokens, num_ctx))
@@ -73,7 +79,8 @@ chat <- function(messages, model = aie_model, provider = aie_provider, system = 
   }
   result$provider <- provider
   result$model <- model
-  result$seconds <- round(as.numeric(difftime(Sys.time(), start, units = "secs")), 3)
+  result$seconds <- round(as.numeric(difftime(Sys.time(), start,
+                                              units = "secs")), 3)
   result
 }
 

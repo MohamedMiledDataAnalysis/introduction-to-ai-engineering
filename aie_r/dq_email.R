@@ -11,9 +11,13 @@ draft_email <- function(found, cutoff_date, deadline) {
 check_email <- function(email, found) {
   written <- regmatches(email, gregexpr("LMF25-[0-9]{5}", email))[[1]]
   expected <- unique(found$loan_id)
-  c(sprintf("loan %s is not in the issue list", sort(setdiff(unique(written), expected))),
-    sprintf("loan %s is missing from the email", sort(setdiff(expected, written))),
-    sprintf("loan %s is mentioned %d times", names(which(table(written) > 1)), as.integer(table(written)[table(written) > 1])))
+  c(sprintf("loan %s is not in the issue list",
+            sort(setdiff(unique(written), expected))),
+    sprintf("loan %s is missing from the email",
+            sort(setdiff(expected, written))),
+    sprintf("loan %s is mentioned %d times",
+            names(which(table(written) > 1)),
+            as.integer(table(written)[table(written) > 1])))
 }
 
 template_email <- function(found, cutoff_date, deadline) {

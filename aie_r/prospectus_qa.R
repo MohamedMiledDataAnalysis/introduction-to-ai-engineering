@@ -13,10 +13,14 @@ build_index <- function(path = "data/sf/rmbs/larkfield_2025_1_prospectus_excerpt
 answer_llm <- function(question, index, k = 3) {
   retrieved <- lapply(bm25_search(index, question, k), `[[`, "chunk")
   p <- load_prompt("answer_with_citations_v1")
-  passages <- paste(vapply(retrieved, function(c) paste0("[", c$id, "]\n", c$text), ""), collapse = "\n\n")
-  text <- trimws(chat(list(list(role = "user", content = render(p$text, passages = passages, question = question))))$text)
-  problems <- if (startsWith(text, refusal_text)) character(0) else check_citations(text, retrieved)
-  list(answer = text, retrieved = vapply(retrieved, `[[`, "", "id"), problems = problems, prompt = p$hash)
+  passages <- paste(vapply(retrieved, function(c)
+    paste0("[", c$id, "]\n", c$text), ""), collapse = "\n\n")
+  text <- trimws(chat(list(list(role = "user", content = render(
+    p$text, passages = passages, question = question))))$text)
+  problems <- if (startsWith(text, refusal_text)) character(0)
+              else check_citations(text, retrieved)
+  list(answer = text, retrieved = vapply(retrieved, `[[`, "", "id"),
+       problems = problems, prompt = p$hash)
 }
 
 answer_extractive <- function(question, index, min_score = 4) {

@@ -50,30 +50,35 @@ def _post(url, payload, headers, timeout, retries):
     raise last
 
 
-def chat(messages, model=None, provider=None, system=None, temperature=0.0, seed=42,
-         max_tokens=1024, format=None, tools=None, timeout=300, retries=2,
+def chat(messages, model=None, provider=None, system=None,
+         temperature=0.0, seed=42, max_tokens=1024, format=None,
+         tools=None, timeout=300, retries=2,
          think=False, num_ctx=16384):
-    """Send a conversation to a model. Returns a dict with text, tool_calls, token counts and timing."""
+    """Send a conversation to a model.
+    Returns a dict with text, tool_calls, token counts and timing."""
     provider = provider or DEFAULT_PROVIDER
     model = model or DEFAULT_MODEL
     start = time.perf_counter()
 
     if provider == "ollama":
-        msgs = ([{"role": "system", "content": system}] if system else []) + list(messages)
+        msgs = ([{"role": "system", "content": system}] if system else []) \
+               + list(messages)
         payload = {"model": model, "messages": msgs, "stream": False,
-                   "think": think,                       # False: answer directly, no hidden reasoning first
-                   "options": {"temperature": temperature, "num_predict": max_tokens,
-                               "num_ctx": num_ctx}}      # context window; Ollama's own default can be 4,096
+                   "think": think,
+                   "options": {"temperature": temperature,
+                               "num_predict": max_tokens,
+                               "num_ctx": num_ctx}}
         if seed is not None:
             payload["options"]["seed"] = seed
         if format is not None:
-            payload["format"] = format          # "json" or a JSON schema (dict)
+            payload["format"] = format        # "json" or a JSON schema
         if tools is not None:
             payload["tools"] = tools
         out = _post(f"{OLLAMA_URL}/api/chat", payload, {}, timeout, retries)
         msg = out.get("message", {})
         result = {"text": msg.get("content", ""),
-                  "tool_calls": [tc["function"] for tc in msg.get("tool_calls", []) or []],
+                  "tool_calls": [tc["function"]
+                                 for tc in msg.get("tool_calls", []) or []],
                   "input_tokens": out.get("prompt_eval_count", 0),
                   "output_tokens": out.get("eval_count", 0)}
         if result["input_tokens"] >= 0.9 * num_ctx:
@@ -98,7 +103,8 @@ def chat(messages, model=None, provider=None, system=None, temperature=0.0, seed
     else:
         raise ValueError(f"unknown provider: {provider}")
 
-    result.update(provider=provider, model=model, seconds=round(time.perf_counter() - start, 3))
+    result.update(provider=provider, model=model,
+                  seconds=round(time.perf_counter() - start, 3))
     return result
 
 

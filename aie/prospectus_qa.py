@@ -21,9 +21,12 @@ def answer_llm(question, index, k=3):
     retrieved = [c for c, _ in index.search(question, k)]
     template, version = load_prompt("answer_with_citations_v1")
     passages = "\n\n".join(f"[{c['id']}]\n{c['text']}" for c in retrieved)
-    text = chat([{"role": "user", "content": render(template, passages=passages, question=question)}])["text"].strip()
-    problems = [] if text.startswith(REFUSAL) else check_citations(text, retrieved)
-    return {"answer": text, "retrieved": [c["id"] for c in retrieved], "problems": problems, "prompt": version}
+    text = chat([{"role": "user", "content": render(
+        template, passages=passages, question=question)}])["text"].strip()
+    problems = [] if text.startswith(REFUSAL) \
+        else check_citations(text, retrieved)
+    return {"answer": text, "retrieved": [c["id"] for c in retrieved],
+            "problems": problems, "prompt": version}
 
 
 def answer_extractive(question, index, min_score=4.0):
