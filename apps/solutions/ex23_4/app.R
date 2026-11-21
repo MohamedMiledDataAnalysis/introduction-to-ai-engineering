@@ -92,7 +92,8 @@ server <- function(input, output, session) {
 
   received <- read.csv("data/sf/rmbs/dq/larkfield_2026_09_received.csv", stringsAsFactors = FALSE)
   flags <- run_rules(received, "2026-09-30")
-  output$dq <- renderDT(datatable(flags, rownames = FALSE, options = list(pageLength = 12, dom = "tp")))
+  output$dq <- renderDT(datatable(flags, rownames = FALSE, style = "default",  # the same look with every DT version
+                                         options = list(pageLength = 12, dom = "tp")))
   email <- reactiveVal(template_email(flags, "30 September 2026", "7 October 2026"))
   observeEvent(input$draft, {
     d <- tryCatch(draft_email(flags, "30 September 2026", "7 October 2026")$email, error = function(e) NULL)
