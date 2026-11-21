@@ -395,7 +395,7 @@ Rscript -e 'shiny::runApp("apps/solutions/ex23_4", port = 8114)'
 -root <- normalizePath(Sys.getenv("AIE_ROOT", "../.."))   # runApp starts in apps/sf_app; work from the repository root
 +root <- normalizePath(Sys.getenv("AIE_ROOT", "../../.."))   # runApp starts in apps/solutions/ex23_4; work from the repository root
  setwd(root)
-@@ -114,2 +114,9 @@
+@@ -115,2 +115,9 @@
      log(c(list(list(q = input$question, r = r)), log()))
 +    if (identical(r$status, "needs_review")) {
 +      dir.create("logs", showWarnings = FALSE)
