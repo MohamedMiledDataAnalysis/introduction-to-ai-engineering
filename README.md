@@ -115,7 +115,15 @@ The workflow `.github/workflows/real-model.yml` runs the scripts of Chapters 3 t
 
 ## Requirements
 
-Chapter 0 of the book installs everything: Python 3.12 or later, R 4.4 or later, Git, and Ollama for running language models on your own computer at no cost.
+Chapter 0 of the book installs everything: Python 3.12 or later, R 4.4 or later, Git, and Ollama for running language models on your own computer at no cost. From the root of the repository:
+
+```bash
+pip install -r requirements.txt          # the Python packages
+Rscript scripts/install_r_packages.R     # the R packages: installs the missing ones, then checks each one loads
+```
+
+The Shiny applications check their packages when they start and install any that is missing from CRAN
+(an internet connection is needed the first time).
 
 ## Licence
 

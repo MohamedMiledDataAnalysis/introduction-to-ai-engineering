@@ -1,5 +1,18 @@
 # Larkfield 2025-1 — the structured finance application (Chapter 23)
 # Run from the repository root:  Rscript -e 'shiny::runApp("apps/sf_app", port = 8101)'
+# The packages this application uses: any that is missing is installed from CRAN at the first start
+needed <- c("shiny", "bslib", "DT", "httr2", "jsonlite", "digest")
+missing <- needed[!vapply(needed, requireNamespace, TRUE, quietly = TRUE)]
+if (length(missing)) {
+  message("Installing the missing R packages: ", paste(missing, collapse = ", "))
+  repos <- getOption("repos")
+  if (is.null(repos) || identical(unname(repos["CRAN"]), "@CRAN@")) repos <- "https://cloud.r-project.org"
+  install.packages(missing, repos = repos)
+  still <- missing[!vapply(missing, requireNamespace, TRUE, quietly = TRUE)]
+  if (length(still))
+    stop("These R packages could not be installed: ", paste(still, collapse = ", "),
+         ". Check your internet connection, then run:  Rscript scripts/install_r_packages.R", call. = FALSE)
+}
 library(shiny); library(bslib); library(DT)
 root <- normalizePath(Sys.getenv("AIE_ROOT", "../.."))   # runApp starts in apps/sf_app; work from the repository root
 setwd(root)

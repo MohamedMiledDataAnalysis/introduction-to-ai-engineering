@@ -1,5 +1,18 @@
 # Exercise 23.1 - the SF application with a fifth tile, Reserve fund
 # Run from the repository root:  Rscript -e 'shiny::runApp("apps/solutions/ex23_1", port = 8111)'
+# The packages this application uses: any that is missing is installed from CRAN at the first start
+needed <- c("shiny", "bslib", "DT", "httr2", "jsonlite", "digest")
+missing <- needed[!vapply(needed, requireNamespace, TRUE, quietly = TRUE)]
+if (length(missing)) {
+  message("Installing the missing R packages: ", paste(missing, collapse = ", "))
+  repos <- getOption("repos")
+  if (is.null(repos) || identical(unname(repos["CRAN"]), "@CRAN@")) repos <- "https://cloud.r-project.org"
+  install.packages(missing, repos = repos)
+  still <- missing[!vapply(missing, requireNamespace, TRUE, quietly = TRUE)]
+  if (length(still))
+    stop("These R packages could not be installed: ", paste(still, collapse = ", "),
+         ". Check your internet connection, then run:  Rscript scripts/install_r_packages.R", call. = FALSE)
+}
 library(shiny); library(bslib); library(DT)
 root <- normalizePath(Sys.getenv("AIE_ROOT", "../../.."))   # runApp starts in apps/solutions/ex23_1; work from the repository root
 setwd(root)

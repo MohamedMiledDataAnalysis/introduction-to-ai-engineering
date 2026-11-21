@@ -83,22 +83,24 @@ and open `http://localhost:8111`. The file is a copy of `apps/sf_app/app.R`, so 
 ``` diff
 --- apps/sf_app/app.R
 +++ apps/solutions/ex23_1/app.R
-@@ -1,5 +1,5 @@
+@@ -1,3 +1,3 @@
 -# Larkfield 2025-1 — the structured finance application (Chapter 23)
 -# Run from the repository root:  Rscript -e 'shiny::runApp("apps/sf_app", port = 8101)'
 +# Exercise 23.1 - the SF application with a fifth tile, Reserve fund
 +# Run from the repository root:  Rscript -e 'shiny::runApp("apps/solutions/ex23_1", port = 8111)'
+ # The packages this application uses: any that is missing is installed from CRAN at the first start
+@@ -16,3 +16,3 @@
  library(shiny); library(bslib); library(DT)
 -root <- normalizePath(Sys.getenv("AIE_ROOT", "../.."))   # runApp starts in apps/sf_app; work from the repository root
 +root <- normalizePath(Sys.getenv("AIE_ROOT", "../../.."))   # runApp starts in apps/solutions/ex23_1; work from the repository root
  setwd(root)
-@@ -41,3 +41,4 @@
+@@ -54,3 +54,4 @@
          value_box("Pool balance", textOutput("kpi_pool")), value_box("Arrears ratio", textOutput("kpi_arrears")),
 -        value_box("CPR (annualised)", textOutput("kpi_cpr")), value_box("Class A balance", textOutput("kpi_classa"))),
 +        value_box("CPR (annualised)", textOutput("kpi_cpr")), value_box("Class A balance", textOutput("kpi_classa")),
 +        value_box("Reserve fund", textOutput("kpi_reserve"))),
        card(card_header("Arrears ratio and CPR since closing"), plotOutput("trend", height = 260)),
-@@ -71,2 +72,3 @@
+@@ -84,2 +85,3 @@
    output$kpi_classa  <- renderText(gbp(figures()$notes["A", "closing"] / 1e6, 2) |> paste0("m"))
 +  output$kpi_reserve <- renderText(gbp(figures()$reserve / 1e6, 2) |> paste0("m"))
    series <- reactive({
@@ -249,16 +251,18 @@ AIE_SERVICE_URL=http://127.0.0.1:9 Rscript -e 'shiny::runApp("apps/solutions/ex2
 ``` diff
 --- apps/sf_app/app.R
 +++ apps/solutions/ex23_3/app.R
-@@ -1,5 +1,5 @@
+@@ -1,3 +1,3 @@
 -# Larkfield 2025-1 — the structured finance application (Chapter 23)
 -# Run from the repository root:  Rscript -e 'shiny::runApp("apps/sf_app", port = 8101)'
 +# Exercise 23.3 - the SF application, which logs why the service is unavailable
 +# Run from the repository root:  AIE_SERVICE_URL=http://127.0.0.1:9 Rscript -e 'shiny::runApp("apps/solutions/ex23_3", port = 8113)'
+ # The packages this application uses: any that is missing is installed from CRAN at the first start
+@@ -16,3 +16,3 @@
  library(shiny); library(bslib); library(DT)
 -root <- normalizePath(Sys.getenv("AIE_ROOT", "../.."))   # runApp starts in apps/sf_app; work from the repository root
 +root <- normalizePath(Sys.getenv("AIE_ROOT", "../../.."))   # runApp starts in apps/solutions/ex23_3; work from the repository root
  setwd(root)
-@@ -20,3 +20,4 @@
+@@ -33,3 +33,4 @@
                       httr2::req_timeout(300) |> httr2::req_error(is_error = function(r) FALSE) |>
 -                     httr2::req_perform(), error = function(e) NULL)
 +                     httr2::req_perform(),
@@ -386,16 +390,18 @@ Rscript -e 'shiny::runApp("apps/solutions/ex23_4", port = 8114)'
 ``` diff
 --- apps/sf_app/app.R
 +++ apps/solutions/ex23_4/app.R
-@@ -1,5 +1,5 @@
+@@ -1,3 +1,3 @@
 -# Larkfield 2025-1 — the structured finance application (Chapter 23)
 -# Run from the repository root:  Rscript -e 'shiny::runApp("apps/sf_app", port = 8101)'
 +# Exercise 23.4 - the SF application with a review queue for answers that need review
 +# Run from the repository root:  Rscript -e 'shiny::runApp("apps/solutions/ex23_4", port = 8114)'
+ # The packages this application uses: any that is missing is installed from CRAN at the first start
+@@ -16,3 +16,3 @@
  library(shiny); library(bslib); library(DT)
 -root <- normalizePath(Sys.getenv("AIE_ROOT", "../.."))   # runApp starts in apps/sf_app; work from the repository root
 +root <- normalizePath(Sys.getenv("AIE_ROOT", "../../.."))   # runApp starts in apps/solutions/ex23_4; work from the repository root
  setwd(root)
-@@ -115,2 +115,9 @@
+@@ -128,2 +128,9 @@
      log(c(list(list(q = input$question, r = r)), log()))
 +    if (identical(r$status, "needs_review")) {
 +      dir.create("logs", showWarnings = FALSE)

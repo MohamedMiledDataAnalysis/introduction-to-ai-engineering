@@ -1,6 +1,19 @@
 # Exercise 24.4 - the AM application with an Approve button, enabled only when every figure is OK
 # Run from the repository root:  Rscript -e 'shiny::runApp("apps/solutions/ex24_4", port = 8124)'
 # AIE_DRAFT=1 shows the first draft (no errors); the default, 2, shows the second (two errors)
+# The packages this application uses: any that is missing is installed from CRAN at the first start
+needed <- c("shiny", "bslib", "DT", "httr2", "jsonlite", "digest")
+missing <- needed[!vapply(needed, requireNamespace, TRUE, quietly = TRUE)]
+if (length(missing)) {
+  message("Installing the missing R packages: ", paste(missing, collapse = ", "))
+  repos <- getOption("repos")
+  if (is.null(repos) || identical(unname(repos["CRAN"]), "@CRAN@")) repos <- "https://cloud.r-project.org"
+  install.packages(missing, repos = repos)
+  still <- missing[!vapply(missing, requireNamespace, TRUE, quietly = TRUE)]
+  if (length(still))
+    stop("These R packages could not be installed: ", paste(still, collapse = ", "),
+         ". Check your internet connection, then run:  Rscript scripts/install_r_packages.R", call. = FALSE)
+}
 library(shiny); library(bslib); library(DT); library(jsonlite)
 root <- normalizePath(Sys.getenv("AIE_ROOT", "../../.."))
 setwd(root)
