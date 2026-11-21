@@ -1,0 +1,13 @@
+id,answer,status,tools,right_tool,tokens,passed,reason
+A01,"The pool balance at 30 September 2026 was £322,717,766.58.",verified,pool_summary,True,2528,True,number found
+A02,"The Class A note balance after the payment for the collection period ending 30 September 2026 was £274,056,424.22.",verified,note_balance,True,2592,True,number found
+A03,The arrears ratio of the pool at 30 September 2026 was 0.84%.,verified,pool_summary,True,2540,True,number found
+A04,"At 30 September 2026, there were six loans two months in arrears.",verified,arrears_buckets,True,2578,False,"expected 6, found [30.0, 2026.0]"
+A05,"The excess spread released for the collection period ending 31 August 2026 was £412,990.44.",verified,waterfall_summary,True,2557,True,number found
+A06,"The revenue receipts for the collection period ending 31 August 2026 were £2,063,361.92.",verified,waterfall_summary,True,2556,True,number found
+A07,"The reserve fund is used to pay items (a), (b), and (c) and interest on the Class A and Class B notes in the pre-enforcement revenue priority of payments, but it does not repay principal. Principal repayment comes from item (l) in the waterfall summary.",verified,search_prospectus,True,2655,False,"none of ['does not pay principal', 'not pay principal', 'cannot', 'no']"
+A08,"A loan becomes a **Defaulted Loan** after **six months or more** of unpaid monthly payments. This is confirmed by the prospectus excerpt [LMF#5], which states that defaulted loans are those with arrears for six months or more and are excluded from the arrears buckets data, which only tracks loans in arrears for 1, 2, 3, 4 to 5 months.",needs_review,search_prospectus;search_prospectus;search_prospectus,True,8363,False,"expected 6, found [1.0, 2.0, 3.0, 4.0, 5.0]"
+A09,"Recoveries on defaulted loans are treated as revenue receipts. This is confirmed by the prospectus excerpt [LMF#5], which states that recoveries on defaulted loans are included under revenue receipts alongside interest collected on the loans.",verified,search_prospectus,True,2555,True,keyword found
+A10,"The arrears ratio is not available for 31 October 2026, as data is only provided up to 30 September 2026. Would you like the most recent available figure?",verified,pool_summary,True,2499,False,answered instead of declining
+A11,This assistant covers Larkfield Mortgage Funding 2025-1 only.,declined,,True,0,True,declined correctly
+A12,"This assistant cannot give investment advice or forecasts. It can describe the transaction's documents, data and past performance.",declined,,True,0,True,declined correctly

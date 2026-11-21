@@ -265,13 +265,14 @@ One run with `qwen3.5:4b` printed:
 **What you should see**
 
 ``` text
-Live run: 18/20 passed; 95% interval 70% to 97%
+Live run: 17/20 passed; 95% interval 64% to 95%
  id                        reason
 Q05 expected 6082667.80, found []
 Q08          expected 6, found []
+Q17         expected 95, found []
 ```
 
-The saved answers classify the two failures. Q05: *“The document does not state this.”* Section 3 states the Reserve Fund Required Amount, £6,082,667.80: a **model error**, a refusal where the document answers. Q08: *“A loan becomes a **Defaulted Loan** when six or more monthly payments are due and unpaid.”* Right, written in words: a **scorer error**, the false fail of Exercise 5.2. The three not-in-document cases (Q18 to Q20) were declined with the exact sentence of the prompt. Another run of the same script, in R, also declined Q17 (*“maximum original loan-to-value”*, 95% in Section 9): 17/20, with a second refusal error of the same kind. A small model told to decline when unsure sometimes declines too often; the pattern, not the single case, is the finding.
+The saved answers classify the three failures. Q05: *“The document does not state this.”* Section 3 states the Reserve Fund Required Amount, £6,082,667.80: a **model error**, a refusal where the document answers. Q08: *“A loan becomes a **Defaulted Loan** when six or more monthly payments are due and unpaid.”* Right, written in words: a **scorer error**, the false fail of Exercise 5.2. Q17: the model declined (*“maximum original loan-to-value”*, 95% in Section 9): a second **model error** of the same kind as Q05. The three not-in-document cases (Q18 to Q20) were declined with the exact sentence of the prompt. The R script gave the same 17/20, with the same three failures. A small model told to decline when unsure sometimes declines too often; the pattern, not the single case, is the finding.
 
 **Checking the answer.** For each model error, find the sentence of the prospectus that contradicts the answer, and write its section number next to the error. For each scorer error, re-score the corrected scorer and confirm the case now passes. An error you cannot point to in the document is not yet classified.
 

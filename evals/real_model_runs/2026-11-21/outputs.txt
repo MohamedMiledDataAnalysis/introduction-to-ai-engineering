@@ -1,0 +1,195 @@
+== python chapters/ch03/python/ch03_first_call.py
+Answer:        Based on the text provided, the interest rate for Class B notes is **Compounded Daily SONIA + 1.10% per annum**.
+
+In securitisation structures like this, the "margin" typically refers to the spread over the reference rate (SONIA). Therefore, the margin on the Class B notes is **1.10% per annum**.
+Model:         ollama qwen3.5:4b
+Input tokens:  357
+Output tokens: 76
+Seconds:       28.95
+exit 0, 29 s
+
+== python chapters/ch03/python/ch03_repeatability.py
+Temperature 0.0: 1 distinct answers out of 5
+Temperature 1.0: 5 distinct answers out of 5
+exit 0, 69 s
+
+== python chapters/ch04/python/ch04_extract_notes.py
+Prompt version 49335149af; 18 notes; 0 invalid replies
+  loan_id            18/18 correct
+  months_in_arrears  13/18 correct
+  arrears_balance    18/18 correct
+  action             18/18 correct
+  promise_date       18/18 correct
+exit 0, 333 s
+
+== python chapters/ch05/python/ch05_live_eval.py
+Live run: 17/20 passed; 95% interval 64% to 95%
+ id                        reason
+Q05 expected 6082667.80, found []
+Q08          expected 6, found []
+Q17         expected 95, found []
+exit 0, 851 s
+
+== python chapters/ch07/python/ch07_hybrid.py
+k=1: bm25 14/17  embeddings 16/17  hybrid 16/17
+k=2: bm25 15/17  embeddings 17/17  hybrid 17/17
+k=3: bm25 17/17  embeddings 17/17  hybrid 17/17
+exit 0, 5 s
+
+== python chapters/ch08/python/ch08_ask_with_tools.py
+tool  note_balance({'note_class': 'A', 'cutoff_date': '2026-09-30'})
+      -> {"class": "A", "cutoff_date": "2026-09-30", "opening_gbp": 278938691.61, "principal_paid_gbp": 4882267.39, "in...
+tool  pool_summary({'cutoff_date': '2026-09-30'})
+      -> {"cutoff_date": "2026-09-30", "pool_balance_gbp": 322717766.58, "loans_outstanding": 1660, "arrears_balance_gb...
+
+answer: The Class A note balance after the payment for the collection period ending 30 September 2026 was **£274,056,424.22**.
+
+The arrears ratio of the pool at that date was **0.8432%**.
+exit 0, 86 s
+
+== python chapters/ch09/python/ch09_agent_runs.py
+  waterfall_summary  {'cutoff_date': '2026-09-30'}                                {"cutoff_date": "2026-09-30", "revenue_receipts_gbp": 185502
+  search_prospectus  {'query': 'excess spread release September 2026', 'k': 1}    {"query": "excess spread release September 2026", "passages"
+  verification       None                                                         20
+  waterfall_summary  {'cutoff_date': '2026-09-30'}                                {"error": "you already made this exact call; use its result 
+  search_prospectus  {'query': 'excess spread recipient priority of payments', 'k {"query": "excess spread recipient priority of payments", "p
+  status=needs_review steps=4 unsupported=['20']
+  answer: The excess spread released in September 2026 was **£692,429.96**.
+
+According to the waterfall summary for the collection period ending on 2026-09-30 [LMF#1], this amount is part of the revenue and principal receipts paid out on the 20th of the following month (i.e., October 2026). The prospectus excerpt provided does not specify the exact recipient of the excess spread for this period, but it notes that excess spread is available to absorb losses [LMF#10].
+
+exit 0, 134 s
+
+== python chapters/ch10/python/ch10_assistant_eval.py
+prompt bc9eed1576
+answers correct : 19/20 (76%-99%)
+answers grounded: 19/20
+retrieval hits  : 17/17
+  Q08  expected 6, found []  | problems: []
+exit 0, 546 s
+
+== python chapters/ch11/python/ch11_ask_database.py
+SQL:     SELECT SUM(h.weight) AS total_weight FROM holdings h JOIN securities s ON h.isin = s.isin WHERE h.fund_code = 'HGEF' AND s.sector = 'Information Technology'
+Result:  {'columns': ['total_weight'], 'rows': [(5.846969,)], 'truncated': False}
+Answer:  The weight of Information Technology in the Global Equity Fund is 5.85%.
+Unsupported figures: ['5.85%']
+exit 0, 29 s
+
+== python agents/python/evaluate_agent.py sf
+SF agent, prompt b7e2474c23
+  correct answers : 8/12 (95% interval 39%-86%)
+  right tool used : 12/12
+  status          : {'verified': 9, 'declined': 2, 'needs_review': 1}
+  tokens          : 31,423
+  A04 expected 6, found [30.0, 2026.0] | tools: arrears_buckets | At 30 September 2026, there were six loans two months in arrears.
+  A07 none of ['does not pay principal', 'not pay principal', 'cannot', 'no'] | tools: search_prospectus | The reserve fund is used to pay items (a), (b), and (c) and interest on the Clas
+  A08 expected 6, found [1.0, 2.0, 3.0, 4.0, 5.0] | tools: search_prospectus;search_prospectus;search_prospectus | A loan becomes a **Defaulted Loan** after **six months or more** of unpaid month
+  A10 answered instead of declining | tools: pool_summary | The arrears ratio is not available for 31 October 2026, as data is only provided
+exit 0, 589 s
+
+== python agents/python/evaluate_agent.py am
+AM agent, prompt 8caa33f43f
+  correct answers : 11/11 (95% interval 74%-100%)
+  right tool used : 11/11
+  status          : {'verified': 6, 'declined': 3, 'needs_review': 2}
+  tokens          : 17,905
+exit 0, 452 s
+
+== Rscript chapters/ch03/r/ch03_first_call.R
+Answer:        Based on the text provided, the interest rate for Class B notes is **Compounded Daily SONIA + 1.10% per annum**.
+
+In securitisation structures like this, the "margin" typically refers to the spread over the reference rate (SONIA). Therefore, the margin on the Class B notes is **1.10% per annum**. 
+Model:         ollama qwen3.5:4b 
+Input tokens:  357 
+Output tokens: 76 
+Seconds:       14.64 
+exit 0, 15 s
+
+== Rscript chapters/ch03/r/ch03_repeatability.R
+Temperature 0: 1 distinct answers out of 5
+Temperature 1: 5 distinct answers out of 5
+exit 0, 69 s
+
+== Rscript chapters/ch04/r/ch04_extract_notes.R
+Prompt version 49335149af; 18 notes; 0 invalid replies
+  loan_id            18/18 correct
+  months_in_arrears  13/18 correct
+  arrears_balance    18/18 correct
+  action             18/18 correct
+  promise_date       18/18 correct
+exit 0, 339 s
+
+== Rscript chapters/ch05/r/ch05_live_eval.R
+Live run: 17/20 passed; 95% interval 64% to 95%
+  id                        reason
+ Q05 expected 6082667.80, found []
+ Q08          expected 6, found []
+ Q17         expected 95, found []
+exit 0, 808 s
+
+== Rscript chapters/ch07/r/ch07_hybrid.R
+k=1: bm25 14/17  embeddings 16/17  hybrid 16/17
+k=2: bm25 15/17  embeddings 17/17  hybrid 17/17
+k=3: bm25 17/17  embeddings 17/17  hybrid 17/17
+exit 0, 5 s
+
+== Rscript chapters/ch08/r/ch08_ask_with_tools.R
+tool  note_balance({"note_class":"A","cutoff_date":"2026-09-30"})
+      -> {"class":"A","cutoff_date":"2026-09-30","opening_gbp":278938691.61,"principal_paid_gbp":4882267.39,"interest_p...
+tool  pool_summary({"cutoff_date":"2026-09-30"})
+      -> {"cutoff_date":"2026-09-30","pool_balance_gbp":322717766.58,"loans_outstanding":1660,"arrears_balance_gbp":272...
+
+answer: The Class A note balance after the payment for the collection period ending 30 September 2026 was **£274,056,424.22**.
+
+The arrears ratio of the pool at that date was **0.8432%**. 
+exit 0, 70 s
+
+== Rscript chapters/ch09/r/ch09_agent_runs.R
+  waterfall_summary  {"cutoff_date":"2026-09-30"}                                 {"cutoff_date":"2026-09-30","revenue_receipts_gbp":1855022.3
+  search_prospectus  {"query":"excess spread release September 2026","k":1}       {"query":"excess spread release September 2026","passages":[
+  verification       {}                                                           20
+  waterfall_summary  {"cutoff_date":"2026-09-30"}                                 {"error":"you already made this exact call; use its result a
+  search_prospectus  {"query":"excess spread recipient payment priority","k":1}   {"query":"excess spread recipient payment priority","passage
+  status=needs_review steps=4 unsupported=[20]
+  answer: The excess spread released in September 2026 was **£692,429.96**.
+
+Regarding the recipient, the prospectus states that the excess spread is available to absorb losses [LMF#10]. The waterfall summary indicates that revenue and principal receipts are paid out on the 20th of the following month [LMF#1], but it does not specify a direct recipient for the excess spread itself.
+
+exit 0, 124 s
+
+== Rscript chapters/ch10/r/ch10_assistant_eval.R
+prompt bc9eed1576
+answers correct : 19/20 (76%-99%)
+answers grounded: 19/20
+retrieval hits  : 17/17
+  Q08  expected 6, found []  | problems: 
+exit 0, 326 s
+
+== Rscript chapters/ch11/r/ch11_ask_database.R
+SQL:     SELECT SUM(h.weight) AS total_weight FROM holdings h JOIN securities s ON h.isin = s.isin WHERE h.fund_code = 'HGEF' AND s.sector = 'Information Technology' 
+  total_weight
+1     5.846969
+exit 0, 10 s
+
+== Rscript agents/r/evaluate_agent.R sf
+SF agent, prompt b7e2474c23
+  correct answers : 8/12 (95% interval 39%-86%)
+  right tool used : 12/12
+
+declined verified 
+       2       10 
+  A04 expected 6, found [30, 2026] | tools: arrears_buckets | At 30 September 2026, there were six loans two months in arrears.
+  A07 none of does not pay principal, not pay principal, cannot, no | tools: search_prospectus | The reserve fund is used to pay items (a), (b), and (c) and interest on Class A 
+  A08 expected 6, found [] | tools: search_prospectus | A loan becomes a Defaulted Loan after six or more monthly payments are due and u
+  A10 answered instead of declining | tools: pool_summary | The arrears ratio is not available for 31 October 2026, as data only runs up to 
+exit 0, 572 s
+
+== Rscript agents/r/evaluate_agent.R am
+AM agent, prompt 8caa33f43f
+  correct answers : 10/11 (95% interval 62%-98%)
+  right tool used : 11/11
+
+    declined needs_review     verified 
+           3            2            6 
+  B01 expected 6.46, found [30, 2026, 4.53] | tools: fund_performance | The one-year return of the Harbourline Global Equity Fund (HGEF) to 30 September
+exit 0, 441 s
