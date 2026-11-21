@@ -6,7 +6,7 @@
 
 **Exercise 7.2.** Repair the *margin* misses (Q01, Q02) without embeddings, in two ways: (a) add to each chunk of section 2 a line of keywords, *“Keywords: margin, coupon, spread, interest rate”*; (b) rewrite the question before searching, replacing *margin* with *interest rate*. Measure the hit rate at $k=1$ for each. Which do you prefer, and why?
 
-**Exercise 7.3.** Compute by hand the fused score of `LMF#2` in Figure 7.3 and check the order of the fused list.
+**Exercise 7.3.** Compute by hand the fused score of `LMF#2` in Figure 7.4 and check the order of the fused list.
 
 **Exercise 7.4.** Write a prompt template `prompts/answer_with_citations_v1.txt` that receives the retrieved chunks and the question, and requires a citation after every sentence. Then run it with Ollama on Q05 and Q10 and pass the answers to `check_citations()`.
 
@@ -136,7 +136,7 @@ Option (a) repairs both misses; option (b) repairs neither.
 
 ### Exercise 7.3
 
-**What the question asks.** Compute by hand the reciprocal rank fusion score of `LMF#2` in Figure 7.3, then the scores of the other chunks, and check the fused order.
+**What the question asks.** Compute by hand the reciprocal rank fusion score of `LMF#2` in Figure 7.4, then the scores of the other chunks, and check the fused order.
 
 **The plan.** Apply the formula $\text{RRF}(d) = \sum_{\text{lists}} \frac{1}{60 + \text{rank}}$ to each chunk, summing over the lists in which it appears.
 
