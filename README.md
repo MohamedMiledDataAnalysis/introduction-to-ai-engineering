@@ -52,6 +52,8 @@ tests/       tests of the assistants, of both applications and of solutions/
 docs/        data dictionary
 ```
 
+Run every script from this root folder, for example `python chapters/ch02/python/ch02_tokens.py`. Update your copy with `git pull`. Keep your own versions of the scripts in a folder `my_work/` at the root: Git ignores it, so `git pull` never overwrites your work.
+
 ## Corrections of the exercises
 
 The folder `solutions/` holds the corrections of every exercise of the book, chapter by chapter
