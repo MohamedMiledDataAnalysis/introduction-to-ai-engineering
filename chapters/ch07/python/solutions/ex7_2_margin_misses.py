@@ -22,7 +22,6 @@ def rewrite(q):
     return q
 
 
-
 def hit_rate(index, question_of, k=1):
     hits, misses = 0, []
     for case in cases.to_dict("records"):

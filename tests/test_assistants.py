@@ -1,9 +1,6 @@
 """Scripted tests of the two assistants' guards. Run with:  python tests/test_assistants.py
 They need no model: guards run before the model, and one scenario replays a scripted model through the mock."""
-import os
-import subprocess
 import sys
-import time
 
 sys.path.insert(0, ".")
 from tools.mock import start_mock

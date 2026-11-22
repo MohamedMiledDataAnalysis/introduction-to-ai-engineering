@@ -221,7 +221,7 @@ REGISTRY["arrears_buckets"] = (
 
 @lru_cache(maxsize=None)
 def _fund_docs_index():
-    from aie.retrieval import BM25, chunk_markdown
+    from aie.retrieval import chunk_markdown
     chunks = []
     for code in ("hgef", "hecb", "hbma"):
         for kind, path in (("KID", f"data/am/documents/{code}_kid.md"),

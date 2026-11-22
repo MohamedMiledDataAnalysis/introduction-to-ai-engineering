@@ -93,7 +93,7 @@ def template_commentary(f):
 
 def render_markdown(f, commentary):
     n = f["notes"]
-    lines = [f"# Larkfield Mortgage Funding 2025-1 PLC — Investor report", "",
+    lines = ["# Larkfield Mortgage Funding 2025-1 PLC — Investor report", "",
              f"Collection period ending {f['cutoff']}, paid on the 20th of the following month. "
              "Fictional document for teaching.", "",
              "## Commentary", "", commentary, "",

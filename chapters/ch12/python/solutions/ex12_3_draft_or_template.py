@@ -6,7 +6,7 @@ import sys
 import pandas as pd
 
 sys.path.insert(0, ".")
-from aie.dq import RULES, run_rules
+from aie.dq import run_rules
 
 tape = pd.read_csv("data/sf/rmbs/dq/larkfield_2026_09_received.csv")
 from aie.dq_email import check_email, draft_email, template_email

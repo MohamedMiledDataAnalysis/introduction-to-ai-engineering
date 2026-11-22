@@ -1,8 +1,5 @@
 """Extract KID data into a schema, one document per call, and check every value three ways."""
 import json
-import re
-
-import pandas as pd
 
 from aie.validate import validate
 

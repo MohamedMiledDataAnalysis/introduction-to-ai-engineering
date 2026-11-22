@@ -1,12 +1,10 @@
 # Exercise 9.2 - A follow-up question with history
 # Run from the root of the repository:  python chapters/ch09/python/solutions/ex9_2_follow_up.py
 
-import os
 import sys
 
 sys.path.insert(0, ".")
 from aie.agent import Agent
-from tools.mock import start_mock
 
 SYSTEM = ("You are an assistant for Larkfield Mortgage Funding 2025-1. "
           "Use the tools for every figure and search the prospectus for rules "

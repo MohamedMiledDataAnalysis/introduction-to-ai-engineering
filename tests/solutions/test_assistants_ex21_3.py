@@ -1,10 +1,7 @@
 """Exercise 21.3 - the tests of tests/test_assistants.py with the two boundary tests added.
 Run from the root of the repository:  python tests/solutions/test_assistants_ex21_3.py
 They need no model: guards run before the model, and one scenario replays a scripted model through the mock."""
-import os
-import subprocess
 import sys
-import time
 
 sys.path.insert(0, ".")
 from tools.mock import start_mock

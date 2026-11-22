@@ -1,6 +1,5 @@
 """Assemble the documentation of one AI use case from the repository's own evidence."""
 import hashlib
-import json
 import sys
 from pathlib import Path
 

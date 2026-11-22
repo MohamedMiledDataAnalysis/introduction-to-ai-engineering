@@ -3,7 +3,6 @@
 
 import sys
 
-import pandas as pd
 
 sys.path.insert(0, ".")
 from aie.monitor import load_log

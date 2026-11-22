@@ -7,7 +7,7 @@ import sys
 import pandas as pd
 
 sys.path.insert(0, ".")
-from aie.factcheck import check_text, forbidden_phrases
+from aie.factcheck import forbidden_phrases
 
 CUT = "2026-09-30"
 tape = pd.read_csv("data/sf/rmbs/larkfield_2025_1_loan_tape.csv")

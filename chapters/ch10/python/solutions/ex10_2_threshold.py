@@ -6,8 +6,8 @@ import sys
 import pandas as pd
 
 sys.path.insert(0, ".")
-from aie.evals import compare_runs, run_eval
-from aie.prospectus_qa import answer_extractive, answer_llm, build_index
+from aie.evals import run_eval
+from aie.prospectus_qa import answer_extractive, build_index
 
 index = build_index()
 cases = pd.read_csv("evals/sf_prospectus_qa.csv", dtype=str,

@@ -1,5 +1,4 @@
 # Chapter 5 - Run the evaluation against the live assistant and save the answers
-import re
 import sys
 from datetime import datetime
 

@@ -2,12 +2,10 @@
 # Run from the root of the repository:  python chapters/ch09/python/solutions/ex9_3_step_limit.py
 # Before you run it: start the mock with MOCK_SCRIPT=tools/scripts/ch09_correction.json python tools/mock_ollama.py
 
-import os
 import sys
 
 sys.path.insert(0, ".")
 from aie.agent import Agent
-from tools.mock import start_mock
 
 SYSTEM = ("You are an assistant for Larkfield Mortgage Funding 2025-1. "
           "Use the tools for every figure and search the prospectus for rules "

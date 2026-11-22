@@ -3,11 +3,10 @@
 
 """
 The AI engineering service: the two assistants and their tools behind an HTTP API.
-Run from the repository root:  uvicorn services.python.app:app --port 8000
+Exercise 18.3: one API key per caller, each request logged with the caller's name.
 """
 import json
 import os
-import secrets
 import sys
 import time
 import uuid
