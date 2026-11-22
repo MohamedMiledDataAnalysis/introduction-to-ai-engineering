@@ -89,18 +89,18 @@ and open `http://localhost:8111`. The file is a copy of `apps/sf_app/app.R`, so 
 +# Exercise 23.1 - the SF application with a fifth tile, Reserve fund
 +# Run from the repository root:  Rscript -e 'shiny::runApp("apps/solutions/ex23_1", port = 8111)'
  # The packages this application uses, with the oldest version the book was tested with: a package that is
-@@ -19,3 +19,3 @@
- library(shiny); library(bslib); library(DT)
+@@ -20,3 +20,3 @@
+ options(shiny.maxRequestSize = 100 * 1024^2)   # uploads up to 100 MB (Shiny's default is 5 MB)
 -root <- normalizePath(Sys.getenv("AIE_ROOT", "../.."))   # runApp starts in apps/sf_app; work from the repository root
 +root <- normalizePath(Sys.getenv("AIE_ROOT", "../../.."))   # runApp starts in apps/solutions/ex23_1; work from the repository root
  setwd(root)
-@@ -57,3 +57,4 @@
+@@ -58,3 +58,4 @@
          value_box("Pool balance", textOutput("kpi_pool")), value_box("Arrears ratio", textOutput("kpi_arrears")),
 -        value_box("CPR (annualised)", textOutput("kpi_cpr")), value_box("Class A balance", textOutput("kpi_classa"))),
 +        value_box("CPR (annualised)", textOutput("kpi_cpr")), value_box("Class A balance", textOutput("kpi_classa")),
 +        value_box("Reserve fund", textOutput("kpi_reserve"))),
        card(card_header("Arrears ratio and CPR since closing"), plotOutput("trend", height = 260)),
-@@ -87,2 +88,3 @@
+@@ -88,2 +89,3 @@
    output$kpi_classa  <- renderText(gbp(figures()$notes["A", "closing"] / 1e6, 2) |> paste0("m"))
 +  output$kpi_reserve <- renderText(gbp(figures()$reserve / 1e6, 2) |> paste0("m"))
    series <- reactive({
@@ -257,12 +257,12 @@ AIE_SERVICE_URL=http://127.0.0.1:9 Rscript -e 'shiny::runApp("apps/solutions/ex2
 +# Exercise 23.3 - the SF application, which logs why the service is unavailable
 +# Run from the repository root:  AIE_SERVICE_URL=http://127.0.0.1:9 Rscript -e 'shiny::runApp("apps/solutions/ex23_3", port = 8113)'
  # The packages this application uses, with the oldest version the book was tested with: a package that is
-@@ -19,3 +19,3 @@
- library(shiny); library(bslib); library(DT)
+@@ -20,3 +20,3 @@
+ options(shiny.maxRequestSize = 100 * 1024^2)   # uploads up to 100 MB (Shiny's default is 5 MB)
 -root <- normalizePath(Sys.getenv("AIE_ROOT", "../.."))   # runApp starts in apps/sf_app; work from the repository root
 +root <- normalizePath(Sys.getenv("AIE_ROOT", "../../.."))   # runApp starts in apps/solutions/ex23_3; work from the repository root
  setwd(root)
-@@ -36,3 +36,4 @@
+@@ -37,3 +37,4 @@
                       httr2::req_timeout(300) |> httr2::req_error(is_error = function(r) FALSE) |>
 -                     httr2::req_perform(), error = function(e) NULL)
 +                     httr2::req_perform(),
@@ -396,12 +396,12 @@ Rscript -e 'shiny::runApp("apps/solutions/ex23_4", port = 8114)'
 +# Exercise 23.4 - the SF application with a review queue for answers that need review
 +# Run from the repository root:  Rscript -e 'shiny::runApp("apps/solutions/ex23_4", port = 8114)'
  # The packages this application uses, with the oldest version the book was tested with: a package that is
-@@ -19,3 +19,3 @@
- library(shiny); library(bslib); library(DT)
+@@ -20,3 +20,3 @@
+ options(shiny.maxRequestSize = 100 * 1024^2)   # uploads up to 100 MB (Shiny's default is 5 MB)
 -root <- normalizePath(Sys.getenv("AIE_ROOT", "../.."))   # runApp starts in apps/sf_app; work from the repository root
 +root <- normalizePath(Sys.getenv("AIE_ROOT", "../../.."))   # runApp starts in apps/solutions/ex23_4; work from the repository root
  setwd(root)
-@@ -131,2 +131,9 @@
+@@ -132,2 +132,9 @@
      log(c(list(list(q = input$question, r = r)), log()))
 +    if (identical(r$status, "needs_review")) {
 +      dir.create("logs", showWarnings = FALSE)

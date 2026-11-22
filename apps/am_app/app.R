@@ -17,6 +17,7 @@ if (length(missing)) {
          ". Check your internet connection, then run:  Rscript scripts/install_r_packages.R", call. = FALSE)
 }
 library(shiny); library(bslib); library(DT); library(jsonlite)
+options(shiny.maxRequestSize = 100 * 1024^2)   # uploads up to 100 MB (Shiny's default is 5 MB)
 root <- normalizePath(Sys.getenv("AIE_ROOT", "../.."))
 setwd(root)
 source("aie_r/assistants.R"); source("aie_r/commentary.R")
