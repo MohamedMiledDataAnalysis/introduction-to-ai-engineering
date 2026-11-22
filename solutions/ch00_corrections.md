@@ -115,7 +115,7 @@ The numbers in brackets are R’s positions in the vector, not part of the names
 
 **Mistakes to avoid.**
 
-- Running the script from another folder: R then reports *cannot open file ‘data/am/funds.csv’*. Run `getwd()`; it must end with `introduction-to-ai-engineering`.
+- Running the script from another folder: R then reports *cannot open file ‘data/am/funds.csv’*. Run `getwd()`; its result must end with this folder name: `introduction-to-ai-engineering`.
 - Writing `funds$Name` with a capital: R column names are case-sensitive and the result is `NULL`, without an error.
 
 **Trade-offs.** `read.csv()` is in base R and needs no package. `readr::read_csv()` is faster on large files and reads dates as dates; for a three-line file the difference does not matter.
