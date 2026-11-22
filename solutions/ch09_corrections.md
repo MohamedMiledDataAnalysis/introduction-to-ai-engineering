@@ -112,9 +112,13 @@ second  <- run_agent("And at the end of August?", system_prompt,
 
 **Step by step.**
 
+In a first terminal, from the repository root, start the mock with the correction script:
+
 ``` bash
 MOCK_SCRIPT=tools/scripts/ch09_correction.json python tools/mock_ollama.py
 ```
+
+In a second terminal, run the agent with a limit of 3 steps:
 
 `chapters/ch09/python/solutions/ex9_3_step_limit.py` (extract)
 
