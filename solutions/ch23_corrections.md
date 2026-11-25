@@ -443,7 +443,8 @@ testServer(app, {
   cat("Advice question:", log()[[1]]$r$status, "\n")
 })
 q <- read.csv("logs/review_queue.csv")
-print(q[, c("question", "unsupported")], row.names = FALSE)
+print(nrow(q))                                                           # the rows of the queue: 1
+print(q$unsupported)                                                     # the unsupported figure
 stopifnot(nrow(q) == 1, q$unsupported == "£1,098,476.03")                # only needs_review answers enter the queue
 stop_mock(mock)
 cat("Exercise 23.4 test passed\n")
@@ -454,10 +455,8 @@ cat("Exercise 23.4 test passed\n")
 ``` text
 needs_review | £1,098,476.03 
 Advice question: declined 
-                                                                      question
- What was the balance of the loans two months in arrears at 30 September 2026?
-   unsupported
- £1,098,476.03
+[1] 1
+[1] "£1,098,476.03"
 Exercise 23.4 test passed
 ```
 

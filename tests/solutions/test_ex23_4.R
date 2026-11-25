@@ -16,7 +16,8 @@ testServer(app, {
   cat("Advice question:", log()[[1]]$r$status, "\n")
 })
 q <- read.csv("logs/review_queue.csv")
-print(q[, c("question", "unsupported")], row.names = FALSE)
+print(nrow(q))                                                           # the rows of the queue: 1
+print(q$unsupported)                                                     # the unsupported figure
 stopifnot(nrow(q) == 1, q$unsupported == "£1,098,476.03")                # only needs_review answers enter the queue
 stop_mock(mock)
 cat("Exercise 23.4 test passed\n")

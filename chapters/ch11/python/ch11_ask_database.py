@@ -1,4 +1,6 @@
 # Chapter 11 - Ask a question in English; get SQL, a guarded result and a checked sentence
+# Before you run it: start the mock with the reference query of S01:
+#   MOCK_SCRIPT=tools/scripts/ch11_sql.json python tools/mock_ollama.py
 import sys
 
 sys.path.insert(0, ".")

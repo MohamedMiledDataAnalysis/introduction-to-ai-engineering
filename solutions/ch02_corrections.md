@@ -155,7 +155,7 @@ print(f"Three KIDs together: ~{kids:,.0f} tokens")
 **What you should see**
 
 ``` text
-hgef_factsheet_2026_09.md     2,031 characters  ~   508 tokens
+hgef_factsheet_2026_09.md     2,061 characters  ~   515 tokens
 hgef_kid.md                   4,153 characters  ~ 1,038 tokens
 hecb_kid.md                   4,188 characters  ~ 1,047 tokens
 hbma_kid.md                   4,001 characters  ~ 1,000 tokens
