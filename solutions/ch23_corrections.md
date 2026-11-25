@@ -94,13 +94,13 @@ and open `http://localhost:8111`. The file is a copy of `apps/sf_app/app.R`, so 
 -root <- normalizePath(Sys.getenv("AIE_ROOT", "../.."))   # runApp starts in apps/sf_app; work from the repository root
 +root <- normalizePath(Sys.getenv("AIE_ROOT", "../../.."))   # runApp starts in apps/solutions/ex23_1; work from the repository root
  setwd(root)
-@@ -58,3 +58,4 @@
+@@ -61,3 +61,4 @@
          value_box("Pool balance", textOutput("kpi_pool")), value_box("Arrears ratio", textOutput("kpi_arrears")),
 -        value_box("CPR (annualised)", textOutput("kpi_cpr")), value_box("Class A balance", textOutput("kpi_classa"))),
 +        value_box("CPR (annualised)", textOutput("kpi_cpr")), value_box("Class A balance", textOutput("kpi_classa")),
 +        value_box("Reserve fund", textOutput("kpi_reserve"))),
        card(card_header("Arrears ratio and CPR since closing"), plotOutput("trend", height = 260)),
-@@ -88,2 +89,3 @@
+@@ -91,2 +92,3 @@
    output$kpi_classa  <- renderText(gbp(figures()$notes["A", "closing"] / 1e6, 2) |> paste0("m"))
 +  output$kpi_reserve <- renderText(gbp(figures()$reserve / 1e6, 2) |> paste0("m"))
    series <- reactive({
@@ -262,7 +262,7 @@ AIE_SERVICE_URL=http://127.0.0.1:9 Rscript -e 'shiny::runApp("apps/solutions/ex2
 -root <- normalizePath(Sys.getenv("AIE_ROOT", "../.."))   # runApp starts in apps/sf_app; work from the repository root
 +root <- normalizePath(Sys.getenv("AIE_ROOT", "../../.."))   # runApp starts in apps/solutions/ex23_3; work from the repository root
  setwd(root)
-@@ -37,3 +37,4 @@
+@@ -40,3 +40,4 @@
                       httr2::req_timeout(300) |> httr2::req_error(is_error = function(r) FALSE) |>
 -                     httr2::req_perform(), error = function(e) NULL)
 +                     httr2::req_perform(),
@@ -401,7 +401,7 @@ Rscript -e 'shiny::runApp("apps/solutions/ex23_4", port = 8114)'
 -root <- normalizePath(Sys.getenv("AIE_ROOT", "../.."))   # runApp starts in apps/sf_app; work from the repository root
 +root <- normalizePath(Sys.getenv("AIE_ROOT", "../../.."))   # runApp starts in apps/solutions/ex23_4; work from the repository root
  setwd(root)
-@@ -132,2 +132,9 @@
+@@ -135,2 +135,9 @@
      log(c(list(list(q = input$question, r = r)), log()))
 +    if (identical(r$status, "needs_review")) {
 +      dir.create("logs", showWarnings = FALSE)

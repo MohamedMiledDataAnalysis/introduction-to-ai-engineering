@@ -30,11 +30,14 @@ funds <- read.csv("data/am/funds.csv", stringsAsFactors = FALSE)
 nav   <- read.csv("data/am/fund_nav_monthly.csv", stringsAsFactors = FALSE)
 bm    <- read.csv("data/am/benchmark_returns_monthly.csv", stringsAsFactors = FALSE)
 hold  <- read.csv("data/am/fund_holdings_monthly.csv", stringsAsFactors = FALSE)
-tool  <- function(name, ...) fromJSON(run_tool(list(name = name, arguments = list(...))))
+tool  <- function(.tool, ...) fromJSON(run_tool(list(name = .tool, arguments = list(...))))
 WARNING <- "Past performance does not predict future returns."
 
 ask_agent <- function(question, history) {
-  if (service_url == "") return(ask_assistant(assistant, question, history))
+  if (service_url == "")                 # mode 1: the agent runs in the app
+    return(tryCatch(ask_assistant(assistant, question, history), llm_error = function(e)
+      list(answer = "The model is unavailable: start Ollama, then ask again.",
+           status = "error", trace = list(), unsupported = character(0))))
   resp <- tryCatch(httr2::request(paste0(service_url, "/am/ask")) |>
                      httr2::req_headers(`x-api-key` = service_key) |>
                      httr2::req_body_json(list(question = question)) |>

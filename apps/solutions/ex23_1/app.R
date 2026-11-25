@@ -30,7 +30,10 @@ dates <- sort(unique(tape$RREL6))[-1]                       # collection period 
 gbp <- function(x, d = 2) paste0("£", formatC(x, format = "f", digits = d, big.mark = ","))
 
 ask_agent <- function(question, history) {
-  if (service_url == "") return(ask_assistant(assistant, question, history))
+  if (service_url == "")                 # mode 1: the agent runs in the app
+    return(tryCatch(ask_assistant(assistant, question, history), llm_error = function(e)
+      list(answer = "The model is unavailable: start Ollama, then ask again.",
+           status = "error", trace = list(), unsupported = character(0))))
   resp <- tryCatch(httr2::request(paste0(service_url, "/sf/ask")) |>
                      httr2::req_headers(`x-api-key` = service_key) |>
                      httr2::req_body_json(list(question = question)) |>

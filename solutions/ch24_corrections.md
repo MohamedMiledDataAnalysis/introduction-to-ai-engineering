@@ -162,17 +162,17 @@ AIE_DRAFT=1 Rscript -e 'shiny::runApp("apps/solutions/ex24_4", port = 8125)'   #
 -root <- normalizePath(Sys.getenv("AIE_ROOT", "../.."))
 +root <- normalizePath(Sys.getenv("AIE_ROOT", "../../.."))
  setwd(root)
-@@ -67,3 +68,3 @@
+@@ -70,3 +71,3 @@
      card(card_header("HGEF, September 2026: Brinson attribution (basis points)"), tableOutput("attr")),
 -    card(card_header("Draft commentary and its fact check"), textOutput("draft"), br(), tableOutput("check"))),
 +    card(card_header("Draft commentary and its fact check"), textOutput("draft"), br(), tableOutput("check"), uiOutput("approve_ui"))),
    nav_panel("Assistant",
-@@ -109,3 +110,3 @@
+@@ -112,3 +113,3 @@
    drafts <- drafts[nchar(drafts) > 0]
 -  draft <- drafts[2]                                   # the second draft has two errors for the checker to find
 +  draft <- drafts[as.integer(Sys.getenv("AIE_DRAFT", "2"))]   # draft 2 has two errors; draft 1 has none
    output$draft <- renderText(draft)
-@@ -116,2 +117,23 @@
+@@ -119,2 +120,23 @@
                 Result = vapply(r, function(x) if (is.na(x$problem)) "OK" else x$problem, ""))
 +  })
 +

@@ -10,5 +10,9 @@ testServer(app, {
   cat("Template email check:", output$email_check, "\n")
   session$setInputs(question = "Should I buy the Class B notes?", ask = 1)
   cat("Assistant status for an advice question:", log()[[1]]$r$status, "\n")
+  ollama_url <<- "http://127.0.0.1:9"              # no model there
+  session$setInputs(question = "Pool balance at 30 September 2026?", ask = 2)
+  stopifnot(log()[[1]]$r$status == "error")        # the session survives
+  cat("Assistant status with the model unreachable:", log()[[1]]$r$status, "\n")
 })
 cat("SF app server tests passed\n")
