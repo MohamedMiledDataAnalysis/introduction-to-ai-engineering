@@ -1,5 +1,7 @@
 # 8. Tools: Letting the Model Use Your Code
 
+> © 2026 Mohamed Miled. All rights reserved. This text is part of the book *Introduction to AI Engineering* and may not be copied, republished or sold. The code blocks are under the MIT licence (see `LICENSE`); the explanations are not (see `LICENSE-TEXT.md`).
+
 ## Exercises
 
 **Exercise 8.1.** Write a new tool `arrears_buckets(cutoff_date)` that returns, for the Larkfield pool, the number of loans and the balance in arrears of 1 month, 2 months, 3 months and 4–5 months (from `RREL68`). Register it with a description and schema, in Python and R, and run it for `2026-09-30`.

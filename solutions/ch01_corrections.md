@@ -1,5 +1,7 @@
 # 1. What an AI Engineer Does
 
+> © 2026 Mohamed Miled. All rights reserved. This text is part of the book *Introduction to AI Engineering* and may not be copied, republished or sold. The code blocks are under the MIT licence (see `LICENSE`); the explanations are not (see `LICENSE-TEXT.md`).
+
 ## Exercises
 
 **Exercise 1.1.** In Python and in R, count the Larkfield loans by account status (`RREL69`) at 30 September 2026. Use the data dictionary to give the meaning of each status.

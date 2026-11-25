@@ -1,5 +1,7 @@
 # 13. Asset Management: Drafting the Factsheet Commentary
 
+> © 2026 Mohamed Miled. All rights reserved. This text is part of the book *Introduction to AI Engineering* and may not be copied, republished or sold. The code blocks are under the MIT licence (see `LICENSE`); the explanations are not (see `LICENSE-TEXT.md`).
+
 ## Exercises
 
 **Exercise 13.1.** Verify the attribution identity for September 2026: the sum of allocation, selection and interaction over all rows equals the fund’s gross return minus the benchmark’s return. Show the computation in Python and R, including the fee adjustment.

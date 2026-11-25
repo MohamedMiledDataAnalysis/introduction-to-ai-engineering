@@ -1,5 +1,7 @@
 # 17. Asset Management: Summarising Research Notes
 
+> © 2026 Mohamed Miled. All rights reserved. This text is part of the book *Introduction to AI Engineering* and may not be copied, republished or sold. The code blocks are under the MIT licence (see `LICENSE`); the explanations are not (see `LICENSE-TEXT.md`).
+
 ## Exercises
 
 **Exercise 17.1.** Run `summarise_note()` with Ollama for the six notes and check each summary. Report the four requirements’ pass rates.

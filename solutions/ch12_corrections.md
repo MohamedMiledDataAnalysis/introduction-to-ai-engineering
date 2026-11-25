@@ -1,5 +1,7 @@
 # 12. Structured Finance: Checking a Received Loan Tape
 
+> © 2026 Mohamed Miled. All rights reserved. This text is part of the book *Introduction to AI Engineering* and may not be copied, republished or sold. The code blocks are under the MIT licence (see `LICENSE`); the explanations are not (see `LICENSE-TEXT.md`).
+
 ## Exercises
 
 **Exercise 12.1.** Write a consistency rule that compares the original LTV (`RREC16`) with the original balance divided by the original valuation (`RREL29 / RREC17`). Choose a tolerance, run it on the received tape, and report what it flags.

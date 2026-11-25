@@ -1,5 +1,7 @@
 # 6. Guardrails: Checking Every Figure
 
+> © 2026 Mohamed Miled. All rights reserved. This text is part of the book *Introduction to AI Engineering* and may not be copied, republished or sold. The code blocks are under the MIT licence (see `LICENSE`); the explanations are not (see `LICENSE-TEXT.md`).
+
 ## Exercises
 
 **Exercise 6.1.** Build the fact table for the Harbourline Global Equity Fund in September 2026: fund return, benchmark return, relative return (one month), and the one-year fund and benchmark returns. Check this draft: *“In September the fund returned 4.53% against 5.03% for its benchmark, lagging by 0.49%. Over one year the fund gained 6.46%, behind the benchmark’s 7.86%.”*

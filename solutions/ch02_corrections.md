@@ -1,5 +1,7 @@
 # 2. How Language Models Work
 
+> © 2026 Mohamed Miled. All rights reserved. This text is part of the book *Introduction to AI Engineering* and may not be copied, republished or sold. The code blocks are under the MIT licence (see `LICENSE`); the explanations are not (see `LICENSE-TEXT.md`).
+
 ## Exercises
 
 **Exercise 2.1.** Using the tiny next-word model, compute by hand the probability of *“b”* after *“class”* at $T = 0.5$. Check it against the output.

@@ -1,3 +1,12 @@
+Scope: this MIT licence covers the source code of this repository only:
+Python (.py), R (.R), configuration (.yml, .yaml), and the code blocks
+inside the Markdown files, together with the data files (CSV, JSON, Excel
+and similar). In this licence, "the Software" means that code and data
+alone. The written material of the repository is not covered: see LICENSE-
+TEXT.md.
+
+--------------------------------------------------------------------------
+
 MIT License
 
 Copyright (c) 2026 Mohamed Miled

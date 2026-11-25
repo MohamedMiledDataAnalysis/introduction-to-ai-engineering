@@ -1,5 +1,7 @@
 # 18. Serving: From a Script to a Service
 
+> © 2026 Mohamed Miled. All rights reserved. This text is part of the book *Introduction to AI Engineering* and may not be copied, republished or sold. The code blocks are under the MIT licence (see `LICENSE`); the explanations are not (see `LICENSE-TEXT.md`).
+
 ## Exercises
 
 **Exercise 18.1.** Add an endpoint `GET /tools/fund_performance?fund_code=HGEF&months=12` to the R service, and test it with `curl`.

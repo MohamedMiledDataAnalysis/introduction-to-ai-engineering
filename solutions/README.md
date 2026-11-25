@@ -1,5 +1,7 @@
 # Corrections of the exercises
 
+> © 2026 Mohamed Miled. All rights reserved. This text is part of the book *Introduction to AI Engineering* and may not be copied, republished or sold. The code blocks are under the MIT licence (see `LICENSE`); the explanations are not (see `LICENSE-TEXT.md`).
+
 These are the corrections printed in *Introduction to AI Engineering*, generated from the book's source,
 so the text, the code and the figures are the same as in the book. Each correction has seven parts:
 what the question asks, the plan, step by step (with the code explained line by line), reading the result,

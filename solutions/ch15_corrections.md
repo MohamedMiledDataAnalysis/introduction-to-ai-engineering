@@ -1,5 +1,7 @@
 # 15. Asset Management: Extracting Data from Key Information Documents
 
+> © 2026 Mohamed Miled. All rights reserved. This text is part of the book *Introduction to AI Engineering* and may not be copied, republished or sold. The code blocks are under the MIT licence (see `LICENSE`); the explanations are not (see `LICENSE-TEXT.md`).
+
 ## Exercises
 
 **Exercise 15.1.** Run `extract_kid()` with Ollama for the three funds, and check each result with `check_extraction()` and against `evals/kid_truth.json`.

@@ -1,5 +1,7 @@
 # 7. Retrieval: Giving the Model the Right Passages
 
+> © 2026 Mohamed Miled. All rights reserved. This text is part of the book *Introduction to AI Engineering* and may not be copied, republished or sold. The code blocks are under the MIT licence (see `LICENSE`); the explanations are not (see `LICENSE-TEXT.md`).
+
 ## Exercises
 
 **Exercise 7.1.** Index the three Harbourline Key Information Documents together, with document codes `HGEF`, `HECB` and `HBMA`. Retrieve for *“What are the ongoing costs of the euro corporate bond fund?”*. Which chunk comes first? What would go wrong if a chunk of another fund came first?

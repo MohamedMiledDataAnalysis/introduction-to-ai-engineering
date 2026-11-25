@@ -1,5 +1,7 @@
 # 22. The Asset Management Agent
 
+> © 2026 Mohamed Miled. All rights reserved. This text is part of the book *Introduction to AI Engineering* and may not be copied, republished or sold. The code blocks are under the MIT licence (see `LICENSE`); the explanations are not (see `LICENSE-TEXT.md`).
+
 ## Exercises
 
 **Exercise 22.1.** Call `fund_characteristics` for the three funds. Why are HECB’s top sectors those of the companies issuing its bonds, and why does HBMA report a bond duration?

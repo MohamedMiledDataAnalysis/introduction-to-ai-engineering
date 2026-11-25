@@ -1,5 +1,7 @@
 # 10. Structured Finance: A Prospectus Assistant with Citations
 
+> © 2026 Mohamed Miled. All rights reserved. This text is part of the book *Introduction to AI Engineering* and may not be copied, republished or sold. The code blocks are under the MIT licence (see `LICENSE`); the explanations are not (see `LICENSE-TEXT.md`).
+
 ## Exercises
 
 **Exercise 10.1.** For each of the eight baseline failures, say which level of Figure 10.2 failed (retrieval, or reading within a retrieved chunk), and whether a model can be expected to fix it.

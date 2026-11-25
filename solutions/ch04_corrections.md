@@ -1,5 +1,7 @@
 # 4. Prompts as Code
 
+> © 2026 Mohamed Miled. All rights reserved. This text is part of the book *Introduction to AI Engineering* and may not be copied, republished or sold. The code blocks are under the MIT licence (see `LICENSE`); the explanations are not (see `LICENSE-TEXT.md`).
+
 ## Exercises
 
 **Exercise 4.1.** Using `render()`, display the full prompt sent for note `N002`. Then call `render()` without `note_text` and read the error.

@@ -1,5 +1,7 @@
 # 19. Monitoring: Logs, Costs and Quality Over Time
 
+> © 2026 Mohamed Miled. All rights reserved. This text is part of the book *Introduction to AI Engineering* and may not be copied, republished or sold. The code blocks are under the MIT licence (see `LICENSE`); the explanations are not (see `LICENSE-TEXT.md`).
+
 ## Exercises
 
 **Exercise 19.1.** Find the first and last error of 7 October, count them by domain, and show that they share a duration close to 3.2 seconds. Explain the duration from Chapter 3.

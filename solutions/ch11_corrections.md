@@ -1,5 +1,7 @@
 # 11. Asset Management: Asking the Fund Database in English
 
+> © 2026 Mohamed Miled. All rights reserved. This text is part of the book *Introduction to AI Engineering* and may not be copied, republished or sold. The code blocks are under the MIT licence (see `LICENSE`); the explanations are not (see `LICENSE-TEXT.md`).
+
 ## Exercises
 
 **Exercise 11.1.** Write the correct query for each of the five failures, and add one sentence to the schema description or the prompt rules that would have prevented each error.

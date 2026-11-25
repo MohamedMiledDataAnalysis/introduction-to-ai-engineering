@@ -1,5 +1,7 @@
 # 24. The Asset Management Application, and Your Next Steps
 
+> © 2026 Mohamed Miled. All rights reserved. This text is part of the book *Introduction to AI Engineering* and may not be copied, republished or sold. The code blocks are under the MIT licence (see `LICENSE`); the explanations are not (see `LICENSE-TEXT.md`).
+
 ## Exercises
 
 **Exercise 24.1.** Select the 3-year period. Write down the three tiles for each fund and explain why the warning matters more on this view.

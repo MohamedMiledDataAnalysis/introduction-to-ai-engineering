@@ -1,5 +1,7 @@
 # 20. Governance: Model Risk, Regulation and Data
 
+> © 2026 Mohamed Miled. All rights reserved. This text is part of the book *Introduction to AI Engineering* and may not be copied, republished or sold. The code blocks are under the MIT licence (see `LICENSE`); the explanations are not (see `LICENSE-TEXT.md`).
+
 ## Exercises
 
 **Exercise 20.1.** Add two use cases to the inventory: (a) a model that ranks mortgage applicants for approval; (b) a chatbot on Harbourline’s public website answering retail investors’ questions about the funds. Assign each a risk tier and explain which rules of section 20.4 apply.

@@ -129,4 +129,6 @@ The Shiny applications check their packages when they start and install from CRA
 
 ## Licence
 
-The code and data of this repository are released under the MIT licence (`LICENSE`). The text of the book is not covered by it.
+- **Code**: MIT licence (see `LICENSE`). Reuse it freely in your own projects.
+- **Data**: invented, released under the MIT licence with the code.
+- **Written material** (solutions, corrections, READMEs, guides): © 2026 Mohamed Miled, all rights reserved, like the book *Introduction to AI Engineering*. Read it and study with it; do not copy, republish or sell it (see `LICENSE-TEXT.md`).

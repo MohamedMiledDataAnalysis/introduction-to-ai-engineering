@@ -1,5 +1,7 @@
 # 9. Agents: Letting the Model Plan the Steps
 
+> © 2026 Mohamed Miled. All rights reserved. This text is part of the book *Introduction to AI Engineering* and may not be copied, republished or sold. The code blocks are under the MIT licence (see `LICENSE`); the explanations are not (see `LICENSE-TEXT.md`).
+
 ## Exercises
 
 **Exercise 9.1.** Run the Larkfield agent with Ollama on three questions: (a) *What is the Class B coupon for the September 2026 period?* (b) *Can the reserve fund be used to repay principal?* (c) *What was the arrears ratio in October 2026?* For each, read the trace and explain the agent’s choices and its status.

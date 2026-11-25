@@ -1,5 +1,7 @@
 # 14. Structured Finance: Producing the Investor Report
 
+> © 2026 Mohamed Miled. All rights reserved. This text is part of the book *Introduction to AI Engineering* and may not be copied, republished or sold. The code blocks are under the MIT licence (see `LICENSE`); the explanations are not (see `LICENSE-TEXT.md`).
+
 ## Exercises
 
 **Exercise 14.1.** Produce the investor report for every collection period from July 2025 to September 2026. Confirm that all reconciliations pass, and list the months with new defaults.

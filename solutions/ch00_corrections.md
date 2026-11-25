@@ -1,5 +1,7 @@
 # 0. Setting Up Your Computer
 
+> © 2026 Mohamed Miled. All rights reserved. This text is part of the book *Introduction to AI Engineering* and may not be copied, republished or sold. The code blocks are under the MIT licence (see `LICENSE`); the explanations are not (see `LICENSE-TEXT.md`).
+
 ## Exercises
 
 **Exercise 0.1.** Type `ollama list` in the terminal. Write down the name and size of each model you have downloaded.

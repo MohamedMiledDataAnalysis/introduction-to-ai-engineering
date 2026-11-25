@@ -1,5 +1,7 @@
 # 16. Structured Finance: Reading Servicer Reports in PDF
 
+> © 2026 Mohamed Miled. All rights reserved. This text is part of the book *Introduction to AI Engineering* and may not be copied, republished or sold. The code blocks are under the MIT licence (see `LICENSE`); the explanations are not (see `LICENSE-TEXT.md`).
+
 ## Exercises
 
 **Exercise 16.1.** Extract the text of the September report in Python and in R. Print the line or lines containing *Prepayments* in each. Explain why a regular expression written for one output would fail on the other.

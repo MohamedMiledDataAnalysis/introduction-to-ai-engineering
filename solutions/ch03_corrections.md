@@ -1,5 +1,7 @@
 # 3. Calling a Model from Code
 
+> © 2026 Mohamed Miled. All rights reserved. This text is part of the book *Introduction to AI Engineering* and may not be copied, republished or sold. The code blocks are under the MIT licence (see `LICENSE`); the explanations are not (see `LICENSE-TEXT.md`).
+
 ## Exercises
 
 **Exercise 3.1.** Run `ch03_cost.py` (or `ch03_cost.R`). Then change the assumptions: 2,000 questions a month, 6,000 input tokens per question (eight passages instead of three) and 500 output tokens. What is the yearly cost with the large paid model? Which change contributed most?

@@ -1,5 +1,7 @@
 # 21. The Structured Finance Agent
 
+> © 2026 Mohamed Miled. All rights reserved. This text is part of the book *Introduction to AI Engineering* and may not be copied, republished or sold. The code blocks are under the MIT licence (see `LICENSE`); the explanations are not (see `LICENSE-TEXT.md`).
+
 ## Exercises
 
 **Exercise 21.1.** Run the evaluation with Ollama, in Python and R. Fill the release-criteria table with your results and decide whether the agent can be released.
